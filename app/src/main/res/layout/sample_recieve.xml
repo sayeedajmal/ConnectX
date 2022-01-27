@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:maxWidth="310dp"
+    android:maxHeight="400dp"
+    android:minWidth="30dp"
+    android:layout_gravity="start"
+    android:background="@drawable/bg_recieve"
+    >
+
+
+    <TextView
+        android:id="@+id/messageRec"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/trebuc"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="12.4dp"
+        android:text="hey! I am Sayeed Ajmal. I am Developing this application. So Plaase Co-operate"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/messageRecTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="52dp"
+        android:fontFamily="@font/trebuc"
+        android:text="12:00PM"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageRec"
+        tools:ignore="DuplicateIds" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
