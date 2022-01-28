@@ -20,6 +20,8 @@ import com.bumptech.glide.request.transition.Transition;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class callsAdaptor extends ArrayAdapter<callsGetter> {
 
     public Context context;
@@ -37,10 +39,7 @@ public class callsAdaptor extends ArrayAdapter<callsGetter> {
         TextView callUsername=view.findViewById(R.id.callUsername);
         TextView callInform=view.findViewById(R.id.callInform);
 
-        ImageView callUserImage=(ImageView)view.findViewById(R.id.callUserImage);
-
-
-
+        CircleImageView callUserImage=(CircleImageView)view.findViewById(R.id.callUserImage);
         callsGetter callsGetter =getItem(position);
 
         Glide.with(context).load(callsGetter.getCallUserImage()).into(new SimpleTarget<Drawable>() {

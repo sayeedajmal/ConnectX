@@ -2,6 +2,7 @@ package com.Strong.personalchat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,7 @@ public class mainChat extends AppCompatActivity {
     TextView mainChatUsername;
     FirebaseAuth fAuth;
     RecyclerView mainChatRecyclerView;
-    EditText TypeMessage;
+    AppCompatEditText TypeMessage;
     FirebaseDatabase database;
     AppCompatImageButton sendButton, mainchatbackButton;
     @Override
@@ -92,23 +93,22 @@ public class mainChat extends AppCompatActivity {
 
             database=FirebaseDatabase.getInstance();
 
-            String message=TypeMessage.getText().toString();
-            final message model=new message(senderId, message);
-            model.setTimeStamp(new Date().getTime());
-            TypeMessage.setText(null);
+            String message= Objects.requireNonNull(TypeMessage.getText()).toString();
+            if (!message.equals("")){
+                final message model=new message(senderId, message);
+                model.setTimeStamp(new Date().getTime());
+                TypeMessage.setText(null);
 
-
-            database.getReference().
-                    child("Users").
-                    child(senderId).
-                    child(receiveId).
-                    push().setValue(model).addOnSuccessListener(unused -> database.getReference().
-                            child("Users").
-                            child(receiveId).
-                            child(senderId).
-                            push().setValue(model));
-           // Toast.makeText(this, "this is SenderId: "+senderId, Toast.LENGTH_SHORT).show();
-
+                database.getReference().
+                        child("Users").
+                        child(senderId).
+                        child(receiveId).
+                        push().setValue(model).addOnSuccessListener(unused -> database.getReference().
+                        child("Users").
+                        child(receiveId).
+                        child(senderId).
+                        push().setValue(model));
+            }
         });
 
         mainchatbackButton.setOnClickListener(view -> {

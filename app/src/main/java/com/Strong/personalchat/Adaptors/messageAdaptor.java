@@ -48,15 +48,14 @@ public class messageAdaptor extends  RecyclerView.Adapter{
             ((sendViewHolder)holder).messageSen.setText(message.getMessage());
 
             Date timeD = new Date(message.getTimeStamp() * 1000);
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             String Time = sdf. format(timeD);
             ((sendViewHolder)holder).messageSenTime.setText(Time);
-
         }
         else{
             ((recieveViewHolder)holder).messageRec.setText(message.getMessage());
             Date timeD = new Date(message.getTimeStamp() * 1000);
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             String Time = sdf. format(timeD);
             ((recieveViewHolder)holder).messageRecTime.setText(Time);
         }
