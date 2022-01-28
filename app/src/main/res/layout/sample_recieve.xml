@@ -4,40 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:maxWidth="310dp"
-    android:maxHeight="400dp"
-    android:minWidth="30dp"
-    android:layout_gravity="start"
-    android:background="@drawable/bg_recieve"
-    >
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="5dp">
 
 
-    <TextView
-        android:id="@+id/messageRec"
-        android:layout_width="312dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/trebuc"
-        android:paddingStart="20dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="12.4dp"
-        android:text="hey! I am Sayeed Ajmal. I am Developing this application. So Plaase Co-operate"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="1dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/mainChatImage"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="User Icon"
+        android:src="@mipmap/avtar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/messageRecTime"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_gchat_message_other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="52dp"
-        android:fontFamily="@font/trebuc"
-        android:text="12:00PM"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageRec"
-        tools:ignore="DuplicateIds" />
+        app:cardBackgroundColor="#eef1f6"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toEndOf="@+id/mainChatImage"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:id="@+id/layout_gchat_container_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
+            <TextView
+                android:id="@+id/messageRec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:maxWidth="260dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="8dp"
+                android:fontFamily="@font/trebuc"
+                android:paddingRight="12dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/messageRecTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/Black"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

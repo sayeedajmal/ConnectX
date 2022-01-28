@@ -1,18 +1,19 @@
 package com.Strong.personalchat.Adaptors;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class messageAdaptor extends  RecyclerView.Adapter{
     ArrayList<message> messageModels;
@@ -45,10 +46,19 @@ public class messageAdaptor extends  RecyclerView.Adapter{
 
         if (holder.getClass()==sendViewHolder.class){
             ((sendViewHolder)holder).messageSen.setText(message.getMessage());
+
+            Date timeD = new Date(message.getTimeStamp() * 1000);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String Time = sdf. format(timeD);
+            ((sendViewHolder)holder).messageSenTime.setText(Time);
+
         }
         else{
             ((recieveViewHolder)holder).messageRec.setText(message.getMessage());
-
+            Date timeD = new Date(message.getTimeStamp() * 1000);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String Time = sdf. format(timeD);
+            ((recieveViewHolder)holder).messageRecTime.setText(Time);
         }
     }
 

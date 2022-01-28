@@ -2,18 +2,24 @@ package com.Strong.personalchat.Adaptors;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.Strong.personalchat.mainChat;
 import com.Strong.personalchat.models.primaryGetter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,10 +36,6 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
         this.context = context;
     }
 
-
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,10 +46,36 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         primaryGetter users=chatUserList.get(position);
+
         Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.chatUserImage);
         holder.ChatUsername.setText(users.getUsername());
-        //FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
-        holder.chatUserMessage.setText("Its the Last Message");
+        String currentUse=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference().child("Users").child(currentUse).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               if (snapshot.hasChildren()){
+                   for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                       holder.chatUserMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                   }
+               }
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
+
+        Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.chatUserImage);
+        holder.ChatUsername.setText(users.getUsername());
+        holder.chatUserMessage.setText(users.getLastMessage());
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent=new Intent(context, mainChat.class);
+            intent.putExtra("userId", users.getUserId());
+            intent.putExtra("username", users.getUsername());
+            intent.putExtra("newChatUserImage", users.getChatUserImage());
+            context.startActivity(intent);
+        });
     }
 
     @Override

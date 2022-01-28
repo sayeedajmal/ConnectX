@@ -15,7 +15,7 @@
         android:background="@color/White">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/backButton"
+            android:id="@+id/mainchatbackButton"
             android:layout_width="30dp"
             android:layout_height="26dp"
             android:layout_marginStart="3dp"
@@ -33,7 +33,7 @@
             android:background="@drawable/image_corner"
             android:src="@mipmap/avtar"
             app:layout_constraintEnd_toStartOf="@+id/mainChatUsername"
-            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@+id/mainchatbackButton"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 

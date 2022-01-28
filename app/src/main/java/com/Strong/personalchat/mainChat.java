@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class mainChat extends AppCompatActivity {
     RecyclerView mainChatRecyclerView;
     EditText TypeMessage;
     FirebaseDatabase database;
-    AppCompatImageButton sendButton;
+    AppCompatImageButton sendButton, mainchatbackButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ public class mainChat extends AppCompatActivity {
         mainChatRecyclerView=findViewById(R.id.mainChatRecyclerView);
         TypeMessage=findViewById(R.id.TypeMessage);
         sendButton=findViewById(R.id.sendButton);
+        mainchatbackButton=findViewById(R.id.mainchatbackButton);
 
         fAuth=FirebaseAuth.getInstance();
 
@@ -50,6 +52,7 @@ public class mainChat extends AppCompatActivity {
 
         String receiveId=getIntent().getStringExtra("userId");
         String receiveName=getIntent().getStringExtra("username");
+
 
         mainChatUsername.setText(receiveName);
 
@@ -71,6 +74,7 @@ public class mainChat extends AppCompatActivity {
                 messageAdaptor.notifyDataSetChanged();
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 messageAdaptor.notifyDataSetChanged();
@@ -106,5 +110,10 @@ public class mainChat extends AppCompatActivity {
            // Toast.makeText(this, "this is SenderId: "+senderId, Toast.LENGTH_SHORT).show();
 
         });
+
+        mainchatbackButton.setOnClickListener(view -> {
+            onBackPressed();
+        });
     }
+
 }

@@ -52,7 +52,7 @@ public class primaryGetter {
         this.chatUserImage = chatUserImage;
     }
 
-    public String getUserId(String key) {
+    public String getUserId() {
         return userId;
     }
 
