@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.Adaptors.newChatAdaptor;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -52,6 +53,7 @@ public class newChatFragment extends Fragment {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             newContactRecyclerView.setLayoutManager(linearLayoutManager);
             database = FirebaseDatabase.getInstance();
+            String currentUser= FirebaseAuth.getInstance().getCurrentUser().getUid();
             database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
                 @SuppressLint("NotifyDataSetChanged")
                 @Override
@@ -59,8 +61,10 @@ public class newChatFragment extends Fragment {
                     arrayList.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         newChatGetter users = dataSnapshot.getValue(newChatGetter.class);
-                        users.setUserId(dataSnapshot.getKey());
-                        arrayList.add(users);
+                        if (!dataSnapshot.getKey().equals(currentUser)) {
+                            users.setUserId(dataSnapshot.getKey());
+                            arrayList.add(users);
+                        }
                     }
                     adaptor.notifyDataSetChanged();
                 }

@@ -19,7 +19,7 @@ public class dashboard extends AppCompatActivity {
     ViewPagerSection viewPagerAdaptor;
     FirebaseAuth firebaseAuth;
     AppCompatImageButton LogoutButton;
-    FloatingActionButton floatNewChat;
+    AppCompatImageButton floatNewChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

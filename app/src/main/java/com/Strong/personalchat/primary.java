@@ -56,7 +56,7 @@ public class primary extends Fragment {
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
       chatListView.setLayoutManager(linearLayoutManager);
       database=FirebaseDatabase.getInstance();
-
+        String currentId=FirebaseAuth.getInstance().getCurrentUser().getUid();
       database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
           @SuppressLint("NotifyDataSetChanged")
           @Override
@@ -64,18 +64,18 @@ public class primary extends Fragment {
                     arrayList.clear();
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                         primaryGetter users=dataSnapshot.getValue(primaryGetter.class);
-                        users.setUserId(dataSnapshot.getKey());
-                        arrayList.add(users);
+                        if (!dataSnapshot.getKey().equals(currentId)) {
+                            users.setUserId(dataSnapshot.getKey());
+                            arrayList.add(users);
+                        }
                     }
                     adaptor.notifyDataSetChanged();
           }
-
           @Override
           public void onCancelled(@NonNull DatabaseError error) {
-
+              adaptor.notifyDataSetChanged();
           }
       });
-
       return view;
     }
 }
