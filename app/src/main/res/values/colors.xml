@@ -147,5 +147,6 @@
 <color name="DarkBlue">#00008B</color>
 <color name="Navy">#000080</color>
 <color name="Black">#000000</color>
-    <color name="darkGray">#06213E</color>
+<color name="darkGray">#06213E</color>
+    <color name="mtrl_textinput_default_box_stoke_color">#fff</color>
 </resources>

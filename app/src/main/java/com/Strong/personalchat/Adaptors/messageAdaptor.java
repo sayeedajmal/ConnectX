@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class messageAdaptor extends  RecyclerView.Adapter{
     ArrayList<message> messageModels;
@@ -47,20 +48,19 @@ public class messageAdaptor extends  RecyclerView.Adapter{
         if (holder.getClass()==sendViewHolder.class){
             ((sendViewHolder)holder).messageSen.setText(message.getMessage());
 
-            Date timeD = new Date(message.getTimeStamp() * 1000);
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            String Time = sdf. format(timeD);
-            ((sendViewHolder)holder).messageSenTime.setText(Time);
+            Date timeD = new Date(message.getTimeStamp());
+            ((sendViewHolder)holder).messageSenTime.setText(ShowDateTime(timeD));
         }
         else{
             ((recieveViewHolder)holder).messageRec.setText(message.getMessage());
-            Date timeD = new Date(message.getTimeStamp() * 1000);
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            String Time = sdf. format(timeD);
-            ((recieveViewHolder)holder).messageRecTime.setText(Time);
+            Date timeD = new Date(message.getTimeStamp());
+            ((recieveViewHolder)holder).messageRecTime.setText(ShowDateTime(timeD));
         }
     }
 
+    private String ShowDateTime(Date date){
+        return new SimpleDateFormat("dd,MM,yyyy - hh:mm a", Locale.getDefault()).format(date);
+    }
     @Override
     public int getItemViewType(int position) {
         if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())){

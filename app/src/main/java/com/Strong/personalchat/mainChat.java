@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EventListener;
 import java.util.Objects;
 
 public class mainChat extends AppCompatActivity {
@@ -60,10 +61,10 @@ public class mainChat extends AppCompatActivity {
         final ArrayList<message> messageModels=new ArrayList<>();
 
         final messageAdaptor messageAdaptor=new messageAdaptor(messageModels, this);
-
+            int count=messageModels.size();
         database=FirebaseDatabase.getInstance();
 
-        database.getReference().child("Users").child((senderId)).child(receiveId).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(receiveId).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -71,26 +72,26 @@ public class mainChat extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1: snapshot.getChildren()){
                     message model=dataSnapshot1.getValue(message.class);
                     messageModels.add(model);
+                    if (count==0){
+                        messageAdaptor.notifyDataSetChanged();
+                    }else{
+                        // Getting Shown the last message when open the chat section
+                        messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
+                        mainChatRecyclerView.smoothScrollToPosition(messageModels.size()-1);
+                    }
+                    mainChatRecyclerView.setAdapter(messageAdaptor);
                 }
-                messageAdaptor.notifyDataSetChanged();
             }
 
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 messageAdaptor.notifyDataSetChanged();
-
             }
+
         });
-
-        mainChatRecyclerView.setAdapter(messageAdaptor);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
-        mainChatRecyclerView.setLayoutManager(layoutManager);
-
-
         //Sending the message and storing in the database
         sendButton.setOnClickListener(view -> {
-
             database=FirebaseDatabase.getInstance();
 
             String message= Objects.requireNonNull(TypeMessage.getText()).toString();
@@ -115,5 +116,4 @@ public class mainChat extends AppCompatActivity {
             onBackPressed();
         });
     }
-
 }

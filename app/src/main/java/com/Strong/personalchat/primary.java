@@ -1,6 +1,7 @@
 package com.Strong.personalchat;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,14 +34,11 @@ public class primary extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
     }
 
 
@@ -56,8 +54,9 @@ public class primary extends Fragment {
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
       chatListView.setLayoutManager(linearLayoutManager);
       database=FirebaseDatabase.getInstance();
-        String currentId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-      database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+
+      String currentId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
           @SuppressLint("NotifyDataSetChanged")
           @Override
           public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -71,6 +70,7 @@ public class primary extends Fragment {
                     }
                     adaptor.notifyDataSetChanged();
           }
+          @SuppressLint("NotifyDataSetChanged")
           @Override
           public void onCancelled(@NonNull DatabaseError error) {
               adaptor.notifyDataSetChanged();

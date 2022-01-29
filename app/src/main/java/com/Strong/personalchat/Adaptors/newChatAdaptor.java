@@ -56,7 +56,7 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
         return newUserList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView newContactImage;
         TextView newChatUsername, newChatLastSeen;
 

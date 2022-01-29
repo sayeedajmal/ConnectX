@@ -23,9 +23,9 @@
         </activity>
         <activity android:name=".purpose" />
         <activity android:name=".login" />
-        <activity android:name=".Splash" />
-        <activity android:name=".newChat" />
         <activity android:name=".dashboard" />
+        <activity android:name=".newChat" />
+        <activity android:name=".Splash" />
         <activity android:name=".mainChat"/>
     </application>
 

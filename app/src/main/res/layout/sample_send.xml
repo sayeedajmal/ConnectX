@@ -36,7 +36,7 @@
                 android:paddingTop="8dp"
                 android:fontFamily="@font/trebuc"
                 android:paddingRight="12dp"
-                android:text="This is a Message"
+                android:text="This is a Sender."
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
@@ -44,10 +44,13 @@
                 android:id="@+id/messageSenTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="10dp"
+                android:layout_gravity="left"
                 android:textColor="@color/White"
+                android:background="@drawable/round_corner"
+                android:layout_marginStart="1dp"
                 android:textSize="10sp"
+                android:padding="3dp"
+                android:text="01,28,2022 - 09-09 PM"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </LinearLayout>
 
