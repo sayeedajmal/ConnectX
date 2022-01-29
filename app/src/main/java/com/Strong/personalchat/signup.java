@@ -27,7 +27,6 @@ public class signup extends AppCompatActivity {
     EditText signUsername, signEmail,signPassword ;
     private FirebaseAuth mAuth;
     ProgressBar progressBar;
-    CircleImageView choose_ProfileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,6 @@ public class signup extends AppCompatActivity {
                 signUsername=findViewById(R.id.signUsername);
                 signEmail=findViewById(R.id.signEmail);
                 signPassword=findViewById(R.id.signPassword);
-                choose_ProfileImage=findViewById(R.id.choose_ProfileImage);
                 chatUserMessage=findViewById(R.id.chatUserMessage);
 
                 String username=signUsername.getText().toString();
@@ -122,4 +120,20 @@ public class signup extends AppCompatActivity {
         Intent intent=new Intent(signup.this, purpose.class);
         startActivity(intent);
     }
+
+    /* <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/choose_ProfileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="24dp"
+        android:src="@mipmap/avtar"
+        android:background="@drawable/image_corner"
+        app:layout_constraintBottom_toTopOf="@+id/signUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.129"
+        tools:ignore="MissingConstraints" />
+ */
 }

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.PersonalChat">
 
         <activity
-            android:name=".Splash"
+            android:name=".signup"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".purpose" />
         <activity android:name=".login" />
-        <activity android:name=".signup" />
+        <activity android:name=".Splash" />
         <activity android:name=".newChat" />
         <activity android:name=".dashboard" />
         <activity android:name=".mainChat"/>
