@@ -64,7 +64,7 @@ public class mainChat extends AppCompatActivity {
             int count=messageModels.size();
         database=FirebaseDatabase.getInstance();
 
-        database.getReference().child("Users").child(receiveId).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(senderId).child(receiveId).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
