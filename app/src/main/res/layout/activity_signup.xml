@@ -7,11 +7,23 @@
      android:background="@color/White"
     tools:context=".signup">
 
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/backButtonSignup"
+        android:layout_width="30dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_corner"
+        android:src="@drawable/backbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="177dp"
         android:layout_height="136dp"
         android:src="@drawable/appicon"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -127,7 +139,7 @@
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/Register"
+        android:id="@+id/ContinueToUploadImage"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="36dp"
@@ -151,7 +163,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Register"
+        app:layout_constraintTop_toBottomOf="@+id/ContinueToUploadImage"
         tools:ignore="MissingConstraints" />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goLoginButton"

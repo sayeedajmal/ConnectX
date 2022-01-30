@@ -3,6 +3,8 @@ package com.Strong.personalchat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,8 +25,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class signup extends AppCompatActivity {
 
-    AppCompatButton goLoginButton, Register;
+    AppCompatButton goLoginButton, ContinueToUploadImage;
     TextView chatUserMessage;
+    AppCompatImageButton backButtonSignup;
     EditText signUsername, signEmail,signPassword ;
     private FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -38,18 +41,19 @@ public class signup extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         progressBar=findViewById(R.id.progressBar);
         goLoginButton=findViewById(R.id.goLoginButton);
-        Register=findViewById(R.id.Register);
+        ContinueToUploadImage=findViewById(R.id.ContinueToUploadImage);
+        backButtonSignup=findViewById(R.id.backButtonSignup);
 
-        goLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    Intent intent = new Intent(signup.this, login.class);
-                    startActivity(intent);
-            }
+        backButtonSignup.setOnClickListener(view ->{
+            onBackPressed();
         });
-        Register.setOnClickListener(view -> {
-            progressBar.setVisibility(View.VISIBLE);
 
+        goLoginButton.setOnClickListener(view -> {
+                Intent intent = new Intent(signup.this, login.class);
+                startActivity(intent);
+        });
+        ContinueToUploadImage.setOnClickListener(view -> {
+            progressBar.setVisibility(View.VISIBLE);
 
             signUsername=findViewById(R.id.signUsername);
             signEmail=findViewById(R.id.signEmail);
@@ -96,9 +100,11 @@ public class signup extends AppCompatActivity {
                         FirebaseDatabase database=FirebaseDatabase.getInstance();
                         database.getReference().child("Users").child(id).setValue(storeData);
 
-                        Toast.makeText(signup.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(signup.this, "Upload Your Profile Pic!", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
-                        Intent intent = new Intent(signup.this, uploadProfile.class);
+                        Intent intent = new Intent(signup.this,uploadProfile.class);
+                        //Sending UerID to UploadProfile Class
+                        intent.putExtra("userId", id);
                         startActivity(intent);
                     }
                     else {
@@ -110,12 +116,5 @@ public class signup extends AppCompatActivity {
                 }
             });
         });
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        Intent intent=new Intent(signup.this, purpose.class);
-        startActivity(intent);
     }
 }

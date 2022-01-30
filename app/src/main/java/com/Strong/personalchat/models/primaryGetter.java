@@ -63,6 +63,10 @@ public class primaryGetter {
     public primaryGetter(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.password=password;
+    }
+
+    public primaryGetter(String chatUserImage){
+        this.chatUserImage=chatUserImage;
     }
 }

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalChat" >
         <activity
-            android:name=".Splash"
+            android:name=".uploadProfile"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +22,8 @@
 
         <activity android:name=".purpose" />
         <activity android:name=".login" />
+        <activity android:name=".Splash" />
         <activity android:name=".signup" />
-        <activity android:name=".uploadProfile" />
         <activity android:name=".verifyNumber" />
         <activity android:name=".dashboard" />
         <activity android:name=".newChat" />
