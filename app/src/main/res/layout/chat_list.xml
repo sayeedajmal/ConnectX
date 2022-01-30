@@ -29,12 +29,12 @@
         android:text="Username"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/chatUserMessage"
+        app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
         app:layout_constraintStart_toEndOf="@+id/chatUserImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/chatUserMessage"
+        android:id="@+id/chatLastMessage"
         android:layout_width="260dp"
         android:layout_height="18dp"
         android:layout_marginStart="20dp"
@@ -59,7 +59,7 @@
         android:gravity="center"
         android:textColor="@color/Red"
         android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/chatUserMessage"
+        app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ChatUsername"
         app:layout_constraintTop_toTopOf="parent"

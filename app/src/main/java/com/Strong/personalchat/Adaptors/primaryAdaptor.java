@@ -1,12 +1,12 @@
 package com.Strong.personalchat.Adaptors;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.Strong.personalchat.mainChat;
@@ -29,6 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHolder>{
 
     ArrayList<primaryGetter> chatUserList;
+    FirebaseDatabase database;
     Context context;
 
     public primaryAdaptor(ArrayList<primaryGetter> chatUserList, Context context) {
@@ -46,29 +47,27 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         primaryGetter users=chatUserList.get(position);
-
-        Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.chatUserImage);
-        holder.ChatUsername.setText(users.getUsername());
         String currentUse=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        //Last Message to Shown
         FirebaseDatabase.getInstance().getReference().child("Users").child(currentUse).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
                if (snapshot.hasChildren()){
                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                       holder.chatUserMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                       holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
                    }
                }
            }
 
            @Override
            public void onCancelled(@NonNull DatabaseError error) {
-
            }
        });
 
+            //Showing Chat Details
         Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.chatUserImage);
         holder.ChatUsername.setText(users.getUsername());
-        holder.chatUserMessage.setText(users.getLastMessage());
         holder.itemView.setOnClickListener(view -> {
             Intent intent=new Intent(context, mainChat.class);
             intent.putExtra("userId", users.getUserId());
@@ -83,16 +82,16 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
         return chatUserList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView chatUserImage;
-        TextView ChatUsername, chatUserMessage;
+        TextView ChatUsername, chatLastMessage, lastMessageTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             chatUserImage=itemView.findViewById(R.id.chatUserImage);
             ChatUsername=itemView.findViewById(R.id.ChatUsername);
-            chatUserMessage=itemView.findViewById(R.id.chatUserMessage);
+            chatLastMessage=itemView.findViewById(R.id.chatLastMessage);
+            lastMessageTime=itemView.findViewById(R.id.lastMessageTime);
         }
     }
-
 }

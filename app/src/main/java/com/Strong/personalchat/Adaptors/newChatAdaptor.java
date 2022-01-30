@@ -26,7 +26,6 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
         this.context = context;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,18 +36,16 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         newChatGetter users=newUserList.get(position);
-       String current=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            Picasso.get().load(users.getNewChatUserImage()).placeholder(R.mipmap.avtar).into(holder.newContactImage);
-            holder.newChatUsername.setText(users.getUsername());
-            holder.newChatLastSeen.setText(users.getLastSeen());
-            holder.itemView.setOnClickListener(view -> {
-                Intent intent = new Intent(context, mainChat.class);
-                intent.putExtra("userId", users.getUserId());
-                intent.putExtra("username", users.getUsername());
-                intent.putExtra("newChatUserImage", users.getNewChatUserImage());
-                context.startActivity(intent);
-            });
+        Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.newContactImage);
+        holder.newChatUsername.setText(users.getUsername());
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent=new Intent(context, mainChat.class);
+            intent.putExtra("userId", users.getUserId());
+            intent.putExtra("username", users.getUsername());
+            intent.putExtra("newChatUserImage", users.getChatUserImage());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -58,13 +55,12 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView newContactImage;
-        TextView newChatUsername, newChatLastSeen;
+        TextView newChatUsername;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             newContactImage=itemView.findViewById(R.id.newContactImage);
             newChatUsername=itemView.findViewById(R.id.newChatUsername);
-            newChatLastSeen=itemView.findViewById(R.id.newChatLastSeen);
         }
     }
 

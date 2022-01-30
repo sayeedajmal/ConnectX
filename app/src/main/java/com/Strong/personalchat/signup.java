@@ -15,13 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.Strong.personalchat.models.*;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class signup extends AppCompatActivity {
 
@@ -58,7 +55,7 @@ public class signup extends AppCompatActivity {
             signUsername=findViewById(R.id.signUsername);
             signEmail=findViewById(R.id.signEmail);
             signPassword=findViewById(R.id.signPassword);
-            chatUserMessage=findViewById(R.id.chatUserMessage);
+            chatUserMessage=findViewById(R.id.chatLastMessage);
 
             String username=signUsername.getText().toString();
             String email=signEmail.getText().toString();

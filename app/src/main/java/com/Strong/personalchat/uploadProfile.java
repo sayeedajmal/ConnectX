@@ -22,9 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -42,7 +40,7 @@ public class uploadProfile extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST=22;
     //Firebase Instance
     FirebaseStorage storage;
-    StorageReference storageReferance;
+    StorageReference storageReference;
     ProgressBar profileProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +59,6 @@ public class uploadProfile extends AppCompatActivity {
 
         uploadProfile.setOnClickListener(view -> {
             uploadImage();
-            Intent intent=new Intent(uploadProfile.this, verifyNumber.class);
-            startActivity(intent);
         });
     }
     private void SelectImage() {
@@ -92,29 +88,31 @@ public class uploadProfile extends AppCompatActivity {
             Toast.makeText(uploadProfile.this, "Uploading Profile Pic", Toast.LENGTH_SHORT).show();
             profileProgress.setVisibility(View.VISIBLE);
 
+            String CurrentID=getIntent().getStringExtra("userId");
             storage=FirebaseStorage.getInstance();
-            storageReferance=storage.getReference();
-            String fileUid=UUID.randomUUID().toString();
-            storageReferance=storageReferance.child("Images/"+filePath);
+            storageReference =storage.getReference();
+            storageReference = storageReference.child("ProfileImages/"+CurrentID);
 
             //Storing Image String to The Database
-            primaryGetter storageImage=new primaryGetter(fileUid);
             FirebaseDatabase database=FirebaseDatabase.getInstance();
-            String CurrentID=getIntent().getStringExtra("userId");
+            storageReference.putFile(filePath).addOnSuccessListener(taskSnapshot -> {
+                storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                    database.getReference().child("Users").child(CurrentID).child("chatUserImage").setValue(uri.toString());
+                });
 
-            database.getReference().child("Users").child(CurrentID).setValue(storageImage);
-            //Adding Listener on uploading  or failure of image
-            storageReferance.putFile(filePath).addOnSuccessListener(taskSnapshot -> {
                 profileProgress.setVisibility(View.GONE);
+
                 Toast.makeText(uploadProfile.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                         profileProgress.setVisibility(View.GONE);
-                    Toast.makeText(uploadProfile.this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+
+                Intent intent=new Intent(uploadProfile.this, verifyNumber.class);
+                startActivity(intent);
+            }).addOnFailureListener(e -> {
+                     profileProgress.setVisibility(View.GONE);
+                Toast.makeText(uploadProfile.this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }
+        else
+            Toast.makeText(uploadProfile.this, "Please Select Profile Pic..", Toast.LENGTH_SHORT).show();
     }
 
 }

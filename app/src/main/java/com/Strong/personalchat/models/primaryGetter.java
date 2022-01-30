@@ -65,8 +65,4 @@ public class primaryGetter {
         this.email = email;
         this.password=password;
     }
-
-    public primaryGetter(String chatUserImage){
-        this.chatUserImage=chatUserImage;
-    }
 }
