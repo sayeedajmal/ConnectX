@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +53,7 @@ public class messageAdaptor extends  RecyclerView.Adapter{
             ((sendViewHolder)holder).messageSenTime.setText(ShowDateTime(timeD));
         }
         else{
+           // ((receiveViewHolder)holder).senderChatIcon.set
             ((receiveViewHolder)holder).messageRec.setText(message.getMessage());
             Date timeD = new Date(message.getTimeStamp());
             ((receiveViewHolder)holder).messageRecTime.setText(ShowDateTime(timeD));

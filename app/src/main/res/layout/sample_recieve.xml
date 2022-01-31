@@ -14,7 +14,7 @@
         android:layout_height="20dp"
         android:layout_marginStart="4dp"
         android:contentDescription="User Icon"
-        android:src="@mipmap/avtar"
+        android:src="@drawable/defaultuser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

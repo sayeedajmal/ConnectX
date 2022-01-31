@@ -7,7 +7,10 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.TextView;
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.models.message;
@@ -31,7 +34,8 @@ public class mainChat extends AppCompatActivity {
     RecyclerView mainChatRecyclerView;
     AppCompatEditText TypeMessage;
     FirebaseDatabase database;
-    CircleImageView mainChatImage, senderChatIcon;
+    private Uri filePath;
+    CircleImageView mainChatImage;
     AppCompatImageButton sendButton, mainchatbackButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,6 @@ public class mainChat extends AppCompatActivity {
         mainChatRecyclerView=findViewById(R.id.mainChatRecyclerView);
         TypeMessage=findViewById(R.id.TypeMessage);
         sendButton=findViewById(R.id.sendButton);
-        senderChatIcon=findViewById(R.id.senderChatIcon);
         mainChatImage=findViewById(R.id.mainChatImage);
         mainchatbackButton=findViewById(R.id.mainchatbackButton);
 
@@ -54,9 +57,11 @@ public class mainChat extends AppCompatActivity {
         String receiveId=getIntent().getStringExtra("userId");
         String receiveName=getIntent().getStringExtra("username");
         String uri=getIntent().getStringExtra("newChatUserImage");
-
         mainChatUsername.setText(receiveName);
         Picasso.get().load(uri).into(mainChatImage);
+
+        //senderChatIcon
+
         final ArrayList<message> messageModels=new ArrayList<>();
 
         final messageAdaptor messageAdaptor=new messageAdaptor(messageModels, this);
