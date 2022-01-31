@@ -29,6 +29,7 @@ public class primary extends Fragment {
 
     View view;
     FirebaseDatabase database;
+    DatabaseReference reference;
     RecyclerView chatListView;
     ArrayList<primaryGetter> arrayList=new ArrayList<>();
     @Override
@@ -48,7 +49,7 @@ public class primary extends Fragment {
         // Inflate the layout for this fragment
       view=inflater.inflate(R.layout.fragment_primary, container, false);
 
-      primaryAdaptor adaptor=new primaryAdaptor(arrayList, getContext());
+      primaryAdaptor adaptor=new primaryAdaptor(arrayList, getContext(), false);
       chatListView=view.findViewById(R.id.chatListView);
       chatListView.setAdapter(adaptor);
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());

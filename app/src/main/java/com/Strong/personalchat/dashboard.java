@@ -8,10 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 
 public class dashboard extends AppCompatActivity {
@@ -19,6 +22,7 @@ public class dashboard extends AppCompatActivity {
     ViewPager dashboardPager;
     ViewPagerSection viewPagerAdaptor;
     FirebaseAuth firebaseAuth;
+    DatabaseReference reference;
     AppCompatImageButton LogoutButton;
     AppCompatImageButton floatNewChat;
 
@@ -63,4 +67,24 @@ public class dashboard extends AppCompatActivity {
         finishAffinity();
     }
 
+    private void status(String status){
+        firebaseAuth=FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+        reference= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseUser.getUid());
+        HashMap<String, Object> hashmap=new HashMap<>();
+        hashmap.put("status", status);
+        reference.updateChildren(hashmap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+     status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
+    }
 }

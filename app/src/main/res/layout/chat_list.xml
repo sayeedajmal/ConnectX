@@ -8,21 +8,48 @@
     android:background="@drawable/chatview_corner"
     tools:ignore="MissingConstraints">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/chatUserImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/defaultuser"
-            android:layout_marginStart="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/Active_status"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/active_status"
+        app:civ_border_width="10dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/chatUserImage"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/deActive_status"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        android:background="@drawable/deactive_status"
+        app:civ_border_width="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/chatUserImage"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chatUserImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/defaultuser"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/ChatUsername"
         android:layout_width="187dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/equinox"
         android:padding="3dp"

@@ -7,6 +7,15 @@ public class primaryGetter {
     String lastMessage;
     String chatUserImage;
     String userId;
+    String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     primaryGetter(){
 
@@ -60,9 +69,10 @@ public class primaryGetter {
         this.userId = userId;
     }
 
-    public primaryGetter(String username, String email, String password) {
+    public primaryGetter(String username, String email, String password, String status) {
         this.username = username;
         this.email = email;
         this.password=password;
+        this.status=status;
     }
 }

@@ -91,7 +91,7 @@ public class signup extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        primaryGetter storeData=new primaryGetter(signUsername.getText().toString(), signEmail.getText().toString(), signPassword.getText().toString());
+                        primaryGetter storeData=new primaryGetter(signUsername.getText().toString(), signEmail.getText().toString(), signPassword.getText().toString(),"offline");
                         String id=task.getResult().getUser().getUid();
                         // Storing Data to Database..
                         FirebaseDatabase database=FirebaseDatabase.getInstance();

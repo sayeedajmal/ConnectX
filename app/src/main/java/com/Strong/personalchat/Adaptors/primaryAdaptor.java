@@ -33,10 +33,12 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
 
     ArrayList<primaryGetter> chatUserList;
     Context context;
+    private boolean isUser;
 
-    public primaryAdaptor(ArrayList<primaryGetter> chatUserList, Context context) {
+    public primaryAdaptor(ArrayList<primaryGetter> chatUserList, Context context, boolean isUser) {
         this.chatUserList = chatUserList;
         this.context = context;
+        this.isUser=isUser;
     }
 
     @NonNull
@@ -81,6 +83,20 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
             intent.putExtra("newChatUserImage",  Uri.parse(users.getChatUserImage()).toString());
             context.startActivity(intent);
         });
+
+        //SHOWING STATUS EITHER USER IS ONLINE OR OFFLINE
+        if (isUser){
+            if (users.getStatus().equals("online")){
+                holder.Active_status.setVisibility(View.VISIBLE);
+                holder.deActive_status.setVisibility(View.GONE);
+            }else{
+                holder.deActive_status.setVisibility(View.VISIBLE);
+                holder.Active_status.setVisibility(View.GONE);
+            }
+        }else{
+            holder.Active_status.setVisibility(View.GONE);
+            holder.deActive_status.setVisibility(View.GONE);
+        }
     }
 
     private String ShowDateTime(Date date) {
@@ -93,11 +109,13 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView chatUserImage;
+        CircleImageView chatUserImage, Active_status, deActive_status;
         TextView ChatUsername, chatLastMessage, lastMessageTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            Active_status=itemView.findViewById(R.id.Active_status);
+            deActive_status=itemView.findViewById(R.id.deActive_status);
             chatUserImage=itemView.findViewById(R.id.chatUserImage);
             ChatUsername=itemView.findViewById(R.id.ChatUsername);
             chatLastMessage=itemView.findViewById(R.id.chatLastMessage);
