@@ -1,6 +1,7 @@
 package com.Strong.personalchat.Adaptors;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +38,13 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         newChatGetter users=newUserList.get(position);
 
-        Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.newContactImage);
+        Picasso.get().load(users.getChatUserImage()).into(holder.newContactImage);
         holder.newChatUsername.setText(users.getUsername());
         holder.itemView.setOnClickListener(view -> {
             Intent intent=new Intent(context, mainChat.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
-            intent.putExtra("newChatUserImage", users.getChatUserImage());
+            intent.putExtra("newChatUserImage", Uri.parse(users.getChatUserImage()));
             context.startActivity(intent);
         });
     }

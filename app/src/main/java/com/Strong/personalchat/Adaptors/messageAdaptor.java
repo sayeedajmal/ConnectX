@@ -1,6 +1,5 @@
 package com.Strong.personalchat.Adaptors;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class messageAdaptor extends  RecyclerView.Adapter{
     ArrayList<message> messageModels;
     Context context;
 
     int SENDER_VIEW_TYPE=1;
-    int RECIEVE_VIEW_TYPE=2;
-
+    int RECEIVE_VIEW_TYPE =2;
     public messageAdaptor(ArrayList<message> messageModels, Context context) {
         this.messageModels = messageModels;
         this.context = context;
@@ -37,7 +37,7 @@ public class messageAdaptor extends  RecyclerView.Adapter{
             return new sendViewHolder(view);
         }else{
             view = LayoutInflater.from(context).inflate(R.layout.sample_recieve, parent, false);
-            return new recieveViewHolder(view);
+            return new receiveViewHolder(view);
         }
     }
 
@@ -47,14 +47,13 @@ public class messageAdaptor extends  RecyclerView.Adapter{
 
         if (holder.getClass()==sendViewHolder.class){
             ((sendViewHolder)holder).messageSen.setText(message.getMessage());
-
             Date timeD = new Date(message.getTimeStamp());
             ((sendViewHolder)holder).messageSenTime.setText(ShowDateTime(timeD));
         }
         else{
-            ((recieveViewHolder)holder).messageRec.setText(message.getMessage());
+            ((receiveViewHolder)holder).messageRec.setText(message.getMessage());
             Date timeD = new Date(message.getTimeStamp());
-            ((recieveViewHolder)holder).messageRecTime.setText(ShowDateTime(timeD));
+            ((receiveViewHolder)holder).messageRecTime.setText(ShowDateTime(timeD));
         }
     }
 
@@ -67,7 +66,7 @@ public class messageAdaptor extends  RecyclerView.Adapter{
             return SENDER_VIEW_TYPE;
         }
         else{
-            return RECIEVE_VIEW_TYPE;
+            return RECEIVE_VIEW_TYPE;
         }
     }
 
@@ -76,11 +75,12 @@ public class messageAdaptor extends  RecyclerView.Adapter{
         return messageModels.size();
     }
 
-    public static class recieveViewHolder extends RecyclerView.ViewHolder{
+    public static class receiveViewHolder extends RecyclerView.ViewHolder{
         TextView messageRec, messageRecTime;
-        public recieveViewHolder(@NonNull View itemView) {
+        CircleImageView senderChatIcon;
+        public receiveViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            senderChatIcon=itemView.findViewById(R.id.senderChatIcon);
             messageRec=itemView.findViewById(R.id.messageRec);
             messageRecTime=itemView.findViewById(R.id.messageRecTime);
         }
@@ -90,7 +90,6 @@ public class messageAdaptor extends  RecyclerView.Adapter{
         TextView messageSen, messageSenTime;
         public sendViewHolder(@NonNull View itemView) {
             super(itemView);
-
             messageSen=itemView.findViewById(R.id.messageSen);
             messageSenTime=itemView.findViewById(R.id.messageSenTime);
         }

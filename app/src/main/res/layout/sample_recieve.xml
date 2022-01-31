@@ -9,7 +9,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/mainChatImage"
+        android:id="@+id/senderChatIcon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="4dp"
@@ -29,7 +29,7 @@
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toEndOf="@+id/mainChatImage"
+        app:layout_constraintStart_toEndOf="@+id/senderChatIcon"
         tools:ignore="MissingConstraints">
         <LinearLayout
             android:id="@+id/layout_gchat_container_other"

@@ -4,30 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Message;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.models.message;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.EventListener;
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class mainChat extends AppCompatActivity {
 
@@ -36,6 +31,7 @@ public class mainChat extends AppCompatActivity {
     RecyclerView mainChatRecyclerView;
     AppCompatEditText TypeMessage;
     FirebaseDatabase database;
+    CircleImageView mainChatImage, senderChatIcon;
     AppCompatImageButton sendButton, mainchatbackButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +42,28 @@ public class mainChat extends AppCompatActivity {
         mainChatRecyclerView=findViewById(R.id.mainChatRecyclerView);
         TypeMessage=findViewById(R.id.TypeMessage);
         sendButton=findViewById(R.id.sendButton);
+        senderChatIcon=findViewById(R.id.senderChatIcon);
+        mainChatImage=findViewById(R.id.mainChatImage);
         mainchatbackButton=findViewById(R.id.mainchatbackButton);
 
         fAuth=FirebaseAuth.getInstance();
 
         final String senderId=fAuth.getUid();
 
+        //RECEIVING THE DATA OF USER FROM NEW CHAT ADAPTOR
         String receiveId=getIntent().getStringExtra("userId");
         String receiveName=getIntent().getStringExtra("username");
-
+        String uri=getIntent().getStringExtra("newChatUserImage");
 
         mainChatUsername.setText(receiveName);
-
+        Picasso.get().load(uri).into(mainChatImage);
         final ArrayList<message> messageModels=new ArrayList<>();
 
         final messageAdaptor messageAdaptor=new messageAdaptor(messageModels, this);
             int count=messageModels.size();
         database=FirebaseDatabase.getInstance();
 
+        //Showing Messages
         database.getReference().child("Users").child(senderId).child(receiveId).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -93,7 +93,6 @@ public class mainChat extends AppCompatActivity {
         //Sending the message and storing in the database
         sendButton.setOnClickListener(view -> {
             database=FirebaseDatabase.getInstance();
-
             String message= Objects.requireNonNull(TypeMessage.getText()).toString();
             if (!message.equals("")){
                 final message model=new message(senderId, message);
@@ -112,8 +111,7 @@ public class mainChat extends AppCompatActivity {
             }
         });
 
-        mainchatbackButton.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        mainchatbackButton.setOnClickListener(view -> onBackPressed());
+
     }
 }

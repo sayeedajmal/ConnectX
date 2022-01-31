@@ -1,9 +1,9 @@
 package com.Strong.personalchat.Adaptors;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +22,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHolder>{
 
     ArrayList<primaryGetter> chatUserList;
-    FirebaseDatabase database;
     Context context;
 
     public primaryAdaptor(ArrayList<primaryGetter> chatUserList, Context context) {
@@ -56,6 +58,9 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
                if (snapshot.hasChildren()){
                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                        holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                       Long fetchingTime=dataSnapshot.child("timeStamp").getValue(Long.class);
+                       Date time=new Date(fetchingTime);
+                       holder.lastMessageTime.setText(ShowDateTime(time));
                    }
                }
            }
@@ -68,13 +73,18 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
             //Showing Chat Details
         Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.chatUserImage);
         holder.ChatUsername.setText(users.getUsername());
+
         holder.itemView.setOnClickListener(view -> {
             Intent intent=new Intent(context, mainChat.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
-            intent.putExtra("newChatUserImage", users.getChatUserImage());
+            intent.putExtra("newChatUserImage",  Uri.parse(users.getChatUserImage()).toString());
             context.startActivity(intent);
         });
+    }
+
+    private String ShowDateTime(Date date) {
+        return new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date);
     }
 
     @Override
