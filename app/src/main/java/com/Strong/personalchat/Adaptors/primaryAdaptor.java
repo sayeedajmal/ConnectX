@@ -85,17 +85,12 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
         });
 
         //SHOWING STATUS EITHER USER IS ONLINE OR OFFLINE
-        if (isUser){
+        if (isUser=true){
             if (users.getStatus().equals("online")){
                 holder.Active_status.setVisibility(View.VISIBLE);
-                holder.deActive_status.setVisibility(View.GONE);
             }else{
                 holder.deActive_status.setVisibility(View.VISIBLE);
-                holder.Active_status.setVisibility(View.GONE);
             }
-        }else{
-            holder.Active_status.setVisibility(View.GONE);
-            holder.deActive_status.setVisibility(View.GONE);
         }
     }
 
