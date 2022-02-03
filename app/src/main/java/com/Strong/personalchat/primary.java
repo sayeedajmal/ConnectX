@@ -29,7 +29,6 @@ public class primary extends Fragment {
 
     View view;
     FirebaseDatabase database;
-    DatabaseReference reference;
     RecyclerView chatListView;
     ArrayList<primaryGetter> arrayList=new ArrayList<>();
     @Override
@@ -46,10 +45,9 @@ public class primary extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
       view=inflater.inflate(R.layout.fragment_primary, container, false);
 
-      primaryAdaptor adaptor=new primaryAdaptor(arrayList, getContext(), false);
+      primaryAdaptor adaptor=new primaryAdaptor(arrayList, getContext());
       chatListView=view.findViewById(R.id.chatListView);
       chatListView.setAdapter(adaptor);
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
@@ -60,10 +58,10 @@ public class primary extends Fragment {
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
           @SuppressLint("NotifyDataSetChanged")
           @Override
-          public void onDataChange(@NonNull DataSnapshot snapshot) {
+          public void onDataChange(@NonNull DataSnapshot Snapshot) {
                     arrayList.clear();
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                        primaryGetter users=dataSnapshot.getValue(primaryGetter.class);
+                    for (DataSnapshot dataSnapshot: Snapshot.getChildren()) {
+                        primaryGetter users = dataSnapshot.getValue(primaryGetter.class);
                         if (!dataSnapshot.getKey().equals(currentId)) {
                             users.setUserId(dataSnapshot.getKey());
                             arrayList.add(users);

@@ -1,6 +1,5 @@
 package com.Strong.personalchat;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.viewpager.widget.ViewPager;
 
@@ -10,19 +9,14 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
+import java.util.Objects;
 
-
-public class dashboard extends AppCompatActivity {
+public class dashboard extends BaseActivity {
     TabLayout tabLayoutDashboard;
     ViewPager dashboardPager;
     ViewPagerSection viewPagerAdaptor;
     FirebaseAuth firebaseAuth;
-    DatabaseReference reference;
     AppCompatImageButton LogoutButton;
     AppCompatImageButton floatNewChat;
 
@@ -45,9 +39,9 @@ public class dashboard extends AppCompatActivity {
         viewPagerAdaptor.addFragment(request, "Requests");
         dashboardPager.setAdapter(viewPagerAdaptor);
         tabLayoutDashboard.setupWithViewPager(dashboardPager);
-        tabLayoutDashboard.getTabAt(0).setIcon(R.drawable.primar_icon);
-        tabLayoutDashboard.getTabAt(1).setIcon(R.drawable.call_icon);
-        tabLayoutDashboard.getTabAt(2).setIcon(R.drawable.request_icon);
+        Objects.requireNonNull(tabLayoutDashboard.getTabAt(0)).setIcon(R.drawable.primar_icon);
+        Objects.requireNonNull(tabLayoutDashboard.getTabAt(1)).setIcon(R.drawable.call_icon);
+        Objects.requireNonNull(tabLayoutDashboard.getTabAt(2)).setIcon(R.drawable.request_icon);
 
         LogoutButton.setOnClickListener(view -> {
             firebaseAuth=FirebaseAuth.getInstance();
@@ -65,26 +59,5 @@ public class dashboard extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
-    }
-
-    private void status(String status){
-        firebaseAuth=FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseUser.getUid());
-        HashMap<String, Object> hashmap=new HashMap<>();
-        hashmap.put("status", status);
-        reference.updateChildren(hashmap);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-     status("online");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        status("offline");
     }
 }

@@ -4,17 +4,12 @@ public class primaryGetter {
     String username;
     String email;
     String password;
-    String lastMessage;
     String chatUserImage;
     String userId;
     String status;
 
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     primaryGetter(){
@@ -29,36 +24,8 @@ public class primaryGetter {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getLastMessage() {
-        return lastMessage;
-    }
-
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
-    }
-
     public String getChatUserImage() {
         return chatUserImage;
-    }
-
-    public void setChatUserImage(String chatUserImage) {
-        this.chatUserImage = chatUserImage;
     }
 
     public String getUserId() {

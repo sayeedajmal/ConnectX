@@ -2,7 +2,6 @@ package com.Strong.personalchat;
 
 import static android.content.Intent.*;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -16,16 +15,10 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.Strong.personalchat.models.primaryGetter;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.IOException;
-import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -115,4 +108,8 @@ public class uploadProfile extends AppCompatActivity {
             Toast.makeText(uploadProfile.this, "Please Select Profile Pic..", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "You cant Go BacK ", Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,5 +1,6 @@
 package com.Strong.personalchat.Adaptors;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -30,11 +31,12 @@ public class callsAdaptor extends ArrayAdapter<callsGetter> {
         this.context=context;
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater=LayoutInflater.from(context);
-        View view=layoutInflater.inflate(R.layout.call_list, null);
+        @SuppressLint("ViewHolder") View view=layoutInflater.inflate(R.layout.call_list, null);
 
         TextView callUsername=view.findViewById(R.id.callUsername);
         TextView callInform=view.findViewById(R.id.callInform);

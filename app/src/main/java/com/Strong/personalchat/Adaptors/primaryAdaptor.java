@@ -33,12 +33,9 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
 
     ArrayList<primaryGetter> chatUserList;
     Context context;
-    private boolean isUser;
-
-    public primaryAdaptor(ArrayList<primaryGetter> chatUserList, Context context, boolean isUser) {
+    public primaryAdaptor(ArrayList<primaryGetter> chatUserList, Context context) {
         this.chatUserList = chatUserList;
         this.context = context;
-        this.isUser=isUser;
     }
 
     @NonNull
@@ -72,10 +69,24 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
            }
        });
 
-            //Showing Chat Details
-        Picasso.get().load(users.getChatUserImage()).placeholder(R.mipmap.avtar).into(holder.chatUserImage);
-        holder.ChatUsername.setText(users.getUsername());
+        //Last Message Time to Shown
+      /*  FirebaseDatabase.getInstance().getReference().child("Users").child(currentUse).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()){
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
 
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        }); */
+
+        //Showing Chat Details
+        Picasso.get().load(users.getChatUserImage()).into(holder.chatUserImage);
+        holder.ChatUsername.setText(users.getUsername());
         holder.itemView.setOnClickListener(view -> {
             Intent intent=new Intent(context, mainChat.class);
             intent.putExtra("userId", users.getUserId());
@@ -85,13 +96,11 @@ public class primaryAdaptor extends RecyclerView.Adapter<primaryAdaptor.ViewHold
         });
 
         //SHOWING STATUS EITHER USER IS ONLINE OR OFFLINE
-        if (isUser=true){
-            if (users.getStatus().equals("online")){
+            if (users.getStatus().equals("online")) {
                 holder.Active_status.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 holder.deActive_status.setVisibility(View.VISIBLE);
             }
-        }
     }
 
     private String ShowDateTime(Date date) {

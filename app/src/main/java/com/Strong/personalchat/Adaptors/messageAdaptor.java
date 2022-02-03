@@ -1,19 +1,28 @@
 package com.Strong.personalchat.Adaptors;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
 
@@ -21,6 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class messageAdaptor extends  RecyclerView.Adapter{
     ArrayList<message> messageModels;
+    FirebaseDatabase database;
     Context context;
 
     int SENDER_VIEW_TYPE=1;
@@ -53,10 +63,29 @@ public class messageAdaptor extends  RecyclerView.Adapter{
             ((sendViewHolder)holder).messageSenTime.setText(ShowDateTime(timeD));
         }
         else{
-           // ((receiveViewHolder)holder).senderChatIcon.set
             ((receiveViewHolder)holder).messageRec.setText(message.getMessage());
             Date timeD = new Date(message.getTimeStamp());
             ((receiveViewHolder)holder).messageRecTime.setText(ShowDateTime(timeD));
+
+            //Setting Sender Image to the chat's left Side
+            /*database=FirebaseDatabase.getInstance();
+            String senderId=message.getuId();
+            database.getReference().child("Users").child(senderId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                            Bitmap receiverImage=dataSnapshot.child("chatUserImage").getValue(Bitmap.class);
+                           // ((receiveViewHolder)holder).receiverImage.setImageBitmap(receiverImage);
+                            Toast.makeText(context, "this is User Id: "+message.getuId() , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "this is image: "+receiverImage, Toast.LENGTH_SHORT).show();
+                        }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            }); */
         }
     }
 
@@ -80,10 +109,10 @@ public class messageAdaptor extends  RecyclerView.Adapter{
 
     public static class receiveViewHolder extends RecyclerView.ViewHolder{
         TextView messageRec, messageRecTime;
-        CircleImageView senderChatIcon;
+        CircleImageView receiverImage;
         public receiveViewHolder(@NonNull View itemView) {
             super(itemView);
-            senderChatIcon=itemView.findViewById(R.id.senderChatIcon);
+            receiverImage=itemView.findViewById(R.id.senderChatIcon);
             messageRec=itemView.findViewById(R.id.messageRec);
             messageRecTime=itemView.findViewById(R.id.messageRecTime);
         }

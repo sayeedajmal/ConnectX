@@ -27,14 +27,13 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class mainChat extends AppCompatActivity {
+public class mainChat extends BaseActivity {
 
     TextView mainChatUsername;
     FirebaseAuth fAuth;
     RecyclerView mainChatRecyclerView;
     AppCompatEditText TypeMessage;
     FirebaseDatabase database;
-    private Uri filePath;
     CircleImageView mainChatImage;
     AppCompatImageButton sendButton, mainchatbackButton;
     @Override

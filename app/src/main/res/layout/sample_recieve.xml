@@ -9,7 +9,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/senderChatIcon"
+        android:id="@+id/receiverImage"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="4dp"
