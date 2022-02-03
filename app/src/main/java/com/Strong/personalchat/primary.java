@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class primary extends Fragment {
 
@@ -54,7 +55,7 @@ public class primary extends Fragment {
       chatListView.setLayoutManager(linearLayoutManager);
       database=FirebaseDatabase.getInstance();
 
-      String currentId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+      String currentId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
           @SuppressLint("NotifyDataSetChanged")
           @Override
@@ -62,7 +63,8 @@ public class primary extends Fragment {
                     arrayList.clear();
                     for (DataSnapshot dataSnapshot: Snapshot.getChildren()) {
                         primaryGetter users = dataSnapshot.getValue(primaryGetter.class);
-                        if (!dataSnapshot.getKey().equals(currentId)) {
+                        if (!Objects.equals(dataSnapshot.getKey(), currentId)) {
+                            assert users != null;
                             users.setUserId(dataSnapshot.getKey());
                             arrayList.add(users);
                         }

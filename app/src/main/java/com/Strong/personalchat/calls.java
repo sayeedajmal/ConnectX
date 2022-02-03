@@ -31,8 +31,8 @@ public class calls extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
        List<callsGetter> callList = new ArrayList<>();
-        callList.add(new callsGetter("Sayeed Ajmal", "Missed","https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/IMG_20211113_163758_281.webp?alt=media&token=cea3f45d-5ae2-4e2f-9ee5-6b8ef8e48005"));
-        callList.add(new callsGetter("Shoaib Akhtar ", "OutGoing","https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/20211005_122253.jpg?alt=media&token=7c6ff5e5-bd40-457b-a21d-08eefc0a3429"));
+        //callList.add(new callsGetter("Sayeed Ajmal", "Missed","https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/IMG_20211113_163758_281.webp?alt=media&token=cea3f45d-5ae2-4e2f-9ee5-6b8ef8e48005"));
+        //callList.add(new callsGetter("Shoaib Akhtar ", "OutGoing","https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/20211005_122253.jpg?alt=media&token=7c6ff5e5-bd40-457b-a21d-08eefc0a3429"));
 
         ListView chatListView = view.findViewById(R.id.callListView);
         callsAdaptor callsAdaptor = new callsAdaptor(getActivity(), callList);

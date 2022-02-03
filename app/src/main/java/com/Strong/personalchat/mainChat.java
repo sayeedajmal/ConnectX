@@ -1,16 +1,12 @@
 package com.Strong.personalchat;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.TextView;
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.models.message;
@@ -35,7 +31,7 @@ public class mainChat extends BaseActivity {
     AppCompatEditText TypeMessage;
     FirebaseDatabase database;
     CircleImageView mainChatImage;
-    AppCompatImageButton sendButton, mainchatbackButton;
+    AppCompatImageButton sendButton, mainChatBackButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +42,7 @@ public class mainChat extends BaseActivity {
         TypeMessage=findViewById(R.id.TypeMessage);
         sendButton=findViewById(R.id.sendButton);
         mainChatImage=findViewById(R.id.mainChatImage);
-        mainchatbackButton=findViewById(R.id.mainchatbackButton);
+        mainChatBackButton =findViewById(R.id.mainchatbackButton);
 
         fAuth=FirebaseAuth.getInstance();
 
@@ -59,8 +55,6 @@ public class mainChat extends BaseActivity {
         mainChatUsername.setText(receiveName);
         Picasso.get().load(uri).into(mainChatImage);
 
-        //senderChatIcon
-
         final ArrayList<message> messageModels=new ArrayList<>();
 
         final messageAdaptor messageAdaptor=new messageAdaptor(messageModels, this);
@@ -68,6 +62,7 @@ public class mainChat extends BaseActivity {
         database=FirebaseDatabase.getInstance();
 
         //Showing Messages
+        assert senderId != null;
         database.getReference().child("Users").child(senderId).child(receiveId).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -115,7 +110,7 @@ public class mainChat extends BaseActivity {
             }
         });
 
-        mainchatbackButton.setOnClickListener(view -> onBackPressed());
+        mainChatBackButton.setOnClickListener(view -> onBackPressed());
 
     }
 }

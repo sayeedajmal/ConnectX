@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.Strong.personalchat.models.*;
 
+import java.util.Objects;
+
 public class signup extends AppCompatActivity {
 
     AppCompatButton goLoginButton, ContinueToUploadImage;
@@ -49,6 +51,7 @@ public class signup extends AppCompatActivity {
                 Intent intent = new Intent(signup.this, login.class);
                 startActivity(intent);
         });
+
         ContinueToUploadImage.setOnClickListener(view -> {
             progressBar.setVisibility(View.VISIBLE);
 
@@ -86,30 +89,28 @@ public class signup extends AppCompatActivity {
                 return;
             }
 
+            String status="offline";
             // create new user or register new user
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        primaryGetter storeData=new primaryGetter(signUsername.getText().toString(), signEmail.getText().toString(), signPassword.getText().toString(),"offline");
-                        String id=task.getResult().getUser().getUid();
-                        // Storing Data to Database..
-                        FirebaseDatabase database=FirebaseDatabase.getInstance();
-                        database.getReference().child("Users").child(id).setValue(storeData);
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    primaryGetter storeData=new primaryGetter(signUsername.getText().toString(), signEmail.getText().toString(), signPassword.getText().toString(),status);
+                    String id= Objects.requireNonNull(task.getResult().getUser()).getUid();
+                    // Storing Data to Database..
+                    FirebaseDatabase database=FirebaseDatabase.getInstance();
+                    database.getReference().child("Users").child(id).setValue(storeData);
 
-                        Toast.makeText(signup.this, "Upload Your Profile Pic!", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                        Intent intent = new Intent(signup.this,uploadProfile.class);
-                        //Sending UerID to UploadProfile Class
-                        intent.putExtra("userId", id);
-                        startActivity(intent);
-                    }
-                    else {
-                        // Registration failed
-                        Toast.makeText(signup.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        // hide the progress bar
-                        progressBar.setVisibility(View.GONE);
-                    }
+                    Toast.makeText(signup.this, "Upload Your Profile Pic!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    Intent intent = new Intent(signup.this,uploadProfile.class);
+                    //Sending UerID to UploadProfile Class
+                    intent.putExtra("userId", id);
+                    startActivity(intent);
+                }
+                else {
+                    // Registration failed
+                    Toast.makeText(signup.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    // hide the progress bar
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         });

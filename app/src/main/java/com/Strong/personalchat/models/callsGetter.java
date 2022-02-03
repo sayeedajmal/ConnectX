@@ -9,24 +9,12 @@ public class callsGetter {
         return callUsername;
     }
 
-    public void setCallUsername(String callUsername) {
-        this.callUsername = callUsername;
-    }
-
     public String getCallInform() {
         return callInform;
     }
 
-    public void setCallInform(String callInform) {
-        this.callInform = callInform;
-    }
-
     public String getCallUserImage() {
         return callUserImage;
-    }
-
-    public void setCallUserImage(String callUserImage) {
-        this.callUserImage = callUserImage;
     }
 
     public callsGetter(String callUsername, String callInform, String callUserImage) {

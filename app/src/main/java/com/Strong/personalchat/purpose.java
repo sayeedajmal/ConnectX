@@ -18,13 +18,10 @@ public class purpose extends AppCompatActivity {
         goLogin=findViewById(R.id.goLogin);
         goSignup=findViewById(R.id.goSignup);
 
-        goLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(purpose.this, login.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            }
+        goLogin.setOnClickListener(view -> {
+            Intent intent=new Intent(purpose.this, login.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         goSignup.setOnClickListener(new View.OnClickListener() {

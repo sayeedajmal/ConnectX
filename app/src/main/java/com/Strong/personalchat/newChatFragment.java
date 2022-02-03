@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class newChatFragment extends Fragment {
 
@@ -39,7 +40,7 @@ public class newChatFragment extends Fragment {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             newContactRecyclerView.setLayoutManager(linearLayoutManager);
             database = FirebaseDatabase.getInstance();
-            String currentUser= FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String currentUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
                 @SuppressLint("NotifyDataSetChanged")
                 @Override
@@ -47,7 +48,8 @@ public class newChatFragment extends Fragment {
                     arrayList.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         newChatGetter users = dataSnapshot.getValue(newChatGetter.class);
-                        if (!dataSnapshot.getKey().equals(currentUser)) {
+                        if (!Objects.equals(dataSnapshot.getKey(), currentUser)) {
+                            assert users != null;
                             users.setUserId(dataSnapshot.getKey());
                             arrayList.add(users);
                         }

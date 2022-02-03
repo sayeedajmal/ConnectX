@@ -15,17 +15,14 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    auth=FirebaseAuth.getInstance();
-                    if (auth.getCurrentUser()!=null){
-                        startActivity(new Intent(Splash.this,dashboard.class));
-                    }else{
-                        startActivity(new Intent(Splash.this, purpose.class));
-                    }
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            new Handler().postDelayed(() -> {
+                auth=FirebaseAuth.getInstance();
+                if (auth.getCurrentUser()!=null){
+                    startActivity(new Intent(Splash.this,dashboard.class));
+                }else{
+                    startActivity(new Intent(Splash.this, purpose.class));
                 }
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }, 180);
     }
 }
