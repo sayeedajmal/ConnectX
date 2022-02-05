@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/Wheat"
+    android:theme="@style/Theme.PersonalChat"
     android:animateLayoutChanges="true"
     android:layout_height="match_parent"
     tools:context=".mainChat">
@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
-        android:background="@color/White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -52,7 +51,6 @@
             android:maxWidth="175dp"
             android:maxHeight="25dp"
             android:text="Username"
-            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
@@ -64,7 +62,7 @@
             android:layout_marginTop="13dp"
             android:layout_marginEnd="30dp"
             android:layout_toStartOf="@+id/voiceCallButton"
-            android:background="@color/White"
+            android:background="#0000ffff"
             android:src="@drawable/video_call"
             tools:ignore="MissingConstraints" />
 
@@ -75,7 +73,7 @@
             android:layout_marginTop="13dp"
             android:layout_marginEnd="30dp"
             android:layout_toStartOf="@+id/optionButton"
-            android:background="@color/White"
+            android:background="#0000ffff"
             android:padding="0dp"
             android:src="@drawable/call_icon"
             tools:ignore="MissingConstraints"
@@ -88,7 +86,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="10dp"
-            android:background="@color/White"
+            android:background="#0000ffff"
             android:padding="0dp"
             android:src="@drawable/option"
             app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +125,6 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/sendButton"
             android:layout_width="match_parent"
-            android:tint="@color/Black"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/sendbutton" />
     </FrameLayout>

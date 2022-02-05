@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_margin="5dp"
+    android:theme="@style/Theme.PersonalChat"
     android:background="@drawable/callview_corner"
     tools:ignore="MissingConstraints">
 
@@ -29,7 +30,6 @@
         android:fontFamily="@font/equinox"
         android:padding="3dp"
         android:text="CallerName"
-        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/callBack"
         app:layout_constraintHorizontal_bias="0.28"
@@ -45,7 +45,6 @@
         android:fontFamily="@font/trebuc"
         android:paddingStart="5sp"
         android:text="Message!"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/callUserImage"
         app:layout_constraintTop_toBottomOf="@+id/callUsername" />
@@ -57,7 +56,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:padding="0sp"
-        android:backgroundTint="@color/Seashell"
+        android:backgroundTint="@color/Bisque"
         android:background="@drawable/button_corner"
         android:src="@drawable/call_icon"
         app:layout_constraintEnd_toEndOf="parent"

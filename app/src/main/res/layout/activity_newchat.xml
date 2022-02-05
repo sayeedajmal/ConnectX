@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:theme="@style/Theme.PersonalChat"
     tools:context=".newChat">
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -13,7 +13,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        android:background="@color/White"
+        android:background="#0000ffff"
         android:padding="0dp"
         android:scaleType="fitCenter"
         android:src="@drawable/backbutton"
@@ -30,7 +30,6 @@
         android:layout_marginEnd="179dp"
         android:fontFamily="@font/trebuc"
         android:text="New Message"
-        android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.203"
@@ -49,7 +48,6 @@
         android:hint="Search Username"
         android:inputType="textPersonName"
         android:paddingStart="10dp"
-        android:textColor="@color/black"
         android:textColorHint="@color/LightSlateGray"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

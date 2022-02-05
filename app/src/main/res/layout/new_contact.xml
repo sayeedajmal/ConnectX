@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_margin="5dp"
-    android:background="@color/White"
+    android:theme="@style/Theme.PersonalChat"
     tools:ignore="MissingConstraints">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -27,7 +27,6 @@
         android:fontFamily="@font/equinox"
         android:padding="3dp"
         android:text="Username"
-        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/newContactImage"
         app:layout_constraintTop_toTopOf="parent" />

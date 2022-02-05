@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_margin="5dp"
+    android:theme="@style/Theme.PersonalChat"
     android:background="@drawable/chatview_corner"
     tools:ignore="MissingConstraints">
 
@@ -52,7 +53,6 @@
         android:fontFamily="@font/equinox"
         android:padding="3dp"
         android:text="Username"
-        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
         app:layout_constraintStart_toEndOf="@+id/chatUserImage"
@@ -67,7 +67,6 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/trebuc"
         android:paddingStart="5sp"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/chatUserImage"
         app:layout_constraintTop_toBottomOf="@+id/ChatUsername"

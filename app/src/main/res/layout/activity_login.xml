@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:theme="@style/Theme.PersonalChat"
     tools:context=".login">
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="150dp"
-        android:layout_height="82dp"
+        android:layout_width="179dp"
+        android:layout_height="86dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="156dp"
-        android:fontFamily="@font/machine"
+        android:fontFamily="@font/abcdisplay"
         android:paddingLeft="5dp"
         android:text="WELCOME BACK"
-        android:textColor="@color/DarkBlue"
-        android:textSize="30sp"
+        android:textColor="@color/DarkCyan"
+        android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,8 +51,8 @@
         android:layout_marginBottom="-10dp"
         android:background="@drawable/button_corner"        android:padding="2sp"
         android:text="Email Address"
-        android:fontFamily="@font/trebuc"
         android:textColor="@color/White"
+        android:fontFamily="@font/trebuc"
         app:layout_constraintBottom_toTopOf="@+id/getEmail"
         app:layout_constraintEnd_toStartOf="@+id/getEmail"
         tools:ignore="MissingConstraints" />
@@ -80,8 +80,8 @@
         android:layout_marginEnd="-90dp"
         android:background="@drawable/button_corner"        android:padding="2sp"
         android:text="Password"
-        android:fontFamily="@font/trebuc"
         android:textColor="@color/White"
+        android:fontFamily="@font/trebuc"
         app:layout_constraintEnd_toStartOf="@+id/getPassword"
         app:layout_constraintTop_toBottomOf="@+id/getEmail"
         tools:ignore="MissingConstraints" />

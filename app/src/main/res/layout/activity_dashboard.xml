@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:theme="@style/Theme.PersonalChat"
     tools:context=".dashboard">
 
     <LinearLayout
         android:id="@+id/labelLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#0F4C82"
+        android:background="#0D83EB"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,8 +21,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="6dp"
-            android:background="@drawable/round_corner"
             android:padding="0dp"
+            android:background="#0000ffff"
             android:scaleType="centerCrop"
             android:src="@drawable/logout" />
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"
-        android:background="@color/White"
+        android:background="@color/BlanchedAlmond"
         app:layout_constraintTop_toBottomOf="@+id/labelLayout"
         app:tabIconTint="#2196F3"
         app:tabIndicatorColor="#2196F3"
@@ -62,7 +62,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         app:cardCornerRadius="30dp"
         app:cardBackgroundColor="#0F4C82"
@@ -74,9 +74,9 @@
             android:id="@+id/floatNewChat"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="#0F4C82"
+            android:background="@drawable/callview_corner"
             android:clickable="true"
-            android:layout_marginTop="5dp"
+            android:layout_margin="5dp"
             android:layout_gravity="fill_horizontal"
             android:layout_marginStart="15dp"
             android:scaleType="fitCenter"

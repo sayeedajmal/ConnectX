@@ -7,14 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.Strong.personalchat.Adaptors.primaryAdaptor;
-import com.Strong.personalchat.R;
+import com.Strong.personalchat.Adaptors.recentAdaptor;
 import com.Strong.personalchat.databinding.FragmentRecentBinding;
 import com.Strong.personalchat.models.primaryGetter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +44,7 @@ public class recentFragment extends Fragment {
                              Bundle savedInstanceState) {
         FragmentRecentBinding BindRecent=FragmentRecentBinding.inflate(inflater,  container, false);
 
-      primaryAdaptor adaptor=new primaryAdaptor(arrayList, getContext());
+      recentAdaptor adaptor=new recentAdaptor(arrayList, getContext());
       BindRecent.chatListView.setAdapter(adaptor);
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
       BindRecent.chatListView.setLayoutManager(linearLayoutManager);

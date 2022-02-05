@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:theme="@style/Theme.PersonalChat"
     tools:context=".Fragments.requestFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,7 +12,7 @@
         android:gravity="center"
         android:textColor="@color/Red"
         android:layout_height="match_parent"
-        android:fontFamily="@font/machine"
-        android:textSize="30sp"
-        android:text="WECLOME BACK MR. SAYEED" />
+        android:fontFamily="@font/abcdisplay"
+        android:textSize="40sp"
+        android:text="WECLOME BACK MR. SAYEED!" />
 </FrameLayout>

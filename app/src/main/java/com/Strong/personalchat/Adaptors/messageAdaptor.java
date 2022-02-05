@@ -30,7 +30,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class messageAdaptor extends  RecyclerView.Adapter{
     ArrayList<message> messageModels;
-    FirebaseDatabase database;
     Context context;
 
     int SENDER_VIEW_TYPE=1;
@@ -112,7 +111,7 @@ public class messageAdaptor extends  RecyclerView.Adapter{
         CircleImageView receiverImage;
         public receiveViewHolder(@NonNull View itemView) {
             super(itemView);
-            receiverImage=itemView.findViewById(R.id.senderChatIcon);
+            receiverImage=itemView.findViewById(R.id.receiverImage);
             messageRec=itemView.findViewById(R.id.messageRec);
             messageRecTime=itemView.findViewById(R.id.messageRecTime);
         }

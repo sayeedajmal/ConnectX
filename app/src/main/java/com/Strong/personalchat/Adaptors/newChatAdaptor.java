@@ -1,4 +1,5 @@
 package com.Strong.personalchat.Adaptors;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import com.Strong.personalchat.mainChat;
 import java.util.ArrayList;
