@@ -4,29 +4,23 @@ import static android.content.Intent.*;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatImageButton;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.Strong.personalchat.databinding.ActivityProfileBinding;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class uploadProfile extends AppCompatActivity {
 
-    AppCompatButton uploadProfile;
-    CircleImageView newProfileImage;
-    AppCompatImageButton newProfileImageButton;
+    ActivityProfileBinding BindProfile;
     //Uri Indicates where the image wil be picked from!
     private Uri filePath;
     //Request Code
@@ -34,23 +28,19 @@ public class uploadProfile extends AppCompatActivity {
     //Firebase Instance
     FirebaseStorage storage;
     StorageReference storageReference;
-    ProgressBar profileProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        BindProfile=ActivityProfileBinding.inflate(getLayoutInflater());
+        setContentView(BindProfile.getRoot());
 
-        uploadProfile=findViewById(R.id.uploadProfile);
-        newProfileImage=findViewById(R.id.newProfileImage);
-        newProfileImageButton=findViewById(R.id.newProfileImageButton);
-        profileProgress=findViewById(R.id.profileProgress);
 
-        newProfileImageButton.setOnClickListener(view ->{
+        BindProfile.newProfileImageButton.setOnClickListener(view ->{
             SelectImage();
         });
 
 
-        uploadProfile.setOnClickListener(view -> {
+        BindProfile.uploadProfile.setOnClickListener(view -> {
             uploadImage();
         });
     }
@@ -69,7 +59,7 @@ public class uploadProfile extends AppCompatActivity {
                 //Setting image on imageview using bitmap
                 try {
                     Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
-                    newProfileImage.setImageBitmap(bitmap);
+                    BindProfile.newProfileImage.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +69,7 @@ public class uploadProfile extends AppCompatActivity {
     private void uploadImage() {
         if (filePath!=null){
             Toast.makeText(uploadProfile.this, "Uploading Profile Pic", Toast.LENGTH_SHORT).show();
-            profileProgress.setVisibility(View.VISIBLE);
+            BindProfile.profileProgress.setVisibility(View.VISIBLE);
 
             String CurrentID=getIntent().getStringExtra("userId");
             storage=FirebaseStorage.getInstance();
@@ -93,14 +83,14 @@ public class uploadProfile extends AppCompatActivity {
                     database.getReference().child("Users").child(CurrentID).child("chatUserImage").setValue(uri.toString());
                 });
 
-                profileProgress.setVisibility(View.GONE);
+                BindProfile.profileProgress.setVisibility(View.GONE);
 
                 Toast.makeText(uploadProfile.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
 
                 Intent intent=new Intent(uploadProfile.this, verifyNumber.class);
                 startActivity(intent);
             }).addOnFailureListener(e -> {
-                     profileProgress.setVisibility(View.GONE);
+                BindProfile.profileProgress.setVisibility(View.GONE);
                 Toast.makeText(uploadProfile.this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }

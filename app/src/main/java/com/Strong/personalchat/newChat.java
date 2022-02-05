@@ -1,29 +1,25 @@
 package com.Strong.personalchat;
-
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Bundle;
 
-public class newChat extends BaseActivity {
+import com.Strong.personalchat.Fragments.newChatFragment;
+import com.Strong.personalchat.databinding.ActivityNewchatBinding;
 
-    ViewPager newContactPager;
-    AppCompatImageButton chatBackButton;
+public class newChat extends BaseActivity {
+ ActivityNewchatBinding BindNewChat;
     ViewPagerSection viewPagerAdaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_newchat);
+        BindNewChat=ActivityNewchatBinding.inflate(getLayoutInflater());
+        setContentView(BindNewChat.getRoot());
 
         newChatFragment newChatFragment=new newChatFragment();
-        newContactPager=findViewById(R.id.newContactPager);
         viewPagerAdaptor=new ViewPagerSection(getSupportFragmentManager(), 0);
         viewPagerAdaptor.addFragment(newChatFragment,"");
-        newContactPager.setAdapter(viewPagerAdaptor);
+        BindNewChat.newContactPager.setAdapter(viewPagerAdaptor);
 
-        chatBackButton=findViewById(R.id.chatBackButton);
-        chatBackButton.setOnClickListener(view -> {
+        BindNewChat.chatBackButton.setOnClickListener(view -> {
             onBackPressed();
         });
     }

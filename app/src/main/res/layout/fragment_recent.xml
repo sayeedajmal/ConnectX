@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/White"
     android:padding="5dp"
-    tools:context=".primary">
+    tools:context=".Fragments.recentFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatListView"

@@ -5,26 +5,26 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;;
+import android.view.View;;import com.Strong.personalchat.databinding.ActivityNewchatBinding;
+import com.Strong.personalchat.databinding.ActivityPurposeBinding;
 
 public class purpose extends AppCompatActivity {
 
-    AppCompatButton goLogin, goSignup;
+    ActivityPurposeBinding BindPurpose;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_purpose);
+        BindPurpose= ActivityPurposeBinding.inflate(getLayoutInflater());
 
-        goLogin=findViewById(R.id.goLogin);
-        goSignup=findViewById(R.id.goSignup);
+        setContentView(BindPurpose.getRoot());
 
-        goLogin.setOnClickListener(view -> {
+        BindPurpose.goLogin.setOnClickListener(view -> {
             Intent intent=new Intent(purpose.this, login.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
-        goSignup.setOnClickListener(new View.OnClickListener() {
+        BindPurpose.goSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(purpose.this, signup.class);

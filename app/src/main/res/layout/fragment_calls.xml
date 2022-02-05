@@ -5,7 +5,7 @@
     android:background="@color/White"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".calls">
+    tools:context=".Fragments.callsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView

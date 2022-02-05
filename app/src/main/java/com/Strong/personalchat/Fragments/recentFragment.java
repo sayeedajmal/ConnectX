@@ -1,7 +1,6 @@
-package com.Strong.personalchat;
+package com.Strong.personalchat.Fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,22 +14,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.Strong.personalchat.Adaptors.primaryAdaptor;
+import com.Strong.personalchat.R;
+import com.Strong.personalchat.databinding.FragmentRecentBinding;
 import com.Strong.personalchat.models.primaryGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class primary extends Fragment {
+public class recentFragment extends Fragment {
 
-    View view;
     FirebaseDatabase database;
-    RecyclerView chatListView;
     ArrayList<primaryGetter> arrayList=new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,13 +44,12 @@ public class primary extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-      view=inflater.inflate(R.layout.fragment_primary, container, false);
+        FragmentRecentBinding BindRecent=FragmentRecentBinding.inflate(inflater,  container, false);
 
       primaryAdaptor adaptor=new primaryAdaptor(arrayList, getContext());
-      chatListView=view.findViewById(R.id.chatListView);
-      chatListView.setAdapter(adaptor);
+      BindRecent.chatListView.setAdapter(adaptor);
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-      chatListView.setLayoutManager(linearLayoutManager);
+      BindRecent.chatListView.setLayoutManager(linearLayoutManager);
       database=FirebaseDatabase.getInstance();
 
       String currentId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -77,6 +74,6 @@ public class primary extends Fragment {
               adaptor.notifyDataSetChanged();
           }
       });
-      return view;
+      return BindRecent.getRoot();
     }
 }

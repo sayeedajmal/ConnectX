@@ -1,4 +1,4 @@
-package com.Strong.personalchat;
+package com.Strong.personalchat.Fragments;
 
 import android.os.Bundle;
 
@@ -12,14 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.Strong.personalchat.Adaptors.callsAdaptor;
+import com.Strong.personalchat.R;
+import com.Strong.personalchat.databinding.FragmentCallsBinding;
 import com.Strong.personalchat.models.callsGetter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class calls extends Fragment {
-
-
+public class callsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class calls extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calls, container, false);
+        FragmentCallsBinding BindRecent=FragmentCallsBinding.inflate(inflater,  container, false);
+        return BindRecent.getRoot();
     }
 }

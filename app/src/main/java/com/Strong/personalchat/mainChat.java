@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 import com.Strong.personalchat.Adaptors.messageAdaptor;
+import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,25 +25,15 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class mainChat extends BaseActivity {
-
-    TextView mainChatUsername;
     FirebaseAuth fAuth;
-    RecyclerView mainChatRecyclerView;
-    AppCompatEditText TypeMessage;
     FirebaseDatabase database;
-    CircleImageView mainChatImage;
-    AppCompatImageButton sendButton, mainChatBackButton;
+    ActivityMainChatBinding BindMainChat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_chat);
+        BindMainChat=ActivityMainChatBinding.inflate(getLayoutInflater());
+        setContentView(BindMainChat.getRoot());
 
-        mainChatUsername=findViewById(R.id.mainChatUsername);
-        mainChatRecyclerView=findViewById(R.id.mainChatRecyclerView);
-        TypeMessage=findViewById(R.id.TypeMessage);
-        sendButton=findViewById(R.id.sendButton);
-        mainChatImage=findViewById(R.id.mainChatImage);
-        mainChatBackButton =findViewById(R.id.mainchatbackButton);
 
         fAuth=FirebaseAuth.getInstance();
 
@@ -52,8 +43,8 @@ public class mainChat extends BaseActivity {
         String receiveId=getIntent().getStringExtra("userId");
         String receiveName=getIntent().getStringExtra("username");
         String uri=getIntent().getStringExtra("newChatUserImage");
-        mainChatUsername.setText(receiveName);
-        Picasso.get().load(uri).into(mainChatImage);
+        BindMainChat.mainChatUsername.setText(receiveName);
+        Picasso.get().load(uri).into(BindMainChat.mainChatImage);
 
         final ArrayList<message> messageModels=new ArrayList<>();
 
@@ -76,9 +67,9 @@ public class mainChat extends BaseActivity {
                     }else{
                         // Getting Shown the last message when open the chat section
                         messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
-                        mainChatRecyclerView.smoothScrollToPosition(messageModels.size()-1);
+                        BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size()-1);
                     }
-                    mainChatRecyclerView.setAdapter(messageAdaptor);
+                    BindMainChat.mainChatRecyclerView.setAdapter(messageAdaptor);
                 }
             }
 
@@ -90,13 +81,13 @@ public class mainChat extends BaseActivity {
 
         });
         //Sending the message and storing in the database
-        sendButton.setOnClickListener(view -> {
+        BindMainChat.sendButton.setOnClickListener(view -> {
             database=FirebaseDatabase.getInstance();
-            String message= Objects.requireNonNull(TypeMessage.getText()).toString();
+            String message= Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
             if (!message.equals("")){
                 final message model=new message(senderId, message);
                 model.setTimeStamp(new Date().getTime());
-                TypeMessage.setText(null);
+                BindMainChat.TypeMessage.setText(null);
 
                 database.getReference().
                         child("Users").
@@ -110,7 +101,7 @@ public class mainChat extends BaseActivity {
             }
         });
 
-        mainChatBackButton.setOnClickListener(view -> onBackPressed());
+        BindMainChat.mainchatbackButton.setOnClickListener(view -> onBackPressed());
 
     }
 }

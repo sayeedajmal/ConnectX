@@ -1,4 +1,4 @@
-package com.Strong.personalchat;
+package com.Strong.personalchat.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -6,11 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.Strong.personalchat.databinding.FragmentNewChatBinding;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.Adaptors.newChatAdaptor;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,21 +25,16 @@ import java.util.Objects;
 
 public class newChatFragment extends Fragment {
 
-        View view;
         FirebaseDatabase database;
-        RecyclerView newContactRecyclerView;
         ArrayList<newChatGetter> arrayList = new ArrayList<>();
         @Override
-        public View onCreateView (LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState){
+        public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
             // Inflate the layout for this fragment
-            view = inflater.inflate(R.layout.fragment_new_chat, container, false);
-
+            FragmentNewChatBinding BindChat=FragmentNewChatBinding.inflate(inflater,  container, false);
             newChatAdaptor adaptor = new newChatAdaptor(arrayList, getContext());
-            newContactRecyclerView = view.findViewById(R.id.newContactRecyclerView);
-            newContactRecyclerView.setAdapter(adaptor);
+            BindChat.newContactRecyclerView.setAdapter(adaptor);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-            newContactRecyclerView.setLayoutManager(linearLayoutManager);
+            BindChat.newContactRecyclerView.setLayoutManager(linearLayoutManager);
             database = FirebaseDatabase.getInstance();
             String currentUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
@@ -62,6 +58,6 @@ public class newChatFragment extends Fragment {
                 }
             });
 
-            return view;
+            return BindChat.getRoot();
         }
 }
