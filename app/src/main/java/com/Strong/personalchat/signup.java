@@ -74,7 +74,7 @@ public class signup extends AppCompatActivity {
             // create new user or register new user
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    primaryGetter storeData=new primaryGetter(BindSignup.signUsername.getText().toString(), BindSignup.signEmail.getText().toString(), BindSignup.signPassword.getText().toString(),status);
+                    UserGetter storeData=new UserGetter(BindSignup.signUsername.getText().toString(), BindSignup.signEmail.getText().toString(), BindSignup.signPassword.getText().toString(),status);
                     String id= Objects.requireNonNull(task.getResult().getUser()).getUid();
                     // Storing Data to Database..
                     FirebaseDatabase database=FirebaseDatabase.getInstance();

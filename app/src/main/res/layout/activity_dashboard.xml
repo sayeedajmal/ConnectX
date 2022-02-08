@@ -40,15 +40,15 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutDashboard"
         android:layout_width="match_parent"
+        android:background="@drawable/callview_corner"
+        android:theme="@style/Theme.PersonalChat"
         android:layout_height="50dp"
         android:layout_margin="5dp"
-        android:background="@color/BlanchedAlmond"
         app:layout_constraintTop_toBottomOf="@+id/labelLayout"
         app:tabIconTint="#2196F3"
-        app:tabIndicatorColor="#2196F3"
+        app:tabIndicatorColor="#FFFFFF"
         app:tabIndicatorHeight="3dp"
-        app:tabSelectedTextColor="@color/Green"
-        app:tabTextColor="@color/Red"
+        app:tabSelectedTextColor="@color/LawnGreen"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="5dp" />
 

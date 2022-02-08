@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.Strong.personalchat.mainChat;
-import com.Strong.personalchat.models.primaryGetter;
+import com.Strong.personalchat.models.UserGetter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,9 +31,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class recentAdaptor extends RecyclerView.Adapter<recentAdaptor.ViewHolder>{
 
-    ArrayList<primaryGetter> chatUserList;
+    ArrayList<UserGetter> chatUserList;
     Context context;
-    public recentAdaptor(ArrayList<primaryGetter> chatUserList, Context context) {
+    public recentAdaptor(ArrayList<UserGetter> chatUserList, Context context) {
         this.chatUserList = chatUserList;
         this.context = context;
     }
@@ -47,7 +47,7 @@ public class recentAdaptor extends RecyclerView.Adapter<recentAdaptor.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        primaryGetter users=chatUserList.get(position);
+        UserGetter users=chatUserList.get(position);
         String currentUse=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //Last Message to Shown

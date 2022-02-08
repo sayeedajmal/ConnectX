@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.Strong.personalchat.Adaptors.recentAdaptor;
 import com.Strong.personalchat.databinding.FragmentRecentBinding;
-import com.Strong.personalchat.models.primaryGetter;
+import com.Strong.personalchat.models.UserGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +27,7 @@ import java.util.Objects;
 public class recentFragment extends Fragment {
 
     FirebaseDatabase database;
-    ArrayList<primaryGetter> arrayList=new ArrayList<>();
+    ArrayList<UserGetter> arrayList=new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class recentFragment extends Fragment {
           public void onDataChange(@NonNull DataSnapshot Snapshot) {
                     arrayList.clear();
                     for (DataSnapshot dataSnapshot: Snapshot.getChildren()) {
-                        primaryGetter users = dataSnapshot.getValue(primaryGetter.class);
+                        UserGetter users = dataSnapshot.getValue(UserGetter.class);
                         if (!Objects.equals(dataSnapshot.getKey(), currentId)) {
                             assert users != null;
                             users.setUserId(dataSnapshot.getKey());

@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class BaseActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -20,10 +21,9 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    private void status(String status){
+   /* private void status(String status){
         firebaseAuth= FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseUser.getUid());
+        reference= FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()));
         HashMap<String, Object> hashmap=new HashMap<>();
         hashmap.put("status", status);
         reference.updateChildren(hashmap);
@@ -39,5 +39,5 @@ public class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         status("offline");
-    }
+    } */
 }

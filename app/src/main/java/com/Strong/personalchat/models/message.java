@@ -19,6 +19,13 @@ public class message {
         return message;
     }
 
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public Long getTimeStamp() {
         return timeStamp;

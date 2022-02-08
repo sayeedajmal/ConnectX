@@ -1,6 +1,6 @@
 package com.Strong.personalchat.models;
 
-public class primaryGetter {
+public class UserGetter {
     String username;
     String email;
     String password;
@@ -12,7 +12,7 @@ public class primaryGetter {
         return status;
     }
 
-    primaryGetter(){
+    UserGetter(){
 
     }
 
@@ -28,6 +28,30 @@ public class primaryGetter {
         return chatUserImage;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setChatUserImage(String chatUserImage) {
+        this.chatUserImage = chatUserImage;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -36,7 +60,7 @@ public class primaryGetter {
         this.userId = userId;
     }
 
-    public primaryGetter(String username, String email, String password, String status) {
+    public UserGetter(String username, String email, String password, String status) {
         this.username = username;
         this.email = email;
         this.password=password;
