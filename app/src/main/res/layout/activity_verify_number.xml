@@ -83,10 +83,9 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sendOtp"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_corner"
-        android:backgroundTint="#212122"
+        android:background="@color/LightSeaGreen"
         android:fontFamily="@font/abcdisplay"
         android:text="Send OTP"
         android:textSize="25sp"

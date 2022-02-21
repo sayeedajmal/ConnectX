@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_margin="5dp"
+    android:background="@drawable/chatview_corner"
     android:theme="@style/Theme.PersonalChat"
     tools:ignore="MissingConstraints">
 
@@ -23,7 +24,7 @@
         android:layout_width="187dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/equinox"
         android:padding="3dp"
         android:text="Username"

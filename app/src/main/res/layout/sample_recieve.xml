@@ -65,7 +65,7 @@
                 android:padding="3dp"
                 android:text="01,28,2022 - 09-09 PM"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="RtlHardcoded" />
+                tools:ignore="RtlHardcoded,SmallSp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

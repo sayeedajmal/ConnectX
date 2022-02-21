@@ -52,7 +52,6 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/equinox"
         android:padding="3dp"
-        android:text="Username"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
         app:layout_constraintStart_toEndOf="@+id/chatUserImage"

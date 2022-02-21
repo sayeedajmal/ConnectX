@@ -45,12 +45,12 @@
                 android:id="@+id/messageSenTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:textColor="@color/White"
                 android:background="@drawable/round_corner"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="5dp"
                 android:textSize="10sp"
-                android:padding="3dp"
+                android:padding="5dp"
                 android:text="01,28,2022 - 09-09 PM"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </LinearLayout>
