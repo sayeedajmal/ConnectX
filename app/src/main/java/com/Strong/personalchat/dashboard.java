@@ -32,9 +32,11 @@ public class dashboard extends BaseActivity {
         requestFragment requestFragment =new requestFragment();
 
         viewPagerAdaptor=new ViewPagerSection(getSupportFragmentManager(), 0);
+
         viewPagerAdaptor.addFragment(recentFragment, "Primary");
         viewPagerAdaptor.addFragment(callsFragment, "Calls");
         viewPagerAdaptor.addFragment(requestFragment, "Requests");
+
         BindDashboard.dashboardPager.setAdapter(viewPagerAdaptor);
         BindDashboard.tabLayoutDashboard.setupWithViewPager(BindDashboard.dashboardPager);
         Objects.requireNonNull(BindDashboard.tabLayoutDashboard.getTabAt(0)).setIcon(R.drawable.primar_icon);

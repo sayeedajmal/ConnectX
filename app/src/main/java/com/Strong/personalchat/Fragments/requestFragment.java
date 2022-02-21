@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.Strong.personalchat.R;
-import com.Strong.personalchat.databinding.FragmentRecentBinding;
 import com.Strong.personalchat.databinding.FragmentRequestBinding;
 
 public class requestFragment extends Fragment {

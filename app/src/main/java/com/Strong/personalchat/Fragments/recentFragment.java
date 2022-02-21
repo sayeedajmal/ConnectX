@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.Strong.personalchat.Adaptors.recentAdaptor;
-import com.Strong.personalchat.databinding.FragmentRecentBinding;
+import com.Strong.personalchat.Adaptors.recentChatAdaptor;
+import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
 import com.Strong.personalchat.models.UserGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +26,7 @@ import java.util.Objects;
 
 public class recentFragment extends Fragment {
 
+    FragmentRecyclerviewBinding BindRecycle;
     FirebaseDatabase database;
     ArrayList<UserGetter> arrayList=new ArrayList<>();
     @Override
@@ -42,12 +43,13 @@ public class recentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentRecentBinding BindRecent=FragmentRecentBinding.inflate(inflater,  container, false);
 
-      recentAdaptor adaptor=new recentAdaptor(arrayList, getContext());
-      BindRecent.chatListView.setAdapter(adaptor);
+        BindRecycle=FragmentRecyclerviewBinding.inflate(inflater,  container, false);
+
+      recentChatAdaptor adaptor=new recentChatAdaptor(arrayList, getContext());
+        BindRecycle.RecyclerView.setAdapter(adaptor);
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-      BindRecent.chatListView.setLayoutManager(linearLayoutManager);
+        BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
       database=FirebaseDatabase.getInstance();
 
       String currentId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -72,6 +74,6 @@ public class recentFragment extends Fragment {
               adaptor.notifyDataSetChanged();
           }
       });
-      return BindRecent.getRoot();
+      return BindRecycle.getRoot();
     }
 }

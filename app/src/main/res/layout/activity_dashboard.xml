@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:showIn=""
     android:theme="@style/Theme.PersonalChat"
     tools:context=".dashboard">
 
@@ -45,6 +44,8 @@
         android:theme="@style/Theme.PersonalChat"
         android:layout_height="50dp"
         android:layout_margin="5dp"
+        android:clickable="true"
+        android:foreground="?android:selectableItemBackgroundBorderless"
         app:layout_constraintTop_toBottomOf="@+id/labelLayout"
         app:tabIconTint="#2196F3"
         app:tabIndicatorColor="#FFFFFF"
@@ -77,8 +78,9 @@
             android:layout_height="40dp"
             android:background="@drawable/callview_corner"
             android:clickable="true"
+            android:foreground="?android:selectableItemBackgroundBorderless"
             android:layout_margin="5dp"
-            android:layout_gravity="fill_horizontal"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="15dp"
             android:scaleType="fitCenter"
             android:src="@drawable/newchat"

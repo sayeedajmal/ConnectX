@@ -29,11 +29,11 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class recentAdaptor extends RecyclerView.Adapter<recentAdaptor.ViewHolder>{
+public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.ViewHolder>{
 
     ArrayList<UserGetter> chatUserList;
     Context context;
-    public recentAdaptor(ArrayList<UserGetter> chatUserList, Context context) {
+    public recentChatAdaptor(ArrayList<UserGetter> chatUserList, Context context) {
         this.chatUserList = chatUserList;
         this.context = context;
     }

@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    android:theme="@style/Theme.PersonalChat"
-    tools:context=".Fragments.newChatFragment">
+    android:theme="@style/Theme.PersonalChat">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newContactRecyclerView"
+        android:id="@+id/RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

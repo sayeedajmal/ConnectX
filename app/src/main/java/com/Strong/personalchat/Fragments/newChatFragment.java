@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.Strong.personalchat.databinding.FragmentNewChatBinding;
+import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.Adaptors.newChatAdaptor;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,17 +24,17 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class newChatFragment extends Fragment {
-
+        FragmentRecyclerviewBinding BindRecycle;
         FirebaseDatabase database;
         ArrayList<newChatGetter> arrayList = new ArrayList<>();
         @Override
         public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
             // Inflate the layout for this fragment
-            FragmentNewChatBinding BindChat=FragmentNewChatBinding.inflate(inflater,  container, false);
+            BindRecycle=FragmentRecyclerviewBinding.inflate(inflater,  container, false);
             newChatAdaptor adaptor = new newChatAdaptor(arrayList, getContext());
-            BindChat.newContactRecyclerView.setAdapter(adaptor);
+            BindRecycle.RecyclerView.setAdapter(adaptor);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-            BindChat.newContactRecyclerView.setLayoutManager(linearLayoutManager);
+            BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
             database = FirebaseDatabase.getInstance();
             String currentUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
@@ -58,6 +58,6 @@ public class newChatFragment extends Fragment {
                 }
             });
 
-            return BindChat.getRoot();
+            return BindRecycle.getRoot();
         }
 }
