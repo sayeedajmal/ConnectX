@@ -43,13 +43,13 @@ public class recentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         BindRecycle=FragmentRecyclerviewBinding.inflate(inflater,  container, false);
 
       recentChatAdaptor adaptor=new recentChatAdaptor(arrayList, getContext());
         BindRecycle.RecyclerView.setAdapter(adaptor);
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
+
       database=FirebaseDatabase.getInstance();
 
       String currentId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();

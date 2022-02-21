@@ -7,10 +7,6 @@ public class newChatGetter {
 
     }
 
-    public void setChatUserImage(String chatUserImage) {
-        this.chatUserImage = chatUserImage;
-    }
-
     public String getUsername() {
         return username;
     }

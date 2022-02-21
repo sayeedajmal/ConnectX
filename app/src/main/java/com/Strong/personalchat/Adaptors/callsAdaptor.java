@@ -43,7 +43,7 @@ public class callsAdaptor extends RecyclerView.Adapter<callsAdaptor.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(context).inflate(R.layout.fragment_calls, parent, false);
+        View view=LayoutInflater.from(context).inflate(R.layout.call_list, parent, false);
         return new ViewHolder(view);
     }
 
