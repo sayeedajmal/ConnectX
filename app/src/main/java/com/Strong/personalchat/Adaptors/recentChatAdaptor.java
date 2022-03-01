@@ -51,7 +51,7 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
         String currentUse=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //Last Message to Shown
-        FirebaseDatabase.getInstance().getReference().child("Users").child(currentUse).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Chats").child(currentUse).child(users.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
                if (snapshot.hasChildren()){
@@ -69,20 +69,6 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
            }
        });
 
-        //Last Message Time to Shown
-      /*  FirebaseDatabase.getInstance().getReference().child("Users").child(currentUse).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChildren()){
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        }); */
 
         //Showing Chat Details
         Picasso.get().load(users.getChatUserImage()).into(holder.chatUserImage);
@@ -96,11 +82,11 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
         });
 
         //SHOWING STATUS EITHER USER IS ONLINE OR OFFLINE
-            if (users.getStatus().equals("online")) {
+           /* if (users.getStatus().equals("online")) {
                 holder.Active_status.setVisibility(View.VISIBLE);
             } else {
                 holder.deActive_status.setVisibility(View.VISIBLE);
-            }
+            } */
     }
 
     private String ShowDateTime(Date date) {

@@ -13,9 +13,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.Strong.personalchat.databinding.ActivityProfileBinding;
+import com.Strong.personalchat.models.UserGetter;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class uploadProfile extends AppCompatActivity {
@@ -28,20 +31,29 @@ public class uploadProfile extends AppCompatActivity {
     //Firebase Instance
     FirebaseStorage storage;
     StorageReference storageReference;
+    String username, email,pass, id, status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BindProfile=ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(BindProfile.getRoot());
 
-
-        BindProfile.newProfileImageButton.setOnClickListener(view ->{
+        username=getIntent().getStringExtra("username");
+        email=getIntent().getStringExtra("email");
+        pass=getIntent().getStringExtra("pass");
+        id=getIntent().getStringExtra("userId");
+        status=getIntent().getStringExtra("status");
+        BindProfile.newProfileImage.setOnClickListener(view ->{
             SelectImage();
         });
 
 
         BindProfile.uploadProfile.setOnClickListener(view -> {
-            uploadImage();
+            try {
+                uploadImage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
     private void SelectImage() {
@@ -66,21 +78,27 @@ public class uploadProfile extends AppCompatActivity {
         }
     }
 
-    private void uploadImage() {
+    private void uploadImage() throws IOException {
         if (filePath!=null){
             Toast.makeText(uploadProfile.this, "Uploading Profile Pic", Toast.LENGTH_SHORT).show();
             BindProfile.profileProgress.setVisibility(View.VISIBLE);
 
-            String CurrentID=getIntent().getStringExtra("userId");
             storage=FirebaseStorage.getInstance();
             storageReference =storage.getReference();
-            storageReference = storageReference.child("ProfileImages/"+CurrentID);
+            storageReference = storageReference.child("ProfileImages/"+id);
 
             //Storing Image String to The Database
             FirebaseDatabase database=FirebaseDatabase.getInstance();
-            storageReference.putFile(filePath).addOnSuccessListener(taskSnapshot -> {
+
+            Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+            ByteArrayOutputStream bas = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 25, bas);
+            byte[] data = bas.toByteArray();
+
+            storageReference.putBytes(data).addOnSuccessListener(taskSnapshot -> {
                 storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                    database.getReference().child("Users").child(CurrentID).child("chatUserImage").setValue(uri.toString());
+                    UserGetter userGetter=new UserGetter(username,email,pass,uri.toString(),id,status);
+                    database.getReference().child("Users").child(id).setValue(userGetter);
                 });
 
                 BindProfile.profileProgress.setVisibility(View.GONE);

@@ -53,7 +53,7 @@ public class recentFragment extends Fragment {
       database=FirebaseDatabase.getInstance();
 
       String currentId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child("Chats").orderByChild("timestamp").limitToLast(1).addValueEventListener(new ValueEventListener() {
           @SuppressLint("NotifyDataSetChanged")
           @Override
           public void onDataChange(@NonNull DataSnapshot Snapshot) {

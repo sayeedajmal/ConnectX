@@ -110,14 +110,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraint"
         app:stackFromEnd="true"
+        android:layout_marginBottom="3dp"
         tools:ignore="MissingConstraints"/>
 
     <FrameLayout
         android:id="@+id/FrameLayout"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/Wheat"
         tools:ignore="MissingConstraints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -142,7 +142,6 @@
         android:hint="Type a Message"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="@color/black"
         android:textColorHint="@color/SlateGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

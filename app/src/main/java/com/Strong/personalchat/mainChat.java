@@ -54,7 +54,7 @@ public class mainChat extends BaseActivity {
 
         //Showing Messages
         assert senderId != null;
-        database.getReference().child("Users").child(senderId).child(receiveId).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child("Chats").child(senderId).child(receiveId).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -91,10 +91,12 @@ public class mainChat extends BaseActivity {
 
                 database.getReference().
                         child("Users").
+                        child("Chats").
                         child(senderId).
                         child(receiveId).
                         push().setValue(model).addOnSuccessListener(unused -> database.getReference().
                         child("Users").
+                        child("Chats").
                         child(receiveId).
                         child(senderId).
                         push().setValue(model));

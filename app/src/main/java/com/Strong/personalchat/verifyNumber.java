@@ -26,7 +26,7 @@ public class verifyNumber extends AppCompatActivity {
             BindVerifyNumber.OtpVerificationButton.setVisibility(View.VISIBLE);
         });
         BindVerifyNumber.OtpVerificationButton.setOnClickListener(view ->{
-            Intent intent=new Intent(verifyNumber.this, dashboard.class);
+            Intent intent=new Intent(verifyNumber.this, recent.class);
             startActivity(intent);
         });
     }

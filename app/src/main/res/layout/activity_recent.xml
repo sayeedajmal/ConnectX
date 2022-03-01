@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.PersonalChat"
-    tools:context=".dashboard">
+    tools:context=".recent">
 
     <LinearLayout
         android:id="@+id/labelLayout"
@@ -40,19 +40,22 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutDashboard"
         android:layout_width="match_parent"
-        android:background="@drawable/callview_corner"
-        android:theme="@style/Theme.PersonalChat"
         android:layout_height="50dp"
         android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/callview_corner"
         android:clickable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
+        android:theme="@style/Theme.PersonalChat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelLayout"
         app:tabIconTint="#2196F3"
         app:tabIndicatorColor="#FFFFFF"
         app:tabIndicatorHeight="3dp"
         app:tabSelectedTextColor="@color/LawnGreen"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="5dp" />
+        tools:ignore="MissingConstraints" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/dashboardPager"

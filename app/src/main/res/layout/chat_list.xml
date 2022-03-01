@@ -16,25 +16,24 @@
         android:id="@+id/Active_status"
         android:layout_width="10dp"
         android:layout_height="10dp"
-        android:layout_marginTop="4dp"
         android:background="@drawable/active_status"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/chatUserImage"
         app:layout_constraintEnd_toEndOf="@+id/chatUserImage"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/deActive_status"
         android:layout_width="10dp"
         android:layout_height="10dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="52dp"
         android:background="@drawable/deactive_status"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/chatUserImage"
         app:layout_constraintEnd_toEndOf="@+id/chatUserImage"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chatUserImage"
@@ -50,7 +49,7 @@
         android:id="@+id/ChatUsername"
         android:layout_width="187dp"
         android:layout_height="30dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/equinox"
         android:padding="3dp"
@@ -81,7 +80,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:textColor="@color/Red"
+        android:textColor="@color/DarkTurquoise"
         android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
         app:layout_constraintEnd_toEndOf="parent"

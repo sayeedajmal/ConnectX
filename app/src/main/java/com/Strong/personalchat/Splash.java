@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class Splash extends AppCompatActivity {
     FirebaseAuth auth;
@@ -18,7 +17,7 @@ public class Splash extends AppCompatActivity {
             new Handler().postDelayed(() -> {
                 auth=FirebaseAuth.getInstance();
                 if (auth.getCurrentUser()!=null){
-                    startActivity(new Intent(Splash.this,dashboard.class));
+                    startActivity(new Intent(Splash.this, recent.class));
                 }else{
                     startActivity(new Intent(Splash.this, purpose.class));
                 }

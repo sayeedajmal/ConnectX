@@ -26,22 +26,32 @@ public class login extends AppCompatActivity {
 
         BindLogin.loginButton.setOnClickListener(view -> {
             BindLogin.progressbar.setVisibility(View.VISIBLE);
-                String email=BindLogin.getEmail.getText().toString();
+            BindLogin.loginButton.setVisibility(View.INVISIBLE);
+            BindLogin.goSignupButton.setVisibility(View.INVISIBLE);
+
+            String email=BindLogin.getEmail.getText().toString();
                 String password=BindLogin.getPassword.getText().toString();
 
             if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
                 Toast.makeText(login.this, "Fill Email & Password Correctly", Toast.LENGTH_SHORT).show();
                 BindLogin.progressbar.setVisibility(View.GONE);
+                BindLogin.loginButton.setVisibility(View.VISIBLE);
+                BindLogin.goSignupButton.setVisibility(View.VISIBLE);
+
             }else {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(login.this, "Logged Successfully", Toast.LENGTH_SHORT).show();
                         BindLogin.progressbar.setVisibility(View.GONE);
-                        Intent intent = new Intent(login.this, dashboard.class);
+                        BindLogin.loginButton.setVisibility(View.INVISIBLE);
+                        BindLogin.goSignupButton.setVisibility(View.INVISIBLE);
+                        Intent intent = new Intent(login.this, recent.class);
                         startActivity(intent);
                         finish();
                     } else {
                         BindLogin.progressbar.setVisibility(View.GONE);
+                        BindLogin.loginButton.setVisibility(View.VISIBLE);
+                        BindLogin.goSignupButton.setVisibility(View.INVISIBLE);
                         Toast.makeText(login.this, "Invalid UserName or Password", Toast.LENGTH_SHORT).show();
                     }
                 });
