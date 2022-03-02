@@ -8,10 +8,6 @@ public class UserGetter {
     String userId;
     String status;
 
-    public String getStatus() {
-        return status;
-    }
-
     public UserGetter(){
 
     }
@@ -29,6 +25,10 @@ public class UserGetter {
         return chatUserImage;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public UserGetter(String username, String email, String password, String chatUserImage, String userId, String status) {
         this.username = username;
         this.email = email;
@@ -41,10 +41,5 @@ public class UserGetter {
     public String getUserId() {
         return userId;
     }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
 
 }

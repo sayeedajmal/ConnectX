@@ -26,9 +26,9 @@
         <activity android:name=".signup" />
         <activity android:name=".uploadProfile" />
         <activity android:name=".verifyNumber" />
-        <activity android:name=".recent" />
         <activity android:name=".newChat" />
         <activity android:name=".mainChat" />
+        <activity android:name=".recent" />
     </application>
 
 </manifest>

@@ -3,14 +3,9 @@ package com.Strong.personalchat.models;
 public class newChatGetter {
     String username;
 
-    public void setChatUserImage(String chatUserImage) {
-        this.chatUserImage = chatUserImage;
-    }
-
     public newChatGetter(){
 
     }
-
     public String getUsername() {
         return username;
     }

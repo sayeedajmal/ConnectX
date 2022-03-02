@@ -15,6 +15,8 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/round_corner"
         android:padding="0dp"
+        android:clickable="true"
+        android:foreground="?android:selectableItemBackgroundBorderless"
         android:scaleType="fitCenter"
         android:src="@drawable/backbutton"
         app:layout_constraintStart_toStartOf="parent"

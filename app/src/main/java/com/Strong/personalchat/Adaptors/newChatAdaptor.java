@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.R;
+import com.Strong.personalchat.models.recentGetter;
 import com.squareup.picasso.Picasso;
 import com.Strong.personalchat.mainChat;
 import java.util.ArrayList;
@@ -40,11 +41,12 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
 
         Picasso.get().load(users.getChatUserImage()).into(holder.newContactImage);
         holder.newChatUsername.setText(users.getUsername());
+
         holder.itemView.setOnClickListener(view -> {
             Intent intent=new Intent(context, mainChat.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
-            intent.putExtra("newChatUserImage", Uri.parse(users.getChatUserImage()));
+            intent.putExtra("newChatUserImage", Uri.parse(users.getChatUserImage()).toString());
             context.startActivity(intent);
         });
     }

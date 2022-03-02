@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
+import com.Strong.personalchat.models.UserGetter;
 import com.Strong.personalchat.models.message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,14 +38,14 @@ public class mainChat extends BaseActivity {
 
         fAuth=FirebaseAuth.getInstance();
 
-        final String senderId=fAuth.getUid();
-
+        final String MineId=fAuth.getUid();
         //RECEIVING THE DATA OF USER FROM NEW CHAT ADAPTOR
-        String receiveId=getIntent().getStringExtra("userId");
+        String YourID=getIntent().getStringExtra("userId");
         String receiveName=getIntent().getStringExtra("username");
-        String uri=getIntent().getStringExtra("newChatUserImage");
+        String chatUserImage=getIntent().getStringExtra("newChatUserImage");
+
         BindMainChat.mainChatUsername.setText(receiveName);
-        Picasso.get().load(uri).into(BindMainChat.mainChatImage);
+        Picasso.get().load(chatUserImage).into(BindMainChat.mainChatImage);
 
         final ArrayList<message> messageModels=new ArrayList<>();
 
@@ -53,8 +54,8 @@ public class mainChat extends BaseActivity {
         database=FirebaseDatabase.getInstance();
 
         //Showing Messages
-        assert senderId != null;
-        database.getReference().child("Users").child("Chats").child(senderId).child(receiveId).addValueEventListener(new ValueEventListener() {
+        assert MineId != null;
+        database.getReference().child("Users").child(MineId).child(YourID).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -80,26 +81,26 @@ public class mainChat extends BaseActivity {
             }
 
         });
+
         //Sending the message and storing in the database
         BindMainChat.sendButton.setOnClickListener(view -> {
-            database=FirebaseDatabase.getInstance();
             String message= Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
             if (!message.equals("")){
-                final message model=new message(senderId, message);
+                final message model=new message(MineId, message);
                 model.setTimeStamp(new Date().getTime());
                 BindMainChat.TypeMessage.setText(null);
 
+                // Feeding Message to Sender and Receiver Database
                 database.getReference().
                         child("Users").
-                        child("Chats").
-                        child(senderId).
-                        child(receiveId).
-                        push().setValue(model).addOnSuccessListener(unused -> database.getReference().
+                        child(MineId).
+                        child(YourID).
+                        push().setValue(model).addOnSuccessListener(e -> database.getReference().
                         child("Users").
-                        child("Chats").
-                        child(receiveId).
-                        child(senderId).
-                        push().setValue(model));
+                        child(YourID).
+                        child(MineId).
+                        push().setValue(model)
+                );
             }
         });
 

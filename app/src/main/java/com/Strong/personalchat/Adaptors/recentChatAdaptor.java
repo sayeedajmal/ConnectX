@@ -1,6 +1,7 @@
 package com.Strong.personalchat.Adaptors;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Strong.personalchat.mainChat;
 import com.Strong.personalchat.models.UserGetter;
@@ -15,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.personalchat.R;
+import com.Strong.personalchat.models.newChatGetter;
+import com.Strong.personalchat.models.recentGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,14 +30,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.ViewHolder>{
 
-    ArrayList<UserGetter> chatUserList;
+    ArrayList<recentGetter> chatUserList;
     Context context;
-    public recentChatAdaptor(ArrayList<UserGetter> chatUserList, Context context) {
+    public recentChatAdaptor(ArrayList<recentGetter> chatUserList, Context context) {
         this.chatUserList = chatUserList;
         this.context = context;
     }
@@ -47,31 +52,32 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        UserGetter users=chatUserList.get(position);
+        recentGetter users=chatUserList.get(position);
         String currentUse=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //Last Message to Shown
-        FirebaseDatabase.getInstance().getReference().child("Users").child("Chats").child(currentUse).child(users.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-               if (snapshot.hasChildren()){
-                   for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                       holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
-                       Long fetchingTime=dataSnapshot.child("timeStamp").getValue(Long.class);
-                       Date time=new Date(fetchingTime);
-                       holder.lastMessageTime.setText(ShowDateTime(time));
-                   }
-               }
-           }
+        FirebaseDatabase.getInstance().getReference().child("Users").child(currentUse).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.hasChildren()){
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                            holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                            Long fetchingTime=dataSnapshot.child("timeStamp").getValue(Long.class);
+                            Date time=new Date(fetchingTime);
+                            holder.lastMessageTime.setText(ShowDateTime(time));
+                        }
+                    }
+                    notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-           }
-       });
-
+            }
+        });
 
         //Showing Chat Details
-        Picasso.get().load(users.getChatUserImage()).into(holder.chatUserImage);
+       Picasso.get().load(users.getChatUserImage()).into(holder.chatUserImage);
         holder.ChatUsername.setText(users.getUsername());
         holder.itemView.setOnClickListener(view -> {
             Intent intent=new Intent(context, mainChat.class);

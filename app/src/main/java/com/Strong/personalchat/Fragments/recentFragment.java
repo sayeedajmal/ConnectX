@@ -1,6 +1,7 @@
 package com.Strong.personalchat.Fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,16 +9,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.Strong.personalchat.Adaptors.recentChatAdaptor;
+import com.Strong.personalchat.Splash;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
 import com.Strong.personalchat.models.UserGetter;
+import com.Strong.personalchat.models.newChatGetter;
+import com.Strong.personalchat.models.recentGetter;
+
+import com.Strong.personalchat.purpose;
+import com.Strong.personalchat.recent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -27,8 +37,8 @@ import java.util.Objects;
 public class recentFragment extends Fragment {
 
     FragmentRecyclerviewBinding BindRecycle;
-    FirebaseDatabase database;
-    ArrayList<UserGetter> arrayList=new ArrayList<>();
+    DatabaseReference database;
+    ArrayList<recentGetter> getters =new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,41 +49,57 @@ public class recentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         BindRecycle=FragmentRecyclerviewBinding.inflate(inflater,  container, false);
 
-      recentChatAdaptor adaptor=new recentChatAdaptor(arrayList, getContext());
+      recentChatAdaptor adaptor=new recentChatAdaptor(getters, getContext());
         BindRecycle.RecyclerView.setAdapter(adaptor);
       LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
 
-      database=FirebaseDatabase.getInstance();
+      database=FirebaseDatabase.getInstance().getReference();
+        database.keepSynced(true);
 
-      String currentId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        database.getReference().child("Users").child("Chats").orderByChild("timestamp").limitToLast(1).addValueEventListener(new ValueEventListener() {
-          @SuppressLint("NotifyDataSetChanged")
-          @Override
-          public void onDataChange(@NonNull DataSnapshot Snapshot) {
-                    arrayList.clear();
-                    for (DataSnapshot dataSnapshot: Snapshot.getChildren()) {
-                        UserGetter users = dataSnapshot.getValue(UserGetter.class);
-                        if (!Objects.equals(dataSnapshot.getKey(), currentId)) {
-                            assert users != null;
-                            users.setUserId(dataSnapshot.getKey());
-                            arrayList.add(users);
-                        }
+        String currentUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+       database.child("Users").child(currentUser).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    getters.clear();
+                    String Uid = dataSnapshot.getKey();
+                    assert Uid != null;
+                    if (Uid.length() > 20) {
+                        database.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    recentGetter users = dataSnapshot.getValue(recentGetter.class);
+                                    if (Objects.equals(dataSnapshot.getKey(), Uid)) {
+                                        users.setUserId(dataSnapshot.getKey());
+                                        getters.add(users);
+                                    }
+                                }
+                                adaptor.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                adaptor.notifyDataSetChanged();
+                            }
+                        });
                     }
                     adaptor.notifyDataSetChanged();
-          }
-          @SuppressLint("NotifyDataSetChanged")
-          @Override
-          public void onCancelled(@NonNull DatabaseError error) {
-              adaptor.notifyDataSetChanged();
-          }
-      });
-      return BindRecycle.getRoot();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                adaptor.notifyDataSetChanged();
+            }
+        });
+        return BindRecycle.getRoot();
     }
 }

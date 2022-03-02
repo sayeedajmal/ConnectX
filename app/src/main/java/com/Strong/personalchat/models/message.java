@@ -10,13 +10,6 @@ public class message {
         this.message=message;
     }
 
-    public void setuId(String uId) {
-        this.uId = uId;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String getuId() {
         return uId;
