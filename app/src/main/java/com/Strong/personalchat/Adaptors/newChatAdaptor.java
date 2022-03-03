@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.models.recentGetter;
 import com.squareup.picasso.Picasso;
 import com.Strong.personalchat.mainChat;
 import java.util.ArrayList;

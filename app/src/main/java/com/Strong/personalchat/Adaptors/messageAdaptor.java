@@ -15,14 +15,12 @@ import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
 
@@ -73,13 +71,11 @@ public class messageAdaptor extends  RecyclerView.Adapter{
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                            Bitmap receiverImage=dataSnapshot.child("chatUserImage").getValue(Bitmap.class);
+                            String receiverImage=dataSnapshot.child("chatUserImage").getValue(String.class);
                            // ((receiveViewHolder)holder).receiverImage.setImageBitmap(receiverImage);
-                            Toast.makeText(context, "this is User Id: "+message.getuId() , Toast.LENGTH_SHORT).show();
-                            Toast.makeText(context, "this is image: "+receiverImage, Toast.LENGTH_SHORT).show();
+                            Picasso.get().load(receiverImage).into(((receiveViewHolder) holder).receiverImage);
                         }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -93,7 +89,7 @@ public class messageAdaptor extends  RecyclerView.Adapter{
     }
     @Override
     public int getItemViewType(int position) {
-        if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())){
+        if (messageModels.get(position).getUid().equals(FirebaseAuth.getInstance().getUid())){
             return SENDER_VIEW_TYPE;
         }
         else{

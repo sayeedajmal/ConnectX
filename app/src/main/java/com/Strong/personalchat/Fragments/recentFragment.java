@@ -1,7 +1,6 @@
 package com.Strong.personalchat.Fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,21 +8,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.Strong.personalchat.Adaptors.recentChatAdaptor;
-import com.Strong.personalchat.Splash;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
-import com.Strong.personalchat.models.UserGetter;
-import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.models.recentGetter;
 
-import com.Strong.personalchat.purpose;
-import com.Strong.personalchat.recent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,7 +54,7 @@ public class recentFragment extends Fragment {
       database=FirebaseDatabase.getInstance().getReference();
         database.keepSynced(true);
 
-        String currentUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        String currentUser= FirebaseAuth.getInstance().getCurrentUser().getUid();
        database.child("Users").child(currentUser).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

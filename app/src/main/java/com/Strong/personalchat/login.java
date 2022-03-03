@@ -51,7 +51,7 @@ public class login extends AppCompatActivity {
                     } else {
                         BindLogin.progressbar.setVisibility(View.GONE);
                         BindLogin.loginButton.setVisibility(View.VISIBLE);
-                        BindLogin.goSignupButton.setVisibility(View.INVISIBLE);
+                        BindLogin.goSignupButton.setVisibility(View.VISIBLE);
                         Toast.makeText(login.this, "Invalid UserName or Password", Toast.LENGTH_SHORT).show();
                     }
                 });

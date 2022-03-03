@@ -1,8 +1,6 @@
 package com.Strong.personalchat.Fragments;
 
-import static android.content.Context.MODE_PRIVATE;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

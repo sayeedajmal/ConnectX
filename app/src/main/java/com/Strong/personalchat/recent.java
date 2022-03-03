@@ -23,11 +23,6 @@ public class recent extends BaseActivity {
         BindRecent =ActivityRecentBinding.inflate(getLayoutInflater());
         setContentView(BindRecent.getRoot());
 
-        firebaseAuth=FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser()==null){
-            startActivity(new Intent(this, purpose.class));
-
-        }
 
         recentFragment recentFragment =new recentFragment();
         callsFragment callsFragment =new callsFragment();
@@ -53,7 +48,6 @@ public class recent extends BaseActivity {
         });
 
         BindRecent.floatNewChat.setOnClickListener(view -> {
-            Toast.makeText(this, "You Clicked on Float Icon Button", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(recent.this, newChat.class));
         });
     }

@@ -1,7 +1,6 @@
 package com.Strong.personalchat.Adaptors;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,15 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.Strong.personalchat.mainChat;
-import com.Strong.personalchat.models.UserGetter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.models.newChatGetter;
+import com.Strong.personalchat.mainChat;
 import com.Strong.personalchat.models.recentGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +31,6 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.ViewHolder>{
-
     ArrayList<recentGetter> chatUserList;
     Context context;
     public recentChatAdaptor(ArrayList<recentGetter> chatUserList, Context context) {
@@ -53,11 +48,10 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         recentGetter users=chatUserList.get(position);
-        String currentUse=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //Last Message to Shown
-        FirebaseDatabase.getInstance().getReference().child("Users").child(currentUse).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        database.getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.hasChildren()){
@@ -68,11 +62,9 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
                             holder.lastMessageTime.setText(ShowDateTime(time));
                         }
                     }
-                    notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -110,8 +102,8 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Active_status=itemView.findViewById(R.id.Active_status);
-            deActive_status=itemView.findViewById(R.id.deActive_status);
+            //Active_status=itemView.findViewById(R.id.Active_status);
+           // deActive_status=itemView.findViewById(R.id.deActive_status);
             chatUserImage=itemView.findViewById(R.id.chatUserImage);
             ChatUsername=itemView.findViewById(R.id.ChatUsername);
             chatLastMessage=itemView.findViewById(R.id.chatLastMessage);

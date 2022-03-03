@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.Adaptors.newChatAdaptor;
-import com.Strong.personalchat.models.recentGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -1,16 +1,11 @@
 package com.Strong.personalchat;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.TextView;
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
-import com.Strong.personalchat.models.UserGetter;
 import com.Strong.personalchat.models.message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class mainChat extends BaseActivity {
     FirebaseAuth fAuth;
