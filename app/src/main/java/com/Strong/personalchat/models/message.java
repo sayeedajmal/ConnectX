@@ -1,30 +1,25 @@
 package com.Strong.personalchat.models;
 
 public class message {
-    String Uid;
+    String uId;
     String message;
-    String receiverImage;
     Long timeStamp;
 
     public message(String senderId, String message) {
-        this.Uid =senderId;
+        this.uId=senderId;
         this.message=message;
     }
 
-    public void setUid(String uid) {
-        this.Uid = uid;
+    public void setuId(String uId) {
+        this.uId = uId;
     }
 
-    public String getReceiverImage() {
-        return receiverImage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setReceiverImage(String receiverImage) {
-        this.receiverImage = receiverImage;
-    }
-
-    public String getUid() {
-        return Uid;
+    public String getuId() {
+        return uId;
     }
 
 
