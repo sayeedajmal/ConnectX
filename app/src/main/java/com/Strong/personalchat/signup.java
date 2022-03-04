@@ -36,14 +36,14 @@ public class signup extends AppCompatActivity {
 
         BindSignup.ContinueToUploadImage.setOnClickListener(view -> {
             BindSignup.progressBar.setVisibility(View.VISIBLE);
-            BindSignup.ContinueToUploadImage.setVisibility(View.GONE);
-            BindSignup.goLoginButton.setVisibility(View.GONE);
+            BindSignup.ContinueToUploadImage.setVisibility(View.INVISIBLE);
+            BindSignup.goLoginButton.setVisibility(View.INVISIBLE);
 
 
 
-            username=BindSignup.signUsername.getText().toString();
-            email=BindSignup.signEmail.getText().toString();
-            pass=BindSignup.signPassword.getText().toString();
+            username=BindSignup.signUsername.getText().toString().trim();
+            email=BindSignup.signEmail.getText().toString().trim();
+            pass=BindSignup.signPassword.getText().toString().trim();
 
             if (TextUtils.isEmpty(username)) {
                 Toast.makeText(getApplicationContext(),
@@ -84,14 +84,12 @@ public class signup extends AppCompatActivity {
                     BindSignup.goLoginButton.setVisibility(View.GONE);
                     String id=mAuth.getCurrentUser().getUid();
 
-
                     Intent intent = new Intent(signup.this,uploadProfile.class);
-
                     intent.putExtra("username", username);
                     intent.putExtra("email", email);
                     intent.putExtra("pass", pass);
                     intent.putExtra("userId", id);
-                    intent.putExtra("status","offline");
+
                     startActivity(intent);
                     finish();
                 }
@@ -104,6 +102,7 @@ public class signup extends AppCompatActivity {
                     BindSignup.goLoginButton.setVisibility(View.VISIBLE);
                 }
             });
+
         });
     }
 }

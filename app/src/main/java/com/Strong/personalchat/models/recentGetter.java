@@ -6,18 +6,9 @@ public class recentGetter {
     public recentGetter(){
         
     }
-    public recentGetter(String chatUserImage, String userId, String username) {
-        this.chatUserImage = chatUserImage;
-        this.userId = userId;
-        this.username = username;
-    }
 
     public String getChatUserImage() {
         return chatUserImage;
-    }
-
-    public void setChatUserImage(String chatUserImage) {
-        this.chatUserImage = chatUserImage;
     }
 
     public String getUserId() {

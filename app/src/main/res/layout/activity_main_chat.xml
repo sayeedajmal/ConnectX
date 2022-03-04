@@ -20,7 +20,7 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/mainchatbackButton"
-            android:layout_width="30dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginTop="12dp"
@@ -41,6 +41,19 @@
             android:layout_toEndOf="@+id/mainchatbackButton"
             android:background="@drawable/image_corner"
             tools:ignore="MissingConstraints" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/Active_status"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-10dp"
+            android:layout_marginBottom="6dp"
+            android:layout_toEndOf="@+id/mainChatImage"
+            android:background="@drawable/active_status"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/mainChatImage"
+            app:layout_constraintEnd_toEndOf="@+id/mainChatImage" />
 
         <TextView
             android:id="@+id/mainChatUsername"
@@ -63,10 +76,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="30dp"
-            android:clickable="true"
-            android:foreground="?android:selectableItemBackgroundBorderless"
             android:layout_toStartOf="@+id/voiceCallButton"
             android:background="#0000ffff"
+            android:clickable="true"
+            android:foreground="?android:selectableItemBackgroundBorderless"
             android:src="@drawable/video_call"
             tools:ignore="MissingConstraints" />
 
@@ -76,10 +89,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="30dp"
-            android:clickable="true"
-            android:foreground="?android:selectableItemBackgroundBorderless"
             android:layout_toStartOf="@+id/optionButton"
             android:background="#0000ffff"
+            android:clickable="true"
+            android:foreground="?android:selectableItemBackgroundBorderless"
             android:padding="0dp"
             android:src="@drawable/call_icon"
             tools:ignore="MissingConstraints"

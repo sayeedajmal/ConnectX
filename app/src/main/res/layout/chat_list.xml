@@ -10,30 +10,6 @@
     android:background="@drawable/chatview_corner"
     tools:ignore="MissingConstraints">
 
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/Active_status"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:background="@drawable/active_status"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/chatUserImage"
-        app:layout_constraintEnd_toEndOf="@+id/chatUserImage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/deActive_status"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/deactive_status"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/chatUserImage"
-        app:layout_constraintEnd_toEndOf="@+id/chatUserImage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chatUserImage"
         android:layout_width="60dp"

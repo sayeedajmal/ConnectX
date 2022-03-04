@@ -51,7 +51,7 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
 
         //Last Message to Shown
         FirebaseDatabase database=FirebaseDatabase.getInstance();
-        database.getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("Chats").child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.hasChildren()){
@@ -97,13 +97,11 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView chatUserImage, Active_status, deActive_status;
+        CircleImageView chatUserImage;
         TextView ChatUsername, chatLastMessage, lastMessageTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //Active_status=itemView.findViewById(R.id.Active_status);
-           // deActive_status=itemView.findViewById(R.id.deActive_status);
             chatUserImage=itemView.findViewById(R.id.chatUserImage);
             ChatUsername=itemView.findViewById(R.id.ChatUsername);
             chatLastMessage=itemView.findViewById(R.id.chatLastMessage);

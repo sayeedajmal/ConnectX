@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.Strong.personalchat.databinding.ActivityProfileBinding;
-import com.Strong.personalchat.models.UserGetter;
+import com.Strong.personalchat.models.signupSetter;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -31,7 +31,7 @@ public class uploadProfile extends AppCompatActivity {
     //Firebase Instance
     FirebaseStorage storage;
     StorageReference storageReference;
-    String username, email,pass, id, status;
+    String username, email,pass, id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +42,13 @@ public class uploadProfile extends AppCompatActivity {
         email=getIntent().getStringExtra("email");
         pass=getIntent().getStringExtra("pass");
         id=getIntent().getStringExtra("userId");
-        status=getIntent().getStringExtra("status");
         BindProfile.newProfileImage.setOnClickListener(view ->{
             SelectImage();
         });
 
 
         BindProfile.uploadProfile.setOnClickListener(view -> {
-            try {
+           try {
                 uploadImage();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -82,6 +81,7 @@ public class uploadProfile extends AppCompatActivity {
         if (filePath!=null){
             Toast.makeText(uploadProfile.this, "Uploading Profile Pic", Toast.LENGTH_SHORT).show();
             BindProfile.profileProgress.setVisibility(View.VISIBLE);
+            BindProfile.uploadProfile.setVisibility(View.INVISIBLE);
 
             storage=FirebaseStorage.getInstance();
             storageReference =storage.getReference();
@@ -97,11 +97,12 @@ public class uploadProfile extends AppCompatActivity {
 
             storageReference.putBytes(data).addOnSuccessListener(taskSnapshot -> {
                 storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                    UserGetter userGetter=new UserGetter(username,email,pass,uri.toString(),id,status);
-                    database.getReference().child("Users").child(id).setValue(userGetter);
+                    signupSetter userData=new signupSetter(username,email,pass,uri.toString(),id);
+                    database.getReference().child("Users").child(id).setValue(userData);
                 });
 
                 BindProfile.profileProgress.setVisibility(View.GONE);
+                BindProfile.uploadProfile.setVisibility(View.VISIBLE);
 
                 Toast.makeText(uploadProfile.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
 
@@ -109,6 +110,8 @@ public class uploadProfile extends AppCompatActivity {
                 startActivity(intent);
             }).addOnFailureListener(e -> {
                 BindProfile.profileProgress.setVisibility(View.GONE);
+                BindProfile.uploadProfile.setVisibility(View.VISIBLE);
+
                 Toast.makeText(uploadProfile.this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }

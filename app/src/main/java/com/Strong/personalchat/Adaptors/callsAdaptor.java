@@ -15,20 +15,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.models.UserGetter;
 import com.Strong.personalchat.models.callsGetter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

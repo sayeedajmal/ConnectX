@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
@@ -49,7 +51,7 @@ public class mainChat extends BaseActivity {
 
         //Showing Messages
         assert MineId != null;
-        database.getReference().child("Users").child(MineId).child(YourID).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -67,7 +69,6 @@ public class mainChat extends BaseActivity {
                     BindMainChat.mainChatRecyclerView.setAdapter(messageAdaptor);
                 }
             }
-
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -80,25 +81,28 @@ public class mainChat extends BaseActivity {
         BindMainChat.sendButton.setOnClickListener(view -> {
             String message= Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
             if (!message.equals("")){
-                final message model=new message(MineId, message);
-                model.setTimeStamp(new Date().getTime());
+                final message conversation=new message(MineId, message);
+                conversation.setTimeStamp(new Date().getTime());
                 BindMainChat.TypeMessage.setText(null);
 
                 // Feeding Message to Sender and Receiver Database
                 database.getReference().
                         child("Users").
                         child(MineId).
+                        child("Chats").
                         child(YourID).
-                        push().setValue(model).addOnSuccessListener(e -> database.getReference().
+                        push().setValue(conversation).addOnSuccessListener(e -> database.getReference().
                         child("Users").
                         child(YourID).
+                        child("Chats").
                         child(MineId).
-                        push().setValue(model)
+                        push().setValue(conversation)
                 );
             }
         });
 
         BindMainChat.mainchatbackButton.setOnClickListener(view -> onBackPressed());
 
+        BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
     }
 }

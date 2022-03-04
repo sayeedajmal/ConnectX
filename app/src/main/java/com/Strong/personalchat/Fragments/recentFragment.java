@@ -55,7 +55,7 @@ public class recentFragment extends Fragment {
         database.keepSynced(true);
 
         String currentUser= FirebaseAuth.getInstance().getCurrentUser().getUid();
-       database.child("Users").child(currentUser).addValueEventListener(new ValueEventListener() {
+       database.child("Users").child(currentUser).child("Chats").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -63,7 +63,6 @@ public class recentFragment extends Fragment {
                     getters.clear();
                     String Uid = dataSnapshot.getKey();
                     assert Uid != null;
-                    if (Uid.length() > 20) {
                         database.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -82,7 +81,6 @@ public class recentFragment extends Fragment {
                                 adaptor.notifyDataSetChanged();
                             }
                         });
-                    }
                     adaptor.notifyDataSetChanged();
                 }
             }
