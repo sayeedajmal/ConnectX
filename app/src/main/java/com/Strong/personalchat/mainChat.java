@@ -1,6 +1,7 @@
 package com.Strong.personalchat;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import java.util.Date;
 import java.util.Objects;
 
 
-public class mainChat extends BaseActivity {
+public class mainChat extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseDatabase database;
     ActivityMainChatBinding BindMainChat;
@@ -105,4 +106,23 @@ public class mainChat extends BaseActivity {
 
         BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
     }
+     /* private void status(String status){
+        firebaseAuth= FirebaseAuth.getInstance();
+        reference= FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()));
+        HashMap<String, Object> hashmap=new HashMap<>();
+        hashmap.put("status", status);
+        reference.updateChildren(hashmap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
+    } */
 }

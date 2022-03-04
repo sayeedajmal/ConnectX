@@ -1,10 +1,12 @@
 package com.Strong.personalchat;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.Strong.personalchat.Fragments.newChatFragment;
 import com.Strong.personalchat.databinding.ActivityNewchatBinding;
 
-public class newChat extends BaseActivity {
+public class newChat extends AppCompatActivity {
  ActivityNewchatBinding BindNewChat;
     ViewPagerSection viewPagerAdaptor;
 

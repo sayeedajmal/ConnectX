@@ -38,7 +38,8 @@ public class login extends AppCompatActivity {
                 BindLogin.loginButton.setVisibility(View.VISIBLE);
                 BindLogin.goSignupButton.setVisibility(View.VISIBLE);
 
-            }else {
+            }
+            else {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(login.this, "Logged Successfully", Toast.LENGTH_SHORT).show();
