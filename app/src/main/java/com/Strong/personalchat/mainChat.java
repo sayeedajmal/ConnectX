@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
@@ -13,17 +14,21 @@ import com.Strong.personalchat.models.message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Objects;
 
 
 public class mainChat extends AppCompatActivity {
     FirebaseAuth fAuth;
+    String MineId;
+    String YourID;
     FirebaseDatabase database;
     ActivityMainChatBinding BindMainChat;
     @Override
@@ -35,9 +40,9 @@ public class mainChat extends AppCompatActivity {
 
         fAuth=FirebaseAuth.getInstance();
 
-        final String MineId=fAuth.getUid();
+        MineId=fAuth.getUid();
         //RECEIVING THE DATA OF USER FROM NEW CHAT ADAPTOR
-        String YourID=getIntent().getStringExtra("userId");
+        YourID=getIntent().getStringExtra("userId");
         String receiveName=getIntent().getStringExtra("username");
         String chatUserImage=getIntent().getStringExtra("newChatUserImage");
 
@@ -49,7 +54,26 @@ public class mainChat extends AppCompatActivity {
         final messageAdaptor messageAdaptor=new messageAdaptor(messageModels, this);
             int count=messageModels.size();
         database=FirebaseDatabase.getInstance();
+        database.getReference().keepSynced(true);
 
+        //Showing Status
+        database.getReference().child("Users").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                   if (dataSnapshot.getKey().equals("status")){
+                       String status=dataSnapshot.getValue(String.class);
+                       if (status.equals("online"))
+                       BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
+                   }
+               }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
         //Showing Messages
         assert MineId != null;
         database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
@@ -104,11 +128,12 @@ public class mainChat extends AppCompatActivity {
 
         BindMainChat.mainchatbackButton.setOnClickListener(view -> onBackPressed());
 
-        BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
     }
-     /* private void status(String status){
-        firebaseAuth= FirebaseAuth.getInstance();
-        reference= FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()));
+     private void status(String status){
+        fAuth= FirebaseAuth.getInstance();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                        child("Users").
+                        child(MineId);
         HashMap<String, Object> hashmap=new HashMap<>();
         hashmap.put("status", status);
         reference.updateChildren(hashmap);
@@ -124,5 +149,5 @@ public class mainChat extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         status("offline");
-    } */
+    }
 }
