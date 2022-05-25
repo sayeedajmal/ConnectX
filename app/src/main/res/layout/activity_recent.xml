@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/labelLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="#0D83EB"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,8 +21,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="6dp"
-            android:padding="0dp"
             android:background="#0000ffff"
+            android:padding="0dp"
+            android:rotationY="180"
             android:scaleType="center"
             android:src="@drawable/logout" />
 
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/abcdisplay"
+            android:fontFamily="@font/emotion"
             android:text="PersonalChat"
             android:textColor="@color/White"
             android:textSize="35sp" />
@@ -42,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"
+        android:orientation="vertical"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="4dp"
         android:background="@drawable/callview_corner"

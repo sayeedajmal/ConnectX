@@ -27,7 +27,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/equinox"
+        android:fontFamily="@font/nexaslabbold"
         android:padding="3dp"
         android:text="Username"
         android:textSize="20sp"

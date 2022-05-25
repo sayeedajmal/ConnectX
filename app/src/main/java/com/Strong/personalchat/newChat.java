@@ -1,10 +1,13 @@
 package com.Strong.personalchat;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.Strong.personalchat.Fragments.newChatFragment;
 import com.Strong.personalchat.databinding.ActivityNewchatBinding;
+
+import java.util.Objects;
 
 public class newChat extends AppCompatActivity {
  ActivityNewchatBinding BindNewChat;
@@ -20,7 +23,6 @@ public class newChat extends AppCompatActivity {
         viewPagerAdaptor=new ViewPagerSection(getSupportFragmentManager(), 0);
         viewPagerAdaptor.addFragment(newChatFragment,"");
         BindNewChat.newContactPager.setAdapter(viewPagerAdaptor);
-
         BindNewChat.chatBackButton.setOnClickListener(view -> {
             onBackPressed();
         });

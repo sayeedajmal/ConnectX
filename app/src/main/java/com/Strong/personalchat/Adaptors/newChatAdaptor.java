@@ -7,18 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.Strong.personalchat.databinding.ActivityNewchatBinding;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.R;
 import com.squareup.picasso.Picasso;
 import com.Strong.personalchat.mainChat;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHolder>{
-
+    ActivityNewchatBinding bindNewChat;
     ArrayList<newChatGetter> newUserList;
     Context context;
 

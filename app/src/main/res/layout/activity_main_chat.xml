@@ -62,7 +62,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="13dp"
             android:layout_toEndOf="@+id/mainChatImage"
-            android:fontFamily="@font/trebuc"
+            android:fontFamily="@font/nexaslabbold"
             android:maxWidth="175dp"
             android:maxHeight="25dp"
             android:text="Username"
