@@ -22,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
         android:layout_width="177dp"
         android:layout_height="136dp"
         android:src="@drawable/appicon"
@@ -33,13 +34,12 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:fontFamily="@font/equinox"
         android:text="CREATE NEW ACCOUNT"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -48,7 +48,7 @@
         android:layout_height="50dp"
         android:drawableStart="@drawable/defaultuser"
         android:drawablePadding="5dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/button_corner"
         android:fontFamily="@font/trebuc"
         android:gravity="center"
@@ -81,7 +81,7 @@
         android:id="@+id/signEmail"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="30dp"
         android:drawablePadding="5dp"
         android:drawableStart="@drawable/email"
         android:background="@drawable/button_corner"
@@ -117,7 +117,7 @@
         android:id="@+id/signPassword"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_corner"
         android:textColor="@color/White"
         android:padding="10dp"

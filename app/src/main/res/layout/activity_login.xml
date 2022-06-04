@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="318dp"
-        android:layout_height="86dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="156dp"
         android:fontFamily="@font/abcdisplay"
@@ -32,7 +32,7 @@
         android:id="@+id/getEmail"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/button_corner"
         android:fontFamily="@font/trebuc"
         android:gravity="center"
@@ -123,7 +123,7 @@
         android:id="@+id/goSignupButton"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="80dp"
         android:fontFamily="@font/trebuc"
         android:text="SIGN UP"
         android:background="#154D60"

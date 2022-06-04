@@ -106,7 +106,7 @@ public class uploadProfile extends AppCompatActivity {
 
                 Toast.makeText(uploadProfile.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
 
-                Intent intent=new Intent(uploadProfile.this, verifyNumber.class);
+                Intent intent=new Intent(uploadProfile.this, recent.class);
                 startActivity(intent);
             }).addOnFailureListener(e -> {
                 BindProfile.profileProgress.setVisibility(View.GONE);

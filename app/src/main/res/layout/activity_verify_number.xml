@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.PersonalChat"
-    tools:context=".verifyNumber">
+    >
 
     <TextView
         android:id="@+id/textView8"
@@ -106,7 +106,7 @@
         android:gravity="center"
         android:hint="Enter OTP"
         android:inputType="number"
-        android:visibility="gone"
+        android:visibility="visible"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#767575"
@@ -124,14 +124,26 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/button_corner"
         android:backgroundTint="@color/LightSeaGreen"
-        android:fontFamily="@font/abcdisplay"
+        android:fontFamily="@font/nexaslabbold"
         android:text="Finish"
-        android:visibility="gone"
+        android:visibility="visible"
         android:textColor="@color/White"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OtpVerification"
+        tools:ignore="MissingConstraints" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/OtpVerificationButton"
+        app:layout_constraintEnd_toEndOf="@+id/OtpVerificationButton"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/OtpVerificationButton"
+        app:layout_constraintTop_toTopOf="@+id/OtpVerificationButton"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
