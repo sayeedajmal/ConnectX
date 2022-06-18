@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".Setting">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/SettingUserImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/button_round"
+        android:src="@drawable/defaultuser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/backButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
+        android:foreground="?android:selectableItemBackground"
         android:layout_marginTop="70dp"
         android:background="@color/transparent"
         android:scaleType="fitCenter"
@@ -31,26 +42,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/defaultuser"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:fontFamily="@font/trebuc"
         android:text="Account"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        tools:layout_editor_absoluteX="16dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/EditProfileButton"
@@ -60,12 +61,14 @@
         android:background="@color/transparent"
         android:drawableEnd="@drawable/goahead"
         android:foreground="?android:selectableItemBackgroundBorderless"
-        android:padding="0dp"
         android:paddingStart="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:text="Edit Profile"
         android:textAlignment="textStart"
         app:layout_constraintTop_toBottomOf="@+id/textView12"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ChangePassButton"
@@ -74,7 +77,8 @@
         android:background="@color/transparent"
         android:drawableEnd="@drawable/goahead"
         android:foreground="?android:selectableItemBackgroundBorderless"
-        android:padding="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:paddingStart="20dp"
         android:text="Change Passowrd"
         android:textAlignment="textStart"
@@ -88,12 +92,14 @@
         android:background="@color/transparent"
         android:drawableEnd="@drawable/goahead"
         android:foreground="?android:selectableItemBackgroundBorderless"
-        android:padding="0dp"
         android:paddingStart="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:text="Help"
         android:textAlignment="textStart"
         app:layout_constraintTop_toBottomOf="@+id/ChangePassButton"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logoutButton"

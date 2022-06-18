@@ -102,10 +102,8 @@ public class messageAdaptor extends  RecyclerView.Adapter{
 
     public static class receiveViewHolder extends RecyclerView.ViewHolder{
         TextView messageRec, messageRecTime;
-        CircleImageView receiverImage;
         public receiveViewHolder(@NonNull View itemView) {
             super(itemView);
-            receiverImage=itemView.findViewById(R.id.receiverImage);
             messageRec=itemView.findViewById(R.id.messageRec);
             messageRecTime=itemView.findViewById(R.id.messageRecTime);
         }

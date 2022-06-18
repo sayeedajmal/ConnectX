@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.Strong.personalchat.databinding.ActivitySettingBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 public class Setting extends AppCompatActivity {
     ActivitySettingBinding BindSet;
@@ -24,5 +25,9 @@ public class Setting extends AppCompatActivity {
             Toast.makeText(this, "SignOut", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, purpose.class));
         });
+
+        //Picasso.get().load(users.getChatUserImage()).into(BindSet.SettingUserImage);
+
+        BindSet.backButton.setOnClickListener(view -> onBackPressed());
     }
 }

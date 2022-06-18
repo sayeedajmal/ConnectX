@@ -54,7 +54,6 @@ public class mainChat extends AppCompatActivity {
         final messageAdaptor messageAdaptor=new messageAdaptor(messageModels, this);
             int count=messageModels.size();
         database=FirebaseDatabase.getInstance();
-        database.getReference().keepSynced(true);
 
         //Showing Status
         database.getReference().child("Users").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,14 +125,20 @@ public class mainChat extends AppCompatActivity {
             }
         });
 
+        BindMainChat.sendButton.setOnLongClickListener(view ->{
+            Toast.makeText(this, "Long Clicked", Toast.LENGTH_SHORT).show();
+            return false;
+        });
+
         BindMainChat.mainchatbackButton.setOnClickListener(view -> onBackPressed());
 
+        database.getReference().keepSynced(true);
     }
      private void status(String status){
-        fAuth= FirebaseAuth.getInstance();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
                         child("Users").
                         child(MineId);
+        reference.keepSynced(true);
         HashMap<String, Object> hashmap=new HashMap<>();
         hashmap.put("status", status);
         reference.updateChildren(hashmap);

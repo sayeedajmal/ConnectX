@@ -38,7 +38,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goLogin"
         android:layout_width="280dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
         android:background="@color/LightSeaGreen"
         android:fontFamily="@font/abcdisplay"
@@ -54,7 +54,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goSignup"
         android:layout_width="280dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="21dp"
         android:fontFamily="@font/abcdisplay"
         android:padding="0dp"
