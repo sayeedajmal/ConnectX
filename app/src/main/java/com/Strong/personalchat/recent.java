@@ -2,7 +2,6 @@ package com.Strong.personalchat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,13 +9,11 @@ import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
 import com.Strong.personalchat.Fragments.requestFragment;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
 public class recent extends AppCompatActivity {
     ViewPagerSection viewPagerAdaptor;
-    FirebaseAuth firebaseAuth;
     ActivityRecentBinding BindRecent;
 
     @Override
@@ -42,11 +39,8 @@ public class recent extends AppCompatActivity {
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(1)).setIcon(R.drawable.call_icon);
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(2)).setIcon(R.drawable.request_icon);
 
-        BindRecent.LogoutButton.setOnClickListener(view -> {
-            firebaseAuth=FirebaseAuth.getInstance();
-            firebaseAuth.signOut();
-            Toast.makeText(this, "SignOut", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, purpose.class));
+        BindRecent.Setting.setOnClickListener(view ->{
+            startActivity(new Intent(this, Setting.class));
         });
 
         BindRecent.floatNewChat.setOnClickListener(view -> {

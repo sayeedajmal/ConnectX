@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Setting">
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="70dp"
+        android:background="@color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/trebuc"
+        android:text="Settings"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/defaultuser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/trebuc"
+        android:text="Account"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/EditProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/transparent"
+        android:drawableEnd="@drawable/goahead"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:padding="0dp"
+        android:paddingStart="20dp"
+        android:text="Edit Profile"
+        android:textAlignment="textStart"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ChangePassButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:drawableEnd="@drawable/goahead"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:padding="0dp"
+        android:paddingStart="20dp"
+        android:text="Change Passowrd"
+        android:textAlignment="textStart"
+        app:layout_constraintTop_toBottomOf="@+id/EditProfileButton"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/HelpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:drawableEnd="@drawable/goahead"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:padding="0dp"
+        android:paddingStart="20dp"
+        android:text="Help"
+        android:textAlignment="textStart"
+        app:layout_constraintTop_toBottomOf="@+id/ChangePassButton"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="188dp"
+        android:background="@drawable/button_round"
+        android:drawableStart="@drawable/logout"
+        android:fontFamily="monospace"
+        android:foreground="?android:selectableItemBackground"
+        android:text="Logout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HelpButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

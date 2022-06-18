@@ -18,19 +18,20 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
+
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/mainchatbackButton"
             android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/round_corner"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent"
             android:clickable="true"
             android:foreground="?android:selectableItemBackgroundBorderless"
+            android:scaleType="centerCrop"
             android:src="@drawable/backbutton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/mainChatImage"
@@ -134,40 +135,34 @@
         android:layout_marginBottom="3dp"
         tools:ignore="MissingConstraints"/>
 
-    <FrameLayout
-        android:id="@+id/FrameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/sendbutton" />
-    </FrameLayout>
-
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/TypeMessage"
         android:layout_width="0dp"
         android:layout_height="42dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:drawablePadding="5dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/image_corner"
+        android:drawablePadding="5dp"
         android:fontFamily="@font/trebuc"
         android:hint="Type a Message"
         android:padding="5dp"
+        android:layout_marginStart="8dp"
         android:paddingStart="15dp"
+        android:layout_marginBottom="5dp"
         android:textColorHint="@color/SlateGray"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/FrameLayout"
         tools:ignore="MissingConstraints,RtlSymmetry" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/sendButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_round"
+        android:scaleType="centerInside"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/sendbutton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

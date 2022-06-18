@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:foreground="?android:selectableItemBackgroundBorderless"
-    android:layout_margin="1dp"
+    android:layout_margin="3dp"
     android:theme="@style/Theme.PersonalChat"
     android:background="@drawable/chatview_corner"
     tools:ignore="MissingConstraints">
@@ -22,12 +22,12 @@
 
     <TextView
         android:id="@+id/ChatUsername"
-        android:layout_width="187dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:maxWidth="187dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/nexaslabbold"
-        android:padding="3dp"
         android:text="Username"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
@@ -40,7 +40,7 @@
         android:layout_height="18dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="5dp"
         android:fontFamily="@font/trebuc"
         android:paddingStart="5sp"
         android:text="LastMessage"
@@ -51,18 +51,13 @@
 
     <TextView
         android:id="@+id/lastMessageTime"
-        android:layout_width="100dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
         android:text="LastMessageTime"
-        app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ChatUsername"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,29 +9,30 @@
     <LinearLayout
         android:id="@+id/labelLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#0D83EB"
+        android:layout_height="50dp"
+        android:background="#0383Eb"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/LogoutButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="6dp"
+            android:id="@+id/Setting"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
             android:background="#0000ffff"
             android:padding="0dp"
-            android:rotationY="180"
-            android:scaleType="center"
-            android:src="@drawable/logout" />
+            android:foreground="?android:selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/setting" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
             android:fontFamily="@font/emotion"
             android:text="PersonalChat"
             android:textColor="@color/White"
@@ -42,10 +43,10 @@
         android:id="@+id/tabLayoutDashboard"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="5dp"
+        android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/callview_corner"
         android:clickable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
@@ -56,14 +57,15 @@
         app:tabIconTint="#2196F3"
         app:tabIndicatorColor="#FFFFFF"
         app:tabIndicatorHeight="3dp"
-        app:tabSelectedTextColor="@color/LawnGreen"
         tools:ignore="MissingConstraints" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/dashboardPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,30 +73,31 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="50dp"
-        app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="#136AB6"
+        android:foregroundGravity="right"
+        app:cardBackgroundColor="#0D83EB"
+        app:cardCornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/dashboardPager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/floatNewChat"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/callview_corner"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/button_round"
             android:clickable="true"
             android:foreground="?android:selectableItemBackgroundBorderless"
-            android:layout_margin="5dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="15dp"
             android:scaleType="fitCenter"
             android:src="@drawable/newchat"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
