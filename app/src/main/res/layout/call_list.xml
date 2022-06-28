@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="65dp"
     android:clickable="true"
     android:foreground="?android:selectableItemBackgroundBorderless"
-    android:layout_margin="2dp"
-    android:theme="@style/Theme.PersonalChat"
+    android:layout_marginTop="2dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:theme="@style/Theme.PersonalChat.V1"
     android:background="@drawable/callview_corner"
     tools:ignore="MissingConstraints">
 
@@ -42,14 +44,16 @@
         android:id="@+id/callInform"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="36dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/trebuc"
         android:paddingStart="5sp"
         android:text="Message!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/callUserImage"
-        app:layout_constraintTop_toBottomOf="@+id/callUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/callUsername"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="RtlSymmetry" />
 
     <ImageButton
         android:id="@+id/callBack"

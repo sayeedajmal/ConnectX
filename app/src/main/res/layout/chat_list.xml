@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:foreground="?android:selectableItemBackgroundBorderless"
-    android:layout_margin="3dp"
-    android:theme="@style/Theme.PersonalChat"
+    android:layout_marginTop="2dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:theme="@style/Theme.PersonalChat.V1"
     android:background="@drawable/chatview_corner"
     tools:ignore="MissingConstraints">
 
@@ -29,7 +31,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/nexaslabbold"
         android:text="Username"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
         app:layout_constraintStart_toEndOf="@+id/chatUserImage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +55,7 @@
         android:id="@+id/lastMessageTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         android:text="LastMessageTime"
         android:textSize="13sp"

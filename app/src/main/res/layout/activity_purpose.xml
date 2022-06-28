@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.PersonalChat"
+    android:theme="@style/Theme.PersonalChat.V1"
     tools:context=".purpose">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="121dp"
+        android:layout_width="85dp"
         android:layout_height="85dp"
         android:padding="0dp"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/appicon"
         tools:ignore="MissingConstraints" />
@@ -37,32 +36,32 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goLogin"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="152dp"
         android:background="@color/LightSeaGreen"
         android:fontFamily="@font/abcdisplay"
-        android:padding="0dp"
-        android:textColor="@color/White"
         android:text="LOGIN"
+        android:textColor="@color/White"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goSignup"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:fontFamily="@font/abcdisplay"
-        android:padding="0dp"
-        android:text="SIGNUP"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
         android:background="@color/LightSeaGreen"
-        android:textSize="35sp"
+        android:fontFamily="@font/abcdisplay"
+        android:text="SIGNUP"
         android:textColor="@color/White"
+        android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goLogin"
         tools:ignore="MissingConstraints" />

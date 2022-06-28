@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/Theme.PersonalChat"
-    android:layout_marginEnd="5dp">
+    android:layout_marginEnd="5dp"
+    android:theme="@style/Theme.PersonalChat.V1">
 
 
     <androidx.cardview.widget.CardView
@@ -30,12 +30,13 @@
                 android:id="@+id/messageSen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:maxWidth="260dp"
-                android:paddingLeft="12dp"
-                android:paddingTop="8dp"
                 android:fontFamily="@font/trebuc"
-                android:paddingRight="12dp"
+                android:maxWidth="260dp"
+                android:textAlignment="textEnd"
+                android:layout_gravity="end"
+                android:paddingStart="8dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
                 android:text="This is a Sender."
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
@@ -48,9 +49,11 @@
                 android:textColor="@color/White"
                 android:background="@drawable/round_corner"
                 android:textSize="10sp"
-                android:padding="5dp"
+                android:padding="3dp"
+                android:layout_marginStart="5dp"
                 android:text="01,28,2022 - 09-09 PM"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="RtlSymmetry,SmallSp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

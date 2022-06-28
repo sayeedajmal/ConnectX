@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
-    android:theme="@style/Theme.PersonalChat">
+    android:theme="@style/Theme.PersonalChat.V1">
 
 
     <androidx.cardview.widget.CardView
@@ -31,12 +31,11 @@
                 android:id="@+id/messageRec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/trebuc"
                 android:maxWidth="260dp"
-                android:paddingLeft="12dp"
+                android:paddingStart="5dp"
                 android:paddingTop="8dp"
-                android:paddingRight="12dp"
+                android:paddingEnd="5dp"
                 android:text="This is Reciever."
                 android:textColor="@color/White"
                 android:textSize="16sp" />
@@ -48,6 +47,7 @@
                 android:layout_gravity="start"
                 android:background="@drawable/round_corner"
                 android:padding="3dp"
+                android:layout_marginEnd="5dp"
                 android:text="01,28,2022 - 09-09 PM"
                 android:textColor="@color/White"
                 android:textSize="10sp"

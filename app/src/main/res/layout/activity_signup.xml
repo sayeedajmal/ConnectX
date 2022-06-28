@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.PersonalChat"
+    android:theme="@style/Theme.PersonalChat.V1"
     tools:context=".signup">
 
 
@@ -24,8 +24,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
-        android:layout_width="177dp"
-        android:layout_height="136dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:src="@drawable/appicon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,10 +35,12 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/equinox"
         android:text="CREATE NEW ACCOUNT"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleImageView"
         tools:ignore="MissingConstraints" />
@@ -55,26 +57,24 @@
         android:gravity="center"
         android:inputType="text"
         android:padding="5dp"
+        android:hint="@string/app_name"
         android:textColor="@color/White"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-200dp"
-        android:layout_marginBottom="-8dp"
-        android:background="@drawable/button_corner"
+        android:layout_marginBottom="2dp"
         android:fontFamily="@font/trebuc"
         android:padding="2sp"
         android:text="Username"
-        android:textColor="@color/White"
         app:layout_constraintBottom_toTopOf="@+id/signUsername"
-        app:layout_constraintEnd_toEndOf="@+id/signUsername"
         app:layout_constraintStart_toStartOf="@+id/signUsername"
         tools:ignore="MissingConstraints" />
 
@@ -90,26 +90,24 @@
         android:gravity="center"
         android:inputType="textEmailAddress"
         android:padding="5dp"
+        android:hint="personalchat@gmail.com"
         android:textColor="@color/White"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUsername"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-180dp"
-        android:layout_marginBottom="-8dp"
-        android:background="@drawable/button_corner"
+        android:layout_marginBottom="2dp"
         android:fontFamily="@font/trebuc"
         android:padding="2sp"
-        android:textColor="@color/White"
         android:text="Email Address"
         app:layout_constraintBottom_toTopOf="@+id/signEmail"
-        app:layout_constraintEnd_toEndOf="@+id/signEmail"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/signEmail"
         tools:ignore="MissingConstraints" />
 
@@ -126,23 +124,21 @@
         android:drawableStart="@drawable/password"
         android:gravity="center"
         android:textSize="20sp"
+        android:hint="********"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signEmail"
-        tools:ignore="MissingConstraints"/>
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-160dp"
-        android:layout_marginBottom="-8dp"
-        android:background="@drawable/button_corner"        android:fontFamily="@font/trebuc"
+        android:layout_marginBottom="2dp"
         android:padding="2sp"
         android:text="Create Password"
-        android:textColor="@color/White"
         app:layout_constraintBottom_toTopOf="@+id/signPassword"
-        app:layout_constraintEnd_toEndOf="@+id/signPassword"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/signPassword"
         tools:ignore="MissingConstraints" />
 

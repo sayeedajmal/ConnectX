@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.PersonalChat.V1"
     tools:context=".Setting">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -46,12 +47,14 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="44dp"
         android:fontFamily="@font/trebuc"
         android:text="Account"
         android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/EditProfileButton"
@@ -83,7 +86,8 @@
         android:text="Change Passowrd"
         android:textAlignment="textStart"
         app:layout_constraintTop_toBottomOf="@+id/EditProfileButton"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/HelpButton"
@@ -103,15 +107,16 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="188dp"
+        android:layout_width="94dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="184dp"
         android:background="@drawable/button_round"
         android:drawableStart="@drawable/logout"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/abcdisplay"
         android:foreground="?android:selectableItemBackground"
         android:text="Logout"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HelpButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

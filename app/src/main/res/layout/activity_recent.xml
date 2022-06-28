@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.PersonalChat"
+    android:theme="@style/Theme.PersonalChat.V1"
     tools:context=".recent">
 
     <LinearLayout
@@ -32,9 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:fontFamily="@font/emotion"
-            android:text="PersonalChat"
+            android:text="@string/app_name"
             android:textColor="@color/White"
             android:textSize="35sp" />
     </LinearLayout>
@@ -43,19 +43,19 @@
         android:id="@+id/tabLayoutDashboard"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:orientation="vertical"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/callview_corner"
         android:clickable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
-        android:theme="@style/Theme.PersonalChat"
+        android:theme="@style/Theme.PersonalChat.V1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelLayout"
         app:tabIconTint="#2196F3"
-        app:tabIndicatorColor="#FFFFFF"
+        app:tabIndicatorColor="@color/White"
         app:tabIndicatorHeight="3dp"
         tools:ignore="MissingConstraints" />
 
@@ -63,8 +63,8 @@
         android:id="@+id/dashboardPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
         android:layout_marginStart="2dp"
+        android:layout_marginTop="105dp"
         android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
