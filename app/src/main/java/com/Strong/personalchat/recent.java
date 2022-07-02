@@ -9,10 +9,14 @@ import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
 import com.Strong.personalchat.Fragments.requestFragment;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Objects;
 
-public class recent extends AppCompatActivity {
+public class recent extends status {
     ViewPagerSection viewPagerAdaptor;
     ActivityRecentBinding BindRecent;
 
@@ -52,4 +56,6 @@ public class recent extends AppCompatActivity {
         super.onBackPressed();
         finishAffinity();
     }
+
+
 }

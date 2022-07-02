@@ -59,26 +59,6 @@ public class messageAdaptor extends  RecyclerView.Adapter{
             ((receiveViewHolder)holder).messageRec.setText(message.getMessage());
             Date timeD = new Date(message.getTimeStamp());
             ((receiveViewHolder)holder).messageRecTime.setText(ShowDateTime(timeD));
-
-            //Setting Sender Image to the chat's left Side
-            /*database=FirebaseDatabase.getInstance();
-            String senderId=message.getuId();
-            database.getReference().child("Users").child(senderId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                            Bitmap receiverImage=dataSnapshot.child("chatUserImage").getValue(Bitmap.class);
-                           // ((receiveViewHolder)holder).receiverImage.setImageBitmap(receiverImage);
-                            Toast.makeText(context, "this is User Id: "+message.getuId() , Toast.LENGTH_SHORT).show();
-                            Toast.makeText(context, "this is image: "+receiverImage, Toast.LENGTH_SHORT).show();
-                        }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            }); */
         }
     }
 

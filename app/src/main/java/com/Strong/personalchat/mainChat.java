@@ -14,7 +14,6 @@ import com.Strong.personalchat.models.message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
@@ -25,7 +24,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 
-public class mainChat extends AppCompatActivity {
+public class mainChat extends status {
     FirebaseAuth fAuth;
     String MineId;
     String YourID;
@@ -56,26 +55,32 @@ public class mainChat extends AppCompatActivity {
         database=FirebaseDatabase.getInstance();
 
         //Showing Status
-        database.getReference().child("Users").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("Users").child(YourID).addValueEventListener(new ValueEventListener() {
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                   if (dataSnapshot.getKey().equals("status")){
+                   if (Objects.requireNonNull(dataSnapshot.getKey()).equals("status")){
                        String status=dataSnapshot.getValue(String.class);
-                       if (status.equals("online"))
-                       BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
+                       assert status != null;
+                       if (status.equals("online")){
+                       BindMainChat.ActiveStatus.setText("Active Now");
+                       }else{
+                           BindMainChat.ActiveStatus.setText("");
+                       }
                    }
                }
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
         //Showing Messages
         assert MineId != null;
         database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
+
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -134,25 +139,5 @@ public class mainChat extends AppCompatActivity {
 
         database.getReference().keepSynced(true);
     }
-     private void status(String status){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                        child("Users").
-                        child(MineId);
-        reference.keepSynced(true);
-        HashMap<String, Object> hashmap=new HashMap<>();
-        hashmap.put("status", status);
-        reference.updateChildren(hashmap);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        status("online");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        status("offline");
-    }
 }

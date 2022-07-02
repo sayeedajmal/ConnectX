@@ -45,18 +45,23 @@
             android:layout_toEndOf="@+id/mainchatbackButton"
             tools:ignore="MissingConstraints" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <TextView
             android:id="@+id/Active_status"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mainChatUsername"
+            android:layout_alignStart="@+id/mainChatUsername"
+            android:layout_alignEnd="@+id/mainChatUsername"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="-10dp"
-            android:layout_marginBottom="6dp"
-            android:layout_toEndOf="@+id/mainChatImage"
-            android:background="@drawable/active_status"
-            android:visibility="invisible"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:textAlignment="center"
+            android:textColor="@color/Green"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/mainChatImage"
-            app:layout_constraintEnd_toEndOf="@+id/mainChatImage" />
+            app:layout_constraintEnd_toEndOf="@+id/mainChatImage"
+            tools:ignore="SmallSp" />
 
         <TextView
             android:id="@+id/mainChatUsername"

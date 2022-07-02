@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-public class Setting extends AppCompatActivity {
+public class Setting extends status {
     ActivitySettingBinding BindSet;
     FirebaseAuth firebaseAuth;
     @Override

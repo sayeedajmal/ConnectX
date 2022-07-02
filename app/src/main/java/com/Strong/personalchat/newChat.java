@@ -9,7 +9,7 @@ import com.Strong.personalchat.databinding.ActivityNewchatBinding;
 
 import java.util.Objects;
 
-public class newChat extends AppCompatActivity {
+public class newChat extends status {
  ActivityNewchatBinding BindNewChat;
     ViewPagerSection viewPagerAdaptor;
 

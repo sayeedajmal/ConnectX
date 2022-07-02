@@ -86,6 +86,7 @@ public class recentFragment extends Fragment {
                 }
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 adaptor.notifyDataSetChanged();
