@@ -10,9 +10,9 @@
     <TextView
         android:layout_width="match_parent"
         android:gravity="center"
-        android:textColor="@color/Red"
+        android:textColor="#2196F3"
         android:layout_height="match_parent"
         android:fontFamily="@font/abcdisplay"
         android:textSize="40sp"
-        android:text="WECLOME BACK MR. SAYEED!" />
+        android:text="WE ARE DEVELOPING THIS APPLICATION. SO, PLEASE KEEP PATIENCE." />
 </FrameLayout>

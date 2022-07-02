@@ -34,7 +34,7 @@
                 android:fontFamily="@font/trebuc"
                 android:maxWidth="260dp"
                 android:padding="7dp"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:text="This is Reciever."
                 android:textColor="@color/White"
                 android:textSize="16sp" />
