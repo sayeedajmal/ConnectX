@@ -11,10 +11,9 @@
         android:id="@+id/SettingUserImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="60dp"
-        android:background="@drawable/button_round"
-        android:src="@drawable/defaultuser"
+        android:src="@drawable/ic_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +58,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/EditProfileButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:background="@color/transparent"
         android:drawableEnd="@drawable/goahead"
@@ -76,7 +75,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ChangePassButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/transparent"
         android:drawableEnd="@drawable/goahead"
         android:foreground="?android:selectableItemBackgroundBorderless"
@@ -92,7 +91,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/HelpButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/transparent"
         android:drawableEnd="@drawable/goahead"
         android:foreground="?android:selectableItemBackgroundBorderless"
@@ -107,15 +106,16 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logoutButton"
-        android:layout_width="94dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="184dp"
-        android:background="@drawable/button_round"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/image_corner"
         android:drawableStart="@drawable/logout"
         android:fontFamily="@font/abcdisplay"
         android:foreground="?android:selectableItemBackground"
         android:text="Logout"
+        android:padding="10dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HelpButton" />

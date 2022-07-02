@@ -1,7 +1,7 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.PersonalChat.V1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:colorBackground">#263337</item>
+        <item name="android:colorBackground">#252c33</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:screenOrientation">portrait</item>

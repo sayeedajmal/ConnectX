@@ -43,7 +43,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:drawableStart="@drawable/defaultuser"
+        android:drawableStart="@drawable/ic_user"
         android:fontFamily="@font/trebuc"
         android:hint="Search Username"
         android:inputType="textPersonName"

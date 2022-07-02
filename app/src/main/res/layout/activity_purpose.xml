@@ -13,10 +13,10 @@
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:padding="0dp"
-        android:scaleType="centerInside"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/appicon"
+        app:srcCompat="@mipmap/icon_foreground"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -37,9 +37,10 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goLogin"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_marginTop="152dp"
-        android:background="@color/LightSeaGreen"
+        android:background="@drawable/button_corner"
+        android:backgroundTint="#2196F3"
         android:fontFamily="@font/abcdisplay"
         android:text="LOGIN"
         android:textColor="@color/White"
@@ -53,9 +54,10 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goSignup"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_marginTop="40dp"
-        android:background="@color/LightSeaGreen"
+        android:background="@drawable/button_corner"
+        android:backgroundTint="#2196F3"
         android:fontFamily="@font/abcdisplay"
         android:text="SIGNUP"
         android:textColor="@color/White"

@@ -54,14 +54,12 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
         database.getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("Chats").child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChildren()){
                         for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                             holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
                             Long fetchingTime=dataSnapshot.child("timeStamp").getValue(Long.class);
                             Date time=new Date(fetchingTime);
                             holder.lastMessageTime.setText(ShowDateTime(time));
                         }
-                    }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

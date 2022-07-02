@@ -35,7 +35,7 @@ public class recent extends AppCompatActivity {
 
         BindRecent.dashboardPager.setAdapter(viewPagerAdaptor);
         BindRecent.tabLayoutDashboard.setupWithViewPager(BindRecent.dashboardPager);
-        Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(0)).setIcon(R.drawable.primar_icon);
+        Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(0)).setIcon(R.drawable.sendbutton);
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(1)).setIcon(R.drawable.call_icon);
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(2)).setIcon(R.drawable.request_icon);
 
