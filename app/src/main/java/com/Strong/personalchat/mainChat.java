@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import com.Strong.personalchat.models.message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
@@ -54,7 +57,7 @@ public class mainChat extends status {
             int count=messageModels.size();
         database=FirebaseDatabase.getInstance();
 
-        //Showing Status
+        //Showing Status and ADDED TYPING SHOWING
         database.getReference().child("Users").child(YourID).addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
@@ -68,6 +71,18 @@ public class mainChat extends status {
                        }else{
                            BindMainChat.ActiveStatus.setText("");
                        }
+                   }
+                   if(dataSnapshot.getKey().equals("Typing")){
+                       String typing=dataSnapshot.getValue(String.class);
+                       assert typing != null;
+                       if(typing.length()!=0){
+                       BindMainChat.ActiveStatus.setVisibility(View.GONE);
+                       BindMainChat.TypingStatus.setVisibility(View.VISIBLE);
+                       }else{
+                       BindMainChat.TypingStatus.setVisibility(View.GONE);
+                       BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
+                       }
+
                    }
                }
             }
@@ -127,6 +142,36 @@ public class mainChat extends status {
                         child(MineId).
                         push().setValue(conversation)
                 );
+            }
+        });
+
+        // MESSAGE TYPING SHOW TYPING ON ACTIVE STATUS OPTION
+        BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                        child("Users").
+                        child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+
+                HashMap<String, Object> hashmap=new HashMap<>();
+                if(charSequence.length()!=0){
+                    hashmap.put("Typing", charSequence.toString());
+                }else{
+                    hashmap.put("Typing", "");
+                }
+                reference.updateChildren(hashmap);
+                reference.keepSynced(true);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
