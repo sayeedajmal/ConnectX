@@ -147,6 +147,12 @@ public class mainChat extends status {
 
         // MESSAGE TYPING SHOW TYPING ON ACTIVE STATUS OPTION
         BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
+                final FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                        child("Users").
+                        child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+
+                final HashMap<String, Object> hashmap=new HashMap<>();
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
