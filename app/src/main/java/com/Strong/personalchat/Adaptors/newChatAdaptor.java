@@ -24,7 +24,6 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHolder>{
-    ActivityNewchatBinding bindNewChat;
     ArrayList<newChatGetter> newUserList;
     Context context;
 

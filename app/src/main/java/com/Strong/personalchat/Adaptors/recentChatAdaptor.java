@@ -76,13 +76,6 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
             intent.putExtra("newChatUserImage",  Uri.parse(users.getChatUserImage()).toString());
             context.startActivity(intent);
         });
-
-        //SHOWING STATUS EITHER USER IS ONLINE OR OFFLINE
-           /* if (users.getStatus().equals("online")) {
-                holder.Active_status.setVisibility(View.VISIBLE);
-            } else {
-                holder.deActive_status.setVisibility(View.VISIBLE);
-            } */
     }
 
     private String ShowDateTime(Date date) {

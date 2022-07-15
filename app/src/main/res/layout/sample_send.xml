@@ -37,7 +37,7 @@
                 android:padding="8dp"
                 android:text="This is a Sender."
                 android:textColor="#ffffff"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 tools:ignore="RtlSymmetry" />
 
             <TextView

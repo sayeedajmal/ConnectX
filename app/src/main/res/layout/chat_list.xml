@@ -3,13 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="wrap_content"
     android:foreground="?android:selectableItemBackgroundBorderless"
-    android:layout_marginTop="2dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
+   android:layout_margin="5dp"
     android:theme="@style/Theme.PersonalChat.V1"
-    android:background="@drawable/chatview_corner"
     tools:ignore="MissingConstraints">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -29,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/nexaslabbold"
+        android:fontFamily="@font/trebuc"
         android:text="Username"
-        android:textSize="17sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
         app:layout_constraintStart_toEndOf="@+id/chatUserImage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,12 +36,13 @@
     <TextView
         android:id="@+id/chatLastMessage"
         android:layout_width="260dp"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="18dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/trebuc"
         android:paddingStart="5sp"
+        android:textSize="15sp"
         android:text="LastMessage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/chatUserImage"

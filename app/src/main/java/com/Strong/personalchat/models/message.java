@@ -14,10 +14,6 @@ public class message {
         this.uId = uId;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getuId() {
         return uId;
     }

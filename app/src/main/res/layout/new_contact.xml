@@ -9,7 +9,6 @@
     android:layout_marginEnd="8dp"
     android:clickable="true"
     android:foreground="?android:selectableItemBackgroundBorderless"
-    android:background="@drawable/chatview_corner"
     android:theme="@style/Theme.PersonalChat.V1"
     tools:ignore="MissingConstraints">
 
@@ -28,7 +27,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/nexaslabbold"
+        android:fontFamily="@font/trebuc"
         android:padding="3dp"
         android:text="Username"
         android:textSize="20sp"

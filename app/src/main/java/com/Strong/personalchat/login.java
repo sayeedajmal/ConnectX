@@ -63,5 +63,9 @@ public class login extends AppCompatActivity {
             Intent intent=new Intent(login.this, signup.class);
             startActivity(intent);
         });
+
+        BindLogin.backButton.setOnClickListener(view ->{
+            onBackPressed();
+        });
     }
 }
