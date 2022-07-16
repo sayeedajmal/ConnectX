@@ -1,7 +1,4 @@
-package com.Strong.personalchat;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.Strong.personalchat.Activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,9 +7,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
+import com.Strong.personalchat.status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 
-public class mainChat extends status {
+public class mainChatActivity extends status {
     FirebaseAuth fAuth;
     String MineId;
     String YourID;
@@ -160,12 +160,6 @@ public class mainChat extends status {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                        child("Users").
-                        child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-
-                HashMap<String, Object> hashmap=new HashMap<>();
                 if(charSequence.length()!=0){
                     hashmap.put("Typing", charSequence.toString());
                 }else{
@@ -186,9 +180,15 @@ public class mainChat extends status {
             return false;
         });
 
-        BindMainChat.mainchatbackButton.setOnClickListener(view -> onBackPressed());
+        BindMainChat.mainchatbackButton.setOnClickListener(view -> {
+            onBackPressed();
+            BindMainChat.TypeMessage.setText(null);
+        });
 
         database.getReference().keepSynced(true);
     }
 
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

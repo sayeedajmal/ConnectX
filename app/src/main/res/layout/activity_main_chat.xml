@@ -6,7 +6,7 @@
     android:theme="@style/Theme.PersonalChat.V1"
     android:animateLayoutChanges="true"
     android:layout_height="match_parent"
-    tools:context=".mainChat">
+    tools:context=".Activity.mainChatActivity">
 
     <RelativeLayout
         android:id="@+id/constraint"

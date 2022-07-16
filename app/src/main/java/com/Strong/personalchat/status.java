@@ -10,13 +10,14 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class status extends AppCompatActivity {
-    private void status(String status){
-        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                child("Users").
-                child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+            child("Users").
+            child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
 
-        HashMap<String, Object> hashmap=new HashMap<>();
+    HashMap<String, Object> hashmap = new HashMap<>();
+
+    private void status(String status) {
         hashmap.put("status", status);
 
         reference.updateChildren(hashmap);
@@ -38,6 +39,9 @@ public class status extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        hashmap.put("status", "");
+        reference.updateChildren(hashmap);
+        reference.keepSynced(true);
         status("offline");
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.PersonalChat.V1"
-    tools:context=".newChat">
+    tools:context=".Activity.newChatActivity">
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/chatBackButton"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="@+id/chatBackButton" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/newSearchPerson"
+        android:id="@+id/SearchPerson"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,5 +63,5 @@
         android:layout_height="611dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newSearchPerson" />
+        app:layout_constraintTop_toBottomOf="@+id/SearchPerson" />
 </androidx.constraintlayout.widget.ConstraintLayout>

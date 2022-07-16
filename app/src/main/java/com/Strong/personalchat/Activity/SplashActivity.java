@@ -1,14 +1,17 @@
-package com.Strong.personalchat;
+package com.Strong.personalchat.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Splash extends AppCompatActivity {
+@SuppressLint("CustomSplashScreen")
+public class SplashActivity extends AppCompatActivity {
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +20,9 @@ public class Splash extends AppCompatActivity {
             new Handler().postDelayed(() -> {
                 auth=FirebaseAuth.getInstance();
                 if (auth.getCurrentUser()!=null){
-                    startActivity(new Intent(Splash.this, recent.class));
+                    startActivity(new Intent(SplashActivity.this, recentActivity.class));
                 }else{
-                    startActivity(new Intent(Splash.this, purpose.class));
+                    startActivity(new Intent(SplashActivity.this, purposeActivity.class));
                 }
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }, 180);

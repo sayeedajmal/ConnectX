@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
 import com.Strong.personalchat.models.newChatGetter;
@@ -37,7 +38,7 @@ public class newChatFragment extends Fragment {
             BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
             database = FirebaseDatabase.getInstance();
 
-            String currentUser= FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String currentUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
                 @SuppressLint("NotifyDataSetChanged")
                 @Override

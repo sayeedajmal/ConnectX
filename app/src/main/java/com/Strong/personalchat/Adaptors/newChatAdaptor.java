@@ -7,19 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Strong.personalchat.databinding.ActivityNewchatBinding;
 import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.R;
 import com.squareup.picasso.Picasso;
-import com.Strong.personalchat.mainChat;
+import com.Strong.personalchat.Activity.mainChatActivity;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,11 +39,12 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         newChatGetter users=newUserList.get(position);
 
+
         Picasso.get().load(users.getChatUserImage()).into(holder.newContactImage);
         holder.newChatUsername.setText(users.getUsername());
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent=new Intent(context, mainChat.class);
+            Intent intent=new Intent(context, mainChatActivity.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
             intent.putExtra("newChatUserImage", Uri.parse(users.getChatUserImage()).toString());

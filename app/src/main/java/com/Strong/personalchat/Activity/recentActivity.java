@@ -1,22 +1,19 @@
-package com.Strong.personalchat;
+package com.Strong.personalchat.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
 import com.Strong.personalchat.Fragments.requestFragment;
+import com.Strong.personalchat.R;
+import com.Strong.personalchat.ViewPagerSection;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.Strong.personalchat.status;
 
-import java.util.HashMap;
 import java.util.Objects;
 
-public class recent extends status {
+public class recentActivity extends status {
     ViewPagerSection viewPagerAdaptor;
     ActivityRecentBinding BindRecent;
 
@@ -43,13 +40,9 @@ public class recent extends status {
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(1)).setIcon(R.drawable.call_icon);
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(2)).setIcon(R.drawable.request_icon);
 
-        BindRecent.Setting.setOnClickListener(view ->{
-            startActivity(new Intent(this, Setting.class));
-        });
+        BindRecent.Setting.setOnClickListener(view -> startActivity(new Intent(this, SettingActivity.class)));
 
-        BindRecent.floatNewChat.setOnClickListener(view -> {
-            startActivity(new Intent(recent.this, newChat.class));
-        });
+        BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
     }
     @Override
     public void onBackPressed() {

@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.mainChat;
+import com.Strong.personalchat.Activity.mainChatActivity;
 import com.Strong.personalchat.models.recentGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -70,7 +70,7 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
        Picasso.get().load(users.getChatUserImage()).into(holder.chatUserImage);
         holder.ChatUsername.setText(users.getUsername());
         holder.itemView.setOnClickListener(view -> {
-            Intent intent=new Intent(context, mainChat.class);
+            Intent intent=new Intent(context, mainChatActivity.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
             intent.putExtra("newChatUserImage",  Uri.parse(users.getChatUserImage()).toString());

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalChat.V1">
         <activity
-            android:name=".Splash"
+            android:name=".Activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".purpose" />
-        <activity android:name=".login" />
-        <activity android:name=".signup" />
-        <activity android:name=".uploadProfile" />
-        <activity android:name=".recent" />
-        <activity android:name=".Setting" />
-        <activity android:name=".newChat" />
-        <activity android:name=".mainChat" />
+        <activity android:name=".Activity.purposeActivity" />
+        <activity android:name=".Activity.loginActivity" />
+        <activity android:name=".Activity.signupActivity" />
+        <activity android:name=".Activity.uploadProfileActivity" />
+        <activity android:name=".Activity.recentActivity" />
+        <activity android:name=".Activity.SettingActivity" />
+        <activity android:name=".Activity.newChatActivity" />
+        <activity android:name=".Activity.mainChatActivity" />
     </application>
 
 </manifest>

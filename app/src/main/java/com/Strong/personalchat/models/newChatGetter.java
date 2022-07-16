@@ -2,6 +2,7 @@ package com.Strong.personalchat.models;
 
 public class newChatGetter {
     String username;
+    static String PersonSearch;
 
     public newChatGetter(){
 
@@ -16,6 +17,15 @@ public class newChatGetter {
 
     public String getChatUserImage() {
         return chatUserImage;
+    }
+
+    public static String getPersonSearch() {
+        return PersonSearch;
+    }
+
+    public static void setPersonSearch(String personSearch) {
+        System.out.println("<<<<<<<<<<<"+newChatGetter.getPersonSearch());
+        PersonSearch = personSearch;
     }
 
     public String getUserId() {
