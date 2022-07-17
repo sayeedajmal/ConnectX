@@ -1,7 +1,8 @@
+
 package com.Strong.personalchat.models;
 
 public class signupSetter {
-    String username;
+  /*  String username;
     String email;
     String password;
 
@@ -58,5 +59,6 @@ public class signupSetter {
     }
 
     String chatUserImage;
-    String userId;
+    String userId;*/
 }
+

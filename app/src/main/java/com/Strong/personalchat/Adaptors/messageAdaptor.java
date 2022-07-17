@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class messageAdaptor extends  RecyclerView.Adapter{
     ArrayList<message> messageModels;
     FirebaseDatabase database;

@@ -40,6 +40,7 @@ public class status extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         hashmap.put("status", "");
+        hashmap.put("searchUser", "");
         reference.updateChildren(hashmap);
         reference.keepSynced(true);
         status("offline");

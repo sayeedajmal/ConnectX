@@ -48,6 +48,7 @@ public class signupActivity extends AppCompatActivity {
                 return;
             }
 
+            showToast("Please Upload DP to Complete Signup..");
             Intent intent = new Intent(signupActivity.this, uploadProfileActivity.class);
             intent.putExtra(Constants.KEY_USERNAME, username);
             intent.putExtra(Constants.KEY_EMAIL, email);

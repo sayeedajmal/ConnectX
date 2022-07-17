@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.Strong.personalchat.Utilities.Constants;
 import com.Strong.personalchat.databinding.ActivityProfileBinding;
-import com.Strong.personalchat.models.signupSetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -23,6 +22,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class uploadProfileActivity extends AppCompatActivity {
@@ -109,10 +109,16 @@ public class uploadProfileActivity extends AppCompatActivity {
                     String id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     storageReference.putBytes(data).addOnSuccessListener(taskSnapshot -> {
                         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            signupSetter userData = new signupSetter(username, email, pass, uri.toString(), id);
-                            database.getReference().child("Users").child(id).setValue(userData);
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put(Constants.KEY_USERNAME, username);
+                            hashMap.put(Constants.KEY_EMAIL, email);
+                            hashMap.put(Constants.KEY_PASSWORD, pass);
+                            hashMap.put(Constants.KEY_URI, uri.toString());
+                            hashMap.put(Constants.KEY_ID, id);
+                            database.getReference().child("Users").child(id).setValue(hashMap);
                             showToast("Image Uploaded!");
                         });
+                        showToast("Welcome " + username + " PersonalChat.");
                         Intent intent = new Intent(uploadProfileActivity.this, recentActivity.class);
                         startActivity(intent);
                     }).addOnFailureListener(e -> {
@@ -124,10 +130,7 @@ public class uploadProfileActivity extends AppCompatActivity {
                     showToast(Objects.requireNonNull(task.getException()).getMessage());
                 }
             });
-
-
         }
-        showToast("Please Select Profile Pic..");
     }
 
     @Override

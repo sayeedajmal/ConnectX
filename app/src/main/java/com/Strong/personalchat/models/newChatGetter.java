@@ -19,15 +19,6 @@ public class newChatGetter {
         return chatUserImage;
     }
 
-    public static String getPersonSearch() {
-        return PersonSearch;
-    }
-
-    public static void setPersonSearch(String personSearch) {
-        System.out.println("<<<<<<<<<<<"+newChatGetter.getPersonSearch());
-        PersonSearch = personSearch;
-    }
-
     public String getUserId() {
         return userId;
     }

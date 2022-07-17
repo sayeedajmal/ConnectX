@@ -30,9 +30,10 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.ViewHolder>{
+public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.ViewHolder> {
     ArrayList<recentGetter> chatUserList;
     Context context;
+
     public recentChatAdaptor(ArrayList<recentGetter> chatUserList, Context context) {
         this.chatUserList = chatUserList;
         this.context = context;
@@ -41,39 +42,40 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view= LayoutInflater.from(context).inflate(R.layout.chat_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.chat_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        recentGetter users=chatUserList.get(position);
+        recentGetter users = chatUserList.get(position);
 
         //Last Message to Shown
-        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         database.getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("Chats").child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                            holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
-                            Long fetchingTime=dataSnapshot.child("timeStamp").getValue(Long.class);
-                            Date time=new Date(fetchingTime);
-                            holder.lastMessageTime.setText(ShowDateTime(time));
-                        }
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                    Long fetchingTime = dataSnapshot.child("timeStamp").getValue(Long.class);
+                    Date time = new Date(fetchingTime);
+                    holder.lastMessageTime.setText(ShowDateTime(time));
+                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
         //Showing Chat Details
-       Picasso.get().load(users.getChatUserImage()).into(holder.chatUserImage);
+        Picasso.get().load(users.getChatUserImage()).into(holder.chatUserImage);
         holder.ChatUsername.setText(users.getUsername());
         holder.itemView.setOnClickListener(view -> {
-            Intent intent=new Intent(context, mainChatActivity.class);
+            Intent intent = new Intent(context, mainChatActivity.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
-            intent.putExtra("newChatUserImage",  Uri.parse(users.getChatUserImage()).toString());
+            intent.putExtra("newChatUserImage", Uri.parse(users.getChatUserImage()).toString());
             context.startActivity(intent);
         });
     }
@@ -87,16 +89,16 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
         return chatUserList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView chatUserImage;
         TextView ChatUsername, chatLastMessage, lastMessageTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            chatUserImage=itemView.findViewById(R.id.chatUserImage);
-            ChatUsername=itemView.findViewById(R.id.ChatUsername);
-            chatLastMessage=itemView.findViewById(R.id.chatLastMessage);
-            lastMessageTime=itemView.findViewById(R.id.lastMessageTime);
+            chatUserImage = itemView.findViewById(R.id.chatUserImage);
+            ChatUsername = itemView.findViewById(R.id.ChatUsername);
+            chatLastMessage = itemView.findViewById(R.id.chatLastMessage);
+            lastMessageTime = itemView.findViewById(R.id.lastMessageTime);
         }
     }
 }
