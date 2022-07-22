@@ -27,21 +27,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class callsAdaptor extends RecyclerView.Adapter<callsAdaptor.ViewHolder> {
     ArrayList<callsGetter> userCall;
     Context context;
+
     public callsAdaptor(Context context, ArrayList<callsGetter> userCall) {
-        this.context=context;
-        this.userCall=userCall;
+        this.context = context;
+        this.userCall = userCall;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(context).inflate(R.layout.call_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.call_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        callsGetter callsGetter =userCall.get(position);
+        callsGetter callsGetter = userCall.get(position);
 
         Glide.with(context).load(callsGetter.getCallUserImage()).into(new SimpleTarget<Drawable>() {
             @Override
@@ -50,7 +51,7 @@ public class callsAdaptor extends RecyclerView.Adapter<callsAdaptor.ViewHolder> 
             }
         });
         holder.callUsername.setText(callsGetter.getCallUsername());
-        holder.callInform.setText(callsGetter.getCallInform()+"."+"Today");
+        holder.callInform.setText(callsGetter.getCallInform() + "." + "Today");
     }
 
     @Override
@@ -66,9 +67,9 @@ public class callsAdaptor extends RecyclerView.Adapter<callsAdaptor.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            callUsername=itemView.findViewById(R.id.callUsername);
-            callInform=itemView.findViewById(R.id.callInform);
-            callUserImage=(CircleImageView)itemView.findViewById(R.id.callUserImage);
+            callUsername = itemView.findViewById(R.id.callUsername);
+            callInform = itemView.findViewById(R.id.callInform);
+            callUserImage = (CircleImageView) itemView.findViewById(R.id.callUserImage);
         }
     }
 }

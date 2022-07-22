@@ -20,15 +20,15 @@ public class recentActivity extends status {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BindRecent =ActivityRecentBinding.inflate(getLayoutInflater());
+        BindRecent = ActivityRecentBinding.inflate(getLayoutInflater());
         setContentView(BindRecent.getRoot());
 
 
-        recentFragment recentFragment =new recentFragment();
-        callsFragment callsFragment =new callsFragment();
-        requestFragment requestFragment =new requestFragment();
+        recentFragment recentFragment = new recentFragment();
+        callsFragment callsFragment = new callsFragment();
+        requestFragment requestFragment = new requestFragment();
 
-        viewPagerAdaptor=new ViewPagerSection(getSupportFragmentManager(), 0);
+        viewPagerAdaptor = new ViewPagerSection(getSupportFragmentManager(), 0);
 
         viewPagerAdaptor.addFragment(recentFragment, "Primary");
         viewPagerAdaptor.addFragment(callsFragment, "Calls");
@@ -44,6 +44,7 @@ public class recentActivity extends status {
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -15,11 +15,12 @@ import com.Strong.personalchat.models.newChatGetter;
 import com.Strong.personalchat.R;
 import com.squareup.picasso.Picasso;
 import com.Strong.personalchat.Activity.mainChatActivity;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHolder>{
+public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHolder> {
     ArrayList<newChatGetter> newUserList;
     Context context;
 
@@ -31,20 +32,20 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.new_contact, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.new_contact, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        newChatGetter users=newUserList.get(position);
+        newChatGetter users = newUserList.get(position);
 
 
         Picasso.get().load(users.getChatUserImage()).into(holder.newContactImage);
         holder.newChatUsername.setText(users.getUsername());
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent=new Intent(context, mainChatActivity.class);
+            Intent intent = new Intent(context, mainChatActivity.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
             intent.putExtra("newChatUserImage", Uri.parse(users.getChatUserImage()).toString());
@@ -57,14 +58,14 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
         return newUserList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView newContactImage;
         TextView newChatUsername;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            newContactImage=itemView.findViewById(R.id.newContactImage);
-            newChatUsername=itemView.findViewById(R.id.newChatUsername);
+            newContactImage = itemView.findViewById(R.id.newContactImage);
+            newChatUsername = itemView.findViewById(R.id.newChatUsername);
         }
     }
 

@@ -33,58 +33,59 @@ public class mainChatActivity extends status {
     String YourID;
     FirebaseDatabase database;
     ActivityMainChatBinding BindMainChat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BindMainChat=ActivityMainChatBinding.inflate(getLayoutInflater());
+        BindMainChat = ActivityMainChatBinding.inflate(getLayoutInflater());
         setContentView(BindMainChat.getRoot());
 
 
-        fAuth=FirebaseAuth.getInstance();
+        fAuth = FirebaseAuth.getInstance();
 
-        MineId=fAuth.getUid();
+        MineId = fAuth.getUid();
         //RECEIVING THE DATA OF USER FROM NEW CHAT ADAPTOR
-        YourID=getIntent().getStringExtra("userId");
-        String receiveName=getIntent().getStringExtra("username");
-        String chatUserImage=getIntent().getStringExtra("newChatUserImage");
+        YourID = getIntent().getStringExtra("userId");
+        String receiveName = getIntent().getStringExtra("username");
+        String chatUserImage = getIntent().getStringExtra("newChatUserImage");
 
         BindMainChat.mainChatUsername.setText(receiveName);
         Picasso.get().load(chatUserImage).into(BindMainChat.mainChatImage);
 
-        final ArrayList<message> messageModels=new ArrayList<>();
+        final ArrayList<message> messageModels = new ArrayList<>();
 
-        final messageAdaptor messageAdaptor=new messageAdaptor(messageModels, this);
-            int count=messageModels.size();
-        database=FirebaseDatabase.getInstance();
+        final messageAdaptor messageAdaptor = new messageAdaptor(messageModels, this);
+        int count = messageModels.size();
+        database = FirebaseDatabase.getInstance();
 
         //Showing Status and ADDED TYPING SHOWING
         database.getReference().child("Users").child(YourID).addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-               for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                   if (Objects.requireNonNull(dataSnapshot.getKey()).equals("status")){
-                       String status=dataSnapshot.getValue(String.class);
-                       assert status != null;
-                       if (status.equals("online")){
-                       BindMainChat.ActiveStatus.setText("Active Now");
-                       }else{
-                           BindMainChat.ActiveStatus.setText("");
-                       }
-                   }
-                   if(dataSnapshot.getKey().equals("Typing")){
-                       String typing=dataSnapshot.getValue(String.class);
-                       assert typing != null;
-                       if(typing.length()!=0){
-                       BindMainChat.ActiveStatus.setVisibility(View.GONE);
-                       BindMainChat.TypingStatus.setVisibility(View.VISIBLE);
-                       }else{
-                       BindMainChat.TypingStatus.setVisibility(View.GONE);
-                       BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
-                       }
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (Objects.requireNonNull(dataSnapshot.getKey()).equals("status")) {
+                        String status = dataSnapshot.getValue(String.class);
+                        assert status != null;
+                        if (status.equals("online")) {
+                            BindMainChat.ActiveStatus.setText("Active Now");
+                        } else {
+                            BindMainChat.ActiveStatus.setText("");
+                        }
+                    }
+                    if (dataSnapshot.getKey().equals("Typing")) {
+                        String typing = dataSnapshot.getValue(String.class);
+                        assert typing != null;
+                        if (typing.length() != 0) {
+                            BindMainChat.ActiveStatus.setVisibility(View.GONE);
+                            BindMainChat.TypingStatus.setVisibility(View.VISIBLE);
+                        } else {
+                            BindMainChat.TypingStatus.setVisibility(View.GONE);
+                            BindMainChat.ActiveStatus.setVisibility(View.VISIBLE);
+                        }
 
-                   }
-               }
+                    }
+                }
             }
 
             @Override
@@ -100,19 +101,20 @@ public class mainChatActivity extends status {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageModels.clear();
-                for (DataSnapshot dataSnapshot1: snapshot.getChildren()){
-                    message model=dataSnapshot1.getValue(message.class);
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    message model = dataSnapshot1.getValue(message.class);
                     messageModels.add(model);
-                    if (count==0){
+                    if (count == 0) {
                         messageAdaptor.notifyDataSetChanged();
-                    }else{
+                    } else {
                         // Getting Shown the last message when open the chat section
                         messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
-                        BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size()-1);
+                        BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size() - 1);
                     }
                     BindMainChat.mainChatRecyclerView.setAdapter(messageAdaptor);
                 }
             }
+
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -123,9 +125,9 @@ public class mainChatActivity extends status {
 
         //Sending the message and storing in the database
         BindMainChat.sendButton.setOnClickListener(view -> {
-            String message= Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
-            if (!message.equals("")){
-                final message conversation=new message(MineId, message);
+            String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
+            if (!message.equals("")) {
+                final message conversation = new message(MineId, message);
                 conversation.setTimeStamp(new Date().getTime());
                 BindMainChat.TypeMessage.setText(null);
 
@@ -136,23 +138,24 @@ public class mainChatActivity extends status {
                         child("Chats").
                         child(YourID).
                         push().setValue(conversation).addOnSuccessListener(e -> database.getReference().
-                        child("Users").
-                        child(YourID).
-                        child("Chats").
-                        child(MineId).
-                        push().setValue(conversation)
-                );
+                                child("Users").
+                                child(YourID).
+                                child("Chats").
+                                child(MineId).
+                                push().setValue(conversation)
+                        );
             }
         });
 
         // MESSAGE TYPING SHOW TYPING ON ACTIVE STATUS OPTION
         BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
-                final FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                        child("Users").
-                        child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+            final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                    child("Users").
+                    child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
 
-                final HashMap<String, Object> hashmap=new HashMap<>();
+            final HashMap<String, Object> hashmap = new HashMap<>();
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -160,9 +163,9 @@ public class mainChatActivity extends status {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length()!=0){
+                if (charSequence.length() != 0) {
                     hashmap.put("Typing", charSequence.toString());
-                }else{
+                } else {
                     hashmap.put("Typing", "");
                 }
                 reference.updateChildren(hashmap);
@@ -175,7 +178,7 @@ public class mainChatActivity extends status {
             }
         });
 
-        BindMainChat.sendButton.setOnLongClickListener(view ->{
+        BindMainChat.sendButton.setOnLongClickListener(view -> {
             Toast.makeText(this, "Long Clicked", Toast.LENGTH_SHORT).show();
             return false;
         });

@@ -30,7 +30,8 @@ public class recentFragment extends Fragment {
 
     FragmentRecyclerviewBinding BindRecycle;
     DatabaseReference database;
-    ArrayList<recentGetter> getters =new ArrayList<>();
+    ArrayList<recentGetter> getters = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,18 +45,18 @@ public class recentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        BindRecycle=FragmentRecyclerviewBinding.inflate(inflater,  container, false);
+        BindRecycle = FragmentRecyclerviewBinding.inflate(inflater, container, false);
 
-      recentChatAdaptor adaptor=new recentChatAdaptor(getters, getContext());
+        recentChatAdaptor adaptor = new recentChatAdaptor(getters, getContext());
         BindRecycle.RecyclerView.setAdapter(adaptor);
-      LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
 
-      database=FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance().getReference();
         database.keepSynced(true);
 
-        String currentUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-       database.child("Users").child(currentUser).child("Chats").addValueEventListener(new ValueEventListener() {
+        String currentUser = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        database.child("Users").child(currentUser).child("Chats").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -63,25 +64,25 @@ public class recentFragment extends Fragment {
                     getters.clear();
                     String Uid = dataSnapshot.getKey();
                     assert Uid != null;
-                        database.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    recentGetter users = dataSnapshot.getValue(recentGetter.class);
-                                    if (Objects.equals(dataSnapshot.getKey(), Uid)) {
-                                        assert users != null;
-                                        users.setUserId(dataSnapshot.getKey());
-                                        getters.add(users);
-                                    }
+                    database.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                recentGetter users = dataSnapshot.getValue(recentGetter.class);
+                                if (Objects.equals(dataSnapshot.getKey(), Uid)) {
+                                    assert users != null;
+                                    users.setUserId(dataSnapshot.getKey());
+                                    getters.add(users);
                                 }
-                                adaptor.notifyDataSetChanged();
                             }
+                            adaptor.notifyDataSetChanged();
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                adaptor.notifyDataSetChanged();
-                            }
-                        });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            adaptor.notifyDataSetChanged();
+                        }
+                    });
                     adaptor.notifyDataSetChanged();
                 }
             }

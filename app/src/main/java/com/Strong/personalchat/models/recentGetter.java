@@ -3,8 +3,8 @@ package com.Strong.personalchat.models;
 public class recentGetter {
     String chatUserImage;
 
-    public recentGetter(){
-        
+    public recentGetter() {
+
     }
 
     public String getChatUserImage() {

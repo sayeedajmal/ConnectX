@@ -10,14 +10,14 @@ import java.util.List;
 
 public class ViewPagerSection extends FragmentPagerAdapter {
 
-    List<Fragment> fragmentList=new ArrayList<>();
-    List<String> fragmentTitles=new ArrayList<>();
+    List<Fragment> fragmentList = new ArrayList<>();
+    List<String> fragmentTitles = new ArrayList<>();
 
     public ViewPagerSection(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 
-    public void addFragment(Fragment fragment, String title){
+    public void addFragment(Fragment fragment, String title) {
         fragmentList.add(fragment);
         fragmentTitles.add(title);
     }
@@ -35,7 +35,7 @@ public class ViewPagerSection extends FragmentPagerAdapter {
 
     @NonNull
     @Override
-    public CharSequence getPageTitle(int position){
-        return  fragmentTitles.get(position);
+    public CharSequence getPageTitle(int position) {
+        return fragmentTitles.get(position);
     }
 }

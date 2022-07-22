@@ -32,17 +32,18 @@ public class callsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        BindRecycle=FragmentRecyclerviewBinding.inflate(inflater,  container, false);
+        BindRecycle = FragmentRecyclerviewBinding.inflate(inflater, container, false);
 
-        callList.add(new callsGetter("Sayeed Ajmal", "Missed",""));
-        callList.add(new callsGetter("Shoaib Akhtar ", "OutGoing",""));
+        callList.add(new callsGetter("Sayeed Ajmal", "Missed", ""));
+        callList.add(new callsGetter("Shoaib Akhtar ", "OutGoing", ""));
 
         callsAdaptor callsAdaptor = new callsAdaptor(getContext(), callList);
         BindRecycle.RecyclerView.setAdapter(callsAdaptor);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
 
         return BindRecycle.getRoot();

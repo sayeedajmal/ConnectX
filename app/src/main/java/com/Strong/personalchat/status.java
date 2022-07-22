@@ -17,7 +17,7 @@ public class status extends AppCompatActivity {
 
     HashMap<String, Object> hashmap = new HashMap<>();
 
-    private void status(String status) {
+    private void Available(String status) {
         hashmap.put("status", status);
 
         reference.updateChildren(hashmap);
@@ -33,7 +33,7 @@ public class status extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        status("online");
+        Available("online");
     }
 
     @Override
@@ -43,6 +43,6 @@ public class status extends AppCompatActivity {
         hashmap.put("searchUser", "");
         reference.updateChildren(hashmap);
         reference.keepSynced(true);
-        status("offline");
+        Available("offline");
     }
 }

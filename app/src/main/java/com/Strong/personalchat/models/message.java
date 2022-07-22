@@ -6,8 +6,8 @@ public class message {
     Long timeStamp;
 
     public message(String senderId, String message) {
-        this.uId=senderId;
-        this.message=message;
+        this.uId = senderId;
+        this.message = message;
     }
 
     public void setuId(String uId) {
@@ -31,7 +31,7 @@ public class message {
         this.timeStamp = timeStamp;
     }
 
-    public message(){
+    public message() {
 
     }
 }

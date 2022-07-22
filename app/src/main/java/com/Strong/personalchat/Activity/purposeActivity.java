@@ -10,21 +10,22 @@ import androidx.appcompat.app.AppCompatActivity;
 public class purposeActivity extends AppCompatActivity {
 
     ActivityPurposeBinding BindPurpose;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BindPurpose= ActivityPurposeBinding.inflate(getLayoutInflater());
+        BindPurpose = ActivityPurposeBinding.inflate(getLayoutInflater());
 
         setContentView(BindPurpose.getRoot());
 
         BindPurpose.goLogin.setOnClickListener(view -> {
-            Intent intent=new Intent(purposeActivity.this, loginActivity.class);
+            Intent intent = new Intent(purposeActivity.this, loginActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         BindPurpose.goSignup.setOnClickListener(view -> {
-            Intent intent=new Intent(purposeActivity.this, signupActivity.class);
+            Intent intent = new Intent(purposeActivity.this, signupActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });

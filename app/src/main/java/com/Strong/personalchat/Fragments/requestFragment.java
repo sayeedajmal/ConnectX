@@ -22,7 +22,7 @@ public class requestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentRequestBinding BindRecent=FragmentRequestBinding.inflate(inflater,  container, false);
-        return  BindRecent.getRoot();
+        FragmentRequestBinding BindRecent = FragmentRequestBinding.inflate(inflater, container, false);
+        return BindRecent.getRoot();
     }
 }

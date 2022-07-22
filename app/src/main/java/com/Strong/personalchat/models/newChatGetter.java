@@ -4,9 +4,10 @@ public class newChatGetter {
     String username;
     static String PersonSearch;
 
-    public newChatGetter(){
+    public newChatGetter() {
 
     }
+
     public String getUsername() {
         return username;
     }

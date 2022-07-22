@@ -35,7 +35,7 @@ public class callsGetter {
         this.callUserImage = callUserImage;
     }
 
-    public callsGetter(){
+    public callsGetter() {
 
     }
 

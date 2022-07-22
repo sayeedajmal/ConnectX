@@ -20,13 +20,14 @@ import java.util.Objects;
 public class SettingActivity extends status {
     ActivitySettingBinding BindSet;
     FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BindSet=ActivitySettingBinding.inflate(getLayoutInflater());
+        BindSet = ActivitySettingBinding.inflate(getLayoutInflater());
         setContentView(BindSet.getRoot());
 
-         firebaseAuth= FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         BindSet.logoutButton.setOnClickListener(view -> {
             firebaseAuth.signOut();
@@ -34,7 +35,7 @@ public class SettingActivity extends status {
             startActivity(new Intent(this, purposeActivity.class));
         });
 
-        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         //SETTING IMAGE OF USER
         database.getReference().child("Users").child(Objects.requireNonNull(firebaseAuth.getUid())).addValueEventListener(new ValueEventListener() {
@@ -42,9 +43,9 @@ public class SettingActivity extends status {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            if(Objects.equals(dataSnapshot.getKey(), "chatUserImage")){
+                        if (Objects.equals(dataSnapshot.getKey(), "chatUserImage")) {
                             Picasso.get().load(dataSnapshot.getValue(String.class)).into(BindSet.SettingUserImage);
-                            }
+                        }
                     }
                 }
             }
