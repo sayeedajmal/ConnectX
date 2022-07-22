@@ -4,21 +4,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import androidx.annotation.NonNull;
-
 import com.Strong.personalchat.Fragments.newChatFragment;
-import com.Strong.personalchat.ViewPagerSection;
+import com.Strong.personalchat.Fragments.ViewPagerSection;
 import com.Strong.personalchat.databinding.ActivityNewchatBinding;
-import com.Strong.personalchat.models.newChatGetter;
-import com.Strong.personalchat.status;
+import com.Strong.personalchat.Utilities.status;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 

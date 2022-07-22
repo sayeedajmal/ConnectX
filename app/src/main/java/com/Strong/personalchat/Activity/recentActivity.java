@@ -7,9 +7,9 @@ import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
 import com.Strong.personalchat.Fragments.requestFragment;
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.ViewPagerSection;
+import com.Strong.personalchat.Fragments.ViewPagerSection;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
-import com.Strong.personalchat.status;
+import com.Strong.personalchat.Utilities.status;
 
 import java.util.Objects;
 

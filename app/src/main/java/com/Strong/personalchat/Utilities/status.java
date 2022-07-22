@@ -1,4 +1,4 @@
-package com.Strong.personalchat;
+package com.Strong.personalchat.Utilities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

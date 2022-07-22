@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
-import com.Strong.personalchat.status;
+import com.Strong.personalchat.Utilities.status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

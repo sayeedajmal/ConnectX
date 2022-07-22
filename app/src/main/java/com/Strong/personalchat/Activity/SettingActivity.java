@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.Strong.personalchat.databinding.ActivitySettingBinding;
-import com.Strong.personalchat.status;
+import com.Strong.personalchat.Utilities.status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

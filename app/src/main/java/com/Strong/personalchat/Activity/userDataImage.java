@@ -1,12 +1,9 @@
 package com.Strong.personalchat.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.Strong.personalchat.R;
 import com.Strong.personalchat.databinding.ActivityUserDataImageBinding;
-import com.Strong.personalchat.status;
+import com.Strong.personalchat.Utilities.status;
 import com.squareup.picasso.Picasso;
 
 public class userDataImage extends status {

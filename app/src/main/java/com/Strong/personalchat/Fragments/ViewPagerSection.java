@@ -1,4 +1,4 @@
-package com.Strong.personalchat;
+package com.Strong.personalchat.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

@@ -1,14 +1,10 @@
 package com.Strong.personalchat.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
-import com.Strong.personalchat.R;
 import com.Strong.personalchat.databinding.ActivityUserDataShowBinding;
-import com.Strong.personalchat.status;
+import com.Strong.personalchat.Utilities.status;
 import com.squareup.picasso.Picasso;
 
 public class UserDataShow extends status {
