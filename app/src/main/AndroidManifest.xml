@@ -29,6 +29,8 @@
         <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.newChatActivity" />
         <activity android:name=".Activity.mainChatActivity" />
+        <activity android:name=".Activity.UserDataShow" />
+        <activity android:name=".Activity.userDataImage" />
     </application>
 
 </manifest>

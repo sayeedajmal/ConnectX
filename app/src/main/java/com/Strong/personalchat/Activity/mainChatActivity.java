@@ -1,6 +1,7 @@
 package com.Strong.personalchat.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,10 +47,10 @@ public class mainChatActivity extends status {
         MineId = fAuth.getUid();
         //RECEIVING THE DATA OF USER FROM NEW CHAT ADAPTOR
         YourID = getIntent().getStringExtra("userId");
-        String receiveName = getIntent().getStringExtra("username");
+        String username = getIntent().getStringExtra("username");
         String chatUserImage = getIntent().getStringExtra("newChatUserImage");
 
-        BindMainChat.mainChatUsername.setText(receiveName);
+        BindMainChat.mainChatUsername.setText(username);
         Picasso.get().load(chatUserImage).into(BindMainChat.mainChatImage);
 
         final ArrayList<message> messageModels = new ArrayList<>();
@@ -188,10 +189,13 @@ public class mainChatActivity extends status {
             BindMainChat.TypeMessage.setText(null);
         });
 
+        BindMainChat.constraint.setOnClickListener(view -> {
+            Intent intent = new Intent(this, UserDataShow.class);
+            intent.putExtra("Image", chatUserImage);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
         database.getReference().keepSynced(true);
-    }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
