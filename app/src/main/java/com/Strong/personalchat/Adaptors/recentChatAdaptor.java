@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,10 +57,12 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
-                    Long fetchingTime = dataSnapshot.child("timeStamp").getValue(Long.class);
-                    Date time = new Date(fetchingTime);
-                    holder.lastMessageTime.setText(ShowDateTime(time));
+                    if (!Objects.equals(dataSnapshot.getKey(), "Typing")) {
+                        holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                        Long fetchingTime = dataSnapshot.child("timeStamp").getValue(Long.class);
+                        Date time = new Date(fetchingTime);
+                        holder.lastMessageTime.setText(ShowDateTime(time));
+                    }
                 }
             }
 
@@ -75,7 +78,7 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
             Intent intent = new Intent(context, mainChatActivity.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
-            intent.putExtra("UserImage",users.getChatUserImage());
+            intent.putExtra("UserImage", users.getChatUserImage());
             context.startActivity(intent);
         });
     }

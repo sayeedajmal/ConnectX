@@ -19,7 +19,6 @@ public class status extends AppCompatActivity {
 
     private void Available(String status) {
         hashmap.put("status", status);
-        hashmap.put("Typing","");
         reference.updateChildren(hashmap);
         reference.keepSynced(true);
     }
@@ -43,6 +42,10 @@ public class status extends AppCompatActivity {
         reference.updateChildren(hashmap);
         reference.keepSynced(true);
         Available("offline");
+    }
+
+    public void OnTyping(String YourID, String MineId) {
+       /* ;*/
     }
 
     public void onLogout() {

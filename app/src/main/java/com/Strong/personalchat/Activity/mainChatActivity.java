@@ -41,20 +41,22 @@ public class mainChatActivity extends status {
         BindMainChat = ActivityMainChatBinding.inflate(getLayoutInflater());
         setContentView(BindMainChat.getRoot());
 
-        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+        YourID = getIntent().getStringExtra("userId");
+        fAuth = FirebaseAuth.getInstance();
+        MineId = fAuth.getUid();
+        String username = getIntent().getStringExtra("username");
+        String chatUserImage = getIntent().getStringExtra("UserImage");
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
                 child("Users").
-                child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                child(YourID).child("Chats").child(MineId);
+
 
         final HashMap<String, Object> hashmap = new HashMap<>();
 
-        fAuth = FirebaseAuth.getInstance();
 
-        MineId = fAuth.getUid();
         //RECEIVING THE DATA OF USER FROM NEW CHAT ADAPTOR
-        YourID = getIntent().getStringExtra("userId");
-        String username = getIntent().getStringExtra("username");
-        String chatUserImage = getIntent().getStringExtra("UserImage");
+
 
         BindMainChat.mainChatUsername.setText(username);
         Picasso.get().load(chatUserImage).into(BindMainChat.mainChatImage);
@@ -65,7 +67,7 @@ public class mainChatActivity extends status {
         int count = messageModels.size();
         database = FirebaseDatabase.getInstance();
 
-        //Showing Status and ADDED TYPING SHOWING
+        //Showing Status
         database.getReference().child("Users").child(YourID).addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
@@ -80,7 +82,20 @@ public class mainChatActivity extends status {
                             BindMainChat.ActiveStatus.setText("");
                         }
                     }
-                    if (dataSnapshot.getKey().equals("Typing")) {
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        //SHOWING TYPING
+        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (Objects.requireNonNull(dataSnapshot.getKey()).equals("Typing")) {
                         String typing = dataSnapshot.getValue(String.class);
                         assert typing != null;
                         if (typing.length() != 0) {
@@ -97,6 +112,7 @@ public class mainChatActivity extends status {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -108,15 +124,17 @@ public class mainChatActivity extends status {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageModels.clear();
-                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                    message model = dataSnapshot1.getValue(message.class);
-                    messageModels.add(model);
-                    if (count == 0) {
-                        messageAdaptor.notifyDataSetChanged();
-                    } else {
-                        // Getting Shown the last message when open the chat section
-                        messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
-                        BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size() - 1);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (!Objects.requireNonNull(dataSnapshot.getKey()).equals("Typing")) {
+                        message model = dataSnapshot.getValue(message.class);
+                        messageModels.add(model);
+                        if (count == 0) {
+                            messageAdaptor.notifyDataSetChanged();
+                        } else {
+                            // Getting Shown the last message when open the chat section
+                            messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
+                            BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size() - 1);
+                        }
                     }
                     BindMainChat.mainChatRecyclerView.setAdapter(messageAdaptor);
                 }
@@ -196,5 +214,17 @@ public class mainChatActivity extends status {
         });
         database.getReference().keepSynced(true);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                child("Users").
+                child(YourID).child("Chats").child(MineId);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("Typing", "");
+        reference.updateChildren(hashMap);
+        reference.keepSynced(true);
     }
 }
