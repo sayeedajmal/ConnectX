@@ -44,9 +44,6 @@ public class status extends AppCompatActivity {
         Available("offline");
     }
 
-    public void OnTyping(String YourID, String MineId) {
-       /* ;*/
-    }
 
     public void onLogout() {
         hashmap.put("status", "offline");

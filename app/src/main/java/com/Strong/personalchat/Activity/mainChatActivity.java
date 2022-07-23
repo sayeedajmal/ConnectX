@@ -49,7 +49,7 @@ public class mainChatActivity extends status {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
                 child("Users").
-                child(YourID).child("Chats").child(MineId);
+                child(YourID).child("Typing").child(MineId);
 
 
         final HashMap<String, Object> hashmap = new HashMap<>();
@@ -91,7 +91,7 @@ public class mainChatActivity extends status {
         });
 
         //SHOWING TYPING
-        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(YourID).child("Typing").child(MineId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -125,16 +125,14 @@ public class mainChatActivity extends status {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageModels.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (!Objects.requireNonNull(dataSnapshot.getKey()).equals("Typing")) {
-                        message model = dataSnapshot.getValue(message.class);
-                        messageModels.add(model);
-                        if (count == 0) {
-                            messageAdaptor.notifyDataSetChanged();
-                        } else {
-                            // Getting Shown the last message when open the chat section
-                            messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
-                            BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size() - 1);
-                        }
+                    message model = dataSnapshot.getValue(message.class);
+                    messageModels.add(model);
+                    if (count == 0) {
+                        messageAdaptor.notifyDataSetChanged();
+                    } else {
+                        // Getting Shown the last message when open the chat section
+                        messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
+                        BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size() - 1);
                     }
                     BindMainChat.mainChatRecyclerView.setAdapter(messageAdaptor);
                 }
@@ -221,7 +219,7 @@ public class mainChatActivity extends status {
         super.onPause();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
                 child("Users").
-                child(YourID).child("Chats").child(MineId);
+                child(YourID).child("Typing").child(MineId);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("Typing", "");
         reference.updateChildren(hashMap);

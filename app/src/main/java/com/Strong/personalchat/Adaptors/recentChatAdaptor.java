@@ -57,12 +57,10 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (!Objects.equals(dataSnapshot.getKey(), "Typing")) {
-                        holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
-                        Long fetchingTime = dataSnapshot.child("timeStamp").getValue(Long.class);
-                        Date time = new Date(fetchingTime);
-                        holder.lastMessageTime.setText(ShowDateTime(time));
-                    }
+                    holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                    Long fetchingTime = dataSnapshot.child("timeStamp").getValue(Long.class);
+                    Date time = new Date(fetchingTime);
+                    holder.lastMessageTime.setText(ShowDateTime(time));
                 }
             }
 
