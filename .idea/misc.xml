@@ -72,6 +72,8 @@
         <entry key="app/src/main/res/layout/fragment_recyclerview.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/fragment_request.xml" value="0.25" />
         <entry key="app/src/main/res/layout/new_contact.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/notification.xml" value="0.22395833333333334" />
+        <entry key="app/src/main/res/layout/notifications.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/sample_recieve.xml" value="0.33" />
         <entry key="app/src/main/res/layout/sample_send.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/appicon_round.xml" value="0.2234375" />
