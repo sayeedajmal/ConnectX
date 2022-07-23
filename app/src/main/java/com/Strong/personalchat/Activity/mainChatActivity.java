@@ -91,7 +91,7 @@ public class mainChatActivity extends status {
         });
 
         //SHOWING TYPING
-        database.getReference().child("Users").child(YourID).child("Typing").child(MineId).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {

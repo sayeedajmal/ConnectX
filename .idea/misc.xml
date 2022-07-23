@@ -49,6 +49,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/layout/activity_main_chat.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_newchat.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_numberwith_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/activity_purpose.xml" value="0.25" />
