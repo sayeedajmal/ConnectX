@@ -20,6 +20,8 @@ import java.util.Objects;
 public class SettingActivity extends status {
     ActivitySettingBinding BindSet;
     FirebaseAuth firebaseAuth;
+    status status;
+    String UserImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,10 @@ public class SettingActivity extends status {
         firebaseAuth = FirebaseAuth.getInstance();
 
         BindSet.logoutButton.setOnClickListener(view -> {
+            status = new status();
+            status.onLogout();
             firebaseAuth.signOut();
-            Toast.makeText(this, "SignOut", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "We Are Waiting For You..", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, purposeActivity.class));
         });
 
@@ -44,7 +48,8 @@ public class SettingActivity extends status {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         if (Objects.equals(dataSnapshot.getKey(), "chatUserImage")) {
-                            Picasso.get().load(dataSnapshot.getValue(String.class)).into(BindSet.SettingUserImage);
+                            UserImage = dataSnapshot.getValue(String.class);
+                            Picasso.get().load(UserImage).into(BindSet.SettingUserImage);
                         }
                     }
                 }
@@ -56,6 +61,11 @@ public class SettingActivity extends status {
             }
         });
 
+        BindSet.SettingUserImage.setOnClickListener(view -> {
+            Intent intent = new Intent(this, userDataImage.class);
+            intent.putExtra("Image", UserImage);
+            startActivity(intent);
+        });
         BindSet.backButton.setOnClickListener(view -> onBackPressed());
     }
 }

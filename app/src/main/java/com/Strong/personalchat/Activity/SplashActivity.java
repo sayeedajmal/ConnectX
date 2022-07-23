@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         auth = FirebaseAuth.getInstance();
         new Handler().postDelayed(() -> {
-            if (!Objects.requireNonNull(auth.getCurrentUser()).getUid().equals(auth.getUid())) {
+            if (auth.getUid() == null) {
                 startActivity(new Intent(SplashActivity.this, purposeActivity.class));
             } else {
                 startActivity(new Intent(SplashActivity.this, recentActivity.class));

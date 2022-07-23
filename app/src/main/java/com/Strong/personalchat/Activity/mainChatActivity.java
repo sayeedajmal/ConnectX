@@ -41,6 +41,12 @@ public class mainChatActivity extends status {
         BindMainChat = ActivityMainChatBinding.inflate(getLayoutInflater());
         setContentView(BindMainChat.getRoot());
 
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                child("Users").
+                child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+
+        final HashMap<String, Object> hashmap = new HashMap<>();
 
         fAuth = FirebaseAuth.getInstance();
 
@@ -48,7 +54,7 @@ public class mainChatActivity extends status {
         //RECEIVING THE DATA OF USER FROM NEW CHAT ADAPTOR
         YourID = getIntent().getStringExtra("userId");
         String username = getIntent().getStringExtra("username");
-        String chatUserImage = getIntent().getStringExtra("newChatUserImage");
+        String chatUserImage = getIntent().getStringExtra("UserImage");
 
         BindMainChat.mainChatUsername.setText(username);
         Picasso.get().load(chatUserImage).into(BindMainChat.mainChatImage);
@@ -150,13 +156,6 @@ public class mainChatActivity extends status {
 
         // MESSAGE TYPING SHOW TYPING ON ACTIVE STATUS OPTION
         BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
-            final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                    child("Users").
-                    child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-
-            final HashMap<String, Object> hashmap = new HashMap<>();
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
