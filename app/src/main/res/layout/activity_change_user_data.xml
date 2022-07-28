@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.PersonalChat.V1"
+    tools:context=".Activity.ChangeUserData">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/transparent"
+        android:foreground="?android:selectableItemBackground"
+        android:scaleType="centerCrop"
+        android:src="@drawable/backbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/updateButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:foreground="?android:selectableItemBackground"
+        android:background="@color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:fontFamily="@font/trebuc"
+        android:text="Edit Profile"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/backButton"
+        app:layout_constraintVertical_bias="0.562" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/updateImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/buttonPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nexaslabbold"
+        android:text="Change profile photo"
+        android:textColor="#045AC3"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="@+id/updateImage"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/updateImage"
+        app:layout_constraintTop_toBottomOf="@+id/updateImage" />
+
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPic" />
+
+    <EditText
+        android:id="@+id/updateUserName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/button_corner"
+        android:drawableStart="@drawable/ic_user"
+        android:drawablePadding="2dp"
+        android:fontFamily="@font/trebuc"
+        android:gravity="center"
+        android:hint="UserName"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:textColor="@color/White"
+        android:textColorHint="@color/CadetBlue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <EditText
+        android:id="@+id/UpdatePassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_corner"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="2dp"
+        android:fontFamily="@font/trebuc"
+        android:gravity="center"
+        android:hint="Password"
+        android:inputType="textVisiblePassword"
+        android:padding="5dp"
+        android:textColor="@color/White"
+        android:textColorHint="@color/CadetBlue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateUserName" />
+
+    <EditText
+        android:id="@+id/UpdateEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_corner"
+        android:drawableStart="@drawable/email"
+        android:drawablePadding="2dp"
+        android:fontFamily="@font/trebuc"
+        android:gravity="center"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:padding="5dp"
+        android:textColor="@color/White"
+        android:textColorHint="@color/CadetBlue"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UpdatePassword" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

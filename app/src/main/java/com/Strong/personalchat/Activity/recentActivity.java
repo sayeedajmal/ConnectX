@@ -10,6 +10,8 @@ import com.Strong.personalchat.R;
 import com.Strong.personalchat.Fragments.ViewPagerSection;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.Utilities.status;
+import com.Strong.personalchat.models.CurrentUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -40,9 +42,11 @@ public class recentActivity extends status {
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(1)).setIcon(R.drawable.call_icon);
         Objects.requireNonNull(BindRecent.tabLayoutDashboard.getTabAt(2)).setIcon(R.drawable.request_icon);
 
-        BindRecent.Setting.setOnClickListener(view -> startActivity(new Intent(this, SettingActivity.class)));
+        BindRecent.setting.setOnClickListener(view -> startActivity(new Intent(this, SettingActivity.class)));
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
+
+        Picasso.get().load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
     }
 
     @Override

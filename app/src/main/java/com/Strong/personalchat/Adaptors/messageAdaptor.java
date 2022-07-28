@@ -1,7 +1,6 @@
 package com.Strong.personalchat.Adaptors;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +20,6 @@ import java.util.Locale;
 
 public class messageAdaptor extends RecyclerView.Adapter {
     ArrayList<message> messageModels;
-    FirebaseDatabase database;
     Context context;
 
     int SENDER_VIEW_TYPE = 1;

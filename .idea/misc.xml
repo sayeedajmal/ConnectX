@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/callview_corner.xml" value="0.2234375" />
         <entry key="app/src/main/res/drawable/chatview.xml" value="0.2234375" />
         <entry key="app/src/main/res/drawable/chatview_corner.xml" value="0.2234375" />
+        <entry key="app/src/main/res/drawable/check.xml" value="0.1425" />
         <entry key="app/src/main/res/drawable/deactive_status.xml" value="0.20625" />
         <entry key="app/src/main/res/drawable/defaultuser.xml" value="0.219" />
         <entry key="app/src/main/res/drawable/email.xml" value="0.2305" />
@@ -42,6 +43,7 @@
         <entry key="app/src/main/res/drawable/video_call.xml" value="0.2234375" />
         <entry key="app/src/main/res/layout-v28/activity_numberwith_profile.xml" value="0.11594202898550725" />
         <entry key="app/src/main/res/layout-v28/activity_purpose.xml" value="0.2359375" />
+        <entry key="app/src/main/res/layout/activity_change_user_data.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_chatcard.xml" value="0.4147727272727273" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_firebase.xml" value="0.20729166666666668" />
@@ -53,9 +55,9 @@
         <entry key="app/src/main/res/layout/activity_numberwith_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/activity_purpose.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_recent.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_recent.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_recent_conversion.xml" value="0.18958333333333333" />
-        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.22395833333333334" />
+        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.20729166666666668" />
@@ -76,6 +78,7 @@
         <entry key="app/src/main/res/layout/notifications.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/sample_recieve.xml" value="0.33" />
         <entry key="app/src/main/res/layout/sample_send.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/option.xml" value="0.22291666666666668" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/appicon_round.xml" value="0.2234375" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/avtar.xml" value="0.2234375" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/avtar_round.xml" value="0.2234375" />

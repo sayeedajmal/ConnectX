@@ -94,6 +94,7 @@ public class uploadProfileActivity extends AppCompatActivity {
 
             storage = FirebaseStorage.getInstance();
             storageReference = storage.getReference();
+            String id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
             storageReference = storageReference.child("ProfileImages/" + id);
 
             //Storing Image String to The Database
@@ -106,7 +107,6 @@ public class uploadProfileActivity extends AppCompatActivity {
 
             mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    String id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     storageReference.putBytes(data).addOnSuccessListener(taskSnapshot -> {
                         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
                             HashMap<String, Object> hashMap = new HashMap<>();

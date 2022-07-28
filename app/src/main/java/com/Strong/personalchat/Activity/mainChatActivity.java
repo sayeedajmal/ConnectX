@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
+import com.Strong.personalchat.R;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.Utilities.status;
@@ -35,6 +40,7 @@ public class mainChatActivity extends status {
     FirebaseDatabase database;
     ActivityMainChatBinding BindMainChat;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,6 +215,30 @@ public class mainChatActivity extends status {
             intent.putExtra("Image", chatUserImage);
             intent.putExtra("username", username);
             startActivity(intent);
+        });
+
+
+        BindMainChat.optionButton.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
+            MenuInflater inflater = popupMenu.getMenuInflater();
+            inflater.inflate(R.menu.option, popupMenu.getMenu());
+            popupMenu.show();
+
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.report:
+                        Toast.makeText(getApplicationContext(), "You Clicked on Report", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.block:
+                        Toast.makeText(getApplicationContext(), "You Clicked on Block", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.deleteChat:
+                        Toast.makeText(getApplicationContext(), "You Clicked on Delete Chat", Toast.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        return false;
+                }
+            });
         });
         database.getReference().keepSynced(true);
 

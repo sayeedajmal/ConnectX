@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.Strong.personalchat.Adaptors.recentChatAdaptor;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
+import com.Strong.personalchat.models.CurrentUser;
 import com.Strong.personalchat.models.recentGetter;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,10 +54,9 @@ public class recentFragment extends Fragment {
         BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
 
         database = FirebaseDatabase.getInstance().getReference();
-        database.keepSynced(true);
+        String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        String currentUser = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        database.child("Users").child(currentUser).child("Chats").addValueEventListener(new ValueEventListener() {
+        database.child("Users").child(uid).child("Chats").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,6 +93,28 @@ public class recentFragment extends Fragment {
                 adaptor.notifyDataSetChanged();
             }
         });
+
+        //Getting Current User data
+        database.child("Users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (Objects.requireNonNull(dataSnapshot.getKey()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        CurrentUser.setUsername(dataSnapshot.child("username").getValue(String.class));
+                        CurrentUser.setEmail(dataSnapshot.child("email").getValue(String.class));
+                        CurrentUser.setPassword(dataSnapshot.child("password").getValue(String.class));
+                        CurrentUser.setChatUserImage(dataSnapshot.child("chatUserImage").getValue(String.class));
+                        CurrentUser.setUserId(dataSnapshot.child("userID").getValue(String.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        database.keepSynced(true);
         return BindRecycle.getRoot();
     }
 }

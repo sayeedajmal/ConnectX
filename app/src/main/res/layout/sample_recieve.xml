@@ -21,7 +21,7 @@
         tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:id="@+id/layout_gchat_container_other"
+            android:id="@+id/container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
