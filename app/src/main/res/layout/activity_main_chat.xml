@@ -194,6 +194,7 @@
         android:foreground="?android:selectableItemBackground"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="3dp"
+        android:backgroundTint="@color/Beige"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/sendbutton" />

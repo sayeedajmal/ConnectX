@@ -1,6 +1,8 @@
 package com.Strong.personalchat.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -218,6 +220,7 @@ public class mainChatActivity extends status {
         });
 
 
+        /* OPTION MENU FOR DELETING AND SOME OTHER STUFF*/
         BindMainChat.optionButton.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
             MenuInflater inflater = popupMenu.getMenuInflater();
@@ -233,7 +236,8 @@ public class mainChatActivity extends status {
                         Toast.makeText(getApplicationContext(), "You Clicked on Block", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.deleteChat:
-                        Toast.makeText(getApplicationContext(), "You Clicked on Delete Chat", Toast.LENGTH_SHORT).show();
+                        deleteChat();
+                        Toast.makeText(getApplicationContext(), "Chats of " + username + " Deleted..", Toast.LENGTH_SHORT).show();
                         return true;
                     default:
                         return false;
@@ -242,6 +246,11 @@ public class mainChatActivity extends status {
         });
         database.getReference().keepSynced(true);
 
+    }
+
+    private void deleteChat() {
+        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+        onBackPressed();
     }
 
     @Override

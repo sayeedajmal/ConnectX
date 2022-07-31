@@ -6,7 +6,6 @@
     android:theme="@style/Theme.PersonalChat.V1"
     tools:context=".Fragments.requestFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:gravity="center"

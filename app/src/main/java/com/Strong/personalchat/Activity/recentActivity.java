@@ -2,6 +2,7 @@ package com.Strong.personalchat.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
@@ -46,7 +47,9 @@ public class recentActivity extends status {
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
 
-        Picasso.get().load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
+        if (CurrentUser.getChatUserImage() != null) {
+            Picasso.get().load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
+        }
     }
 
     @Override

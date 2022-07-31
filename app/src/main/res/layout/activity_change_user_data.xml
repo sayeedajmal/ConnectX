@@ -16,7 +16,7 @@
         android:background="@color/transparent"
         android:foreground="?android:selectableItemBackground"
         android:scaleType="centerCrop"
-        android:src="@drawable/backbutton"
+        android:src="@drawable/cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
