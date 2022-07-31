@@ -63,6 +63,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/abcdisplay"
         android:padding="15dp"
+        android:textAlignment="center"
         android:text="Add A Profile Picture So that You and Your Friend Can Identify Eachother"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

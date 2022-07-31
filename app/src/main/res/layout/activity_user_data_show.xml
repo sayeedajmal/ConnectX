@@ -11,12 +11,12 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:background="@color/transparent"
         android:clickable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
         android:scaleType="centerCrop"
-        android:src="@drawable/backbutton"
+        android:src="@drawable/cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,40 +37,53 @@
         android:id="@+id/userDataName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/trebuc"
         android:text="Username"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.463"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="@+id/userDataImage"
+        app:layout_constraintHorizontal_bias="0.371"
+        app:layout_constraintStart_toStartOf="@+id/userDataImage"
         app:layout_constraintTop_toBottomOf="@+id/userDataImage" />
 
     <ImageButton
         android:id="@+id/userDataCall"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="36dp"
         android:background="@color/transparent"
         android:foreground="?android:selectableItemBackground"
         android:scaleType="centerCrop"
         android:src="@drawable/call_icon"
-        app:layout_constraintStart_toStartOf="@+id/userDataImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userDataName" />
+
+    <ImageButton
+        android:id="@+id/userBlock"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="36dp"
+        android:autofillHints="Block"
+        android:background="@color/transparent"
+        android:foreground="?android:selectableItemBackground"
+        android:scaleType="centerCrop"
+        android:src="@drawable/unblock"
+        app:layout_constraintEnd_toStartOf="@+id/userDataVideoCall"
+        app:layout_constraintStart_toEndOf="@+id/userDataCall"
         app:layout_constraintTop_toBottomOf="@+id/userDataName" />
 
     <ImageButton
         android:id="@+id/userDataVideoCall"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="50dp"
         android:background="@color/transparent"
         android:foreground="?android:selectableItemBackground"
         android:scaleType="centerCrop"
         android:src="@drawable/video_call"
-        app:layout_constraintEnd_toEndOf="@+id/userDataImage"
-        app:layout_constraintHorizontal_bias="0.732"
-        app:layout_constraintStart_toEndOf="@+id/userDataCall"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userDataName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

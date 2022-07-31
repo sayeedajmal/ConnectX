@@ -11,6 +11,7 @@
 
     <item
         android:id="@+id/block"
+        android:icon="@drawable/block"
         android:title="Block"
         app:showAsAction="collapseActionView"/>
 
