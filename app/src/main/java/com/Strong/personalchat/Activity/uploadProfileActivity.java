@@ -34,8 +34,6 @@ public class uploadProfileActivity extends AppCompatActivity {
     //Request Code
     private final int PICK_IMAGE_REQUEST = 22;
     //Firebase Instance
-
-    FirebaseStorage storage;
     StorageReference storageReference;
     private FirebaseAuth mAuth;
     String username, email, pass, id;
@@ -92,8 +90,7 @@ public class uploadProfileActivity extends AppCompatActivity {
             showToast("Uploading Profile Pic");
             visibility(true);
 
-            storage = FirebaseStorage.getInstance();
-            storageReference = storage.getReference();
+            storageReference = FirebaseStorage.getInstance().getReference();
             String id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
             storageReference = storageReference.child("ProfileImages/" + id);
 
@@ -102,7 +99,7 @@ public class uploadProfileActivity extends AppCompatActivity {
 
             Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
             ByteArrayOutputStream bas = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 25, bas);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 50, bas);
             byte[] data = bas.toByteArray();
 
             mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(task -> {

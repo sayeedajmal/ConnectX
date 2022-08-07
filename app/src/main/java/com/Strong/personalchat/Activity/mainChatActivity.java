@@ -1,26 +1,31 @@
 package com.Strong.personalchat.Activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.R;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.Utilities.status;
+import com.devlomi.record_view.OnRecordListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,8 +44,9 @@ import java.util.Objects;
 
 public class mainChatActivity extends status {
     FirebaseAuth fAuth;
-    String MineId;
+    String MineId, AudioPath;
     String YourID;
+    private static MediaRecorder mediaRecorder;
     FirebaseDatabase database;
     ActivityMainChatBinding BindMainChat;
 
@@ -189,8 +197,12 @@ public class mainChatActivity extends status {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() != 0) {
                     hashmap.put("Typing", charSequence.toString());
+                    BindMainChat.audioRecord.setVisibility(View.INVISIBLE);
+                    BindMainChat.sendButton.setVisibility(View.VISIBLE);
                 } else {
                     hashmap.put("Typing", "");
+                    BindMainChat.audioRecord.setVisibility(View.VISIBLE);
+                    BindMainChat.sendButton.setVisibility(View.INVISIBLE);
                 }
                 reference.updateChildren(hashmap);
                 reference.keepSynced(true);
@@ -202,15 +214,14 @@ public class mainChatActivity extends status {
             }
         });
 
-        BindMainChat.sendButton.setOnLongClickListener(view -> {
-            Toast.makeText(this, "Long Clicked", Toast.LENGTH_SHORT).show();
-            return false;
-        });
 
         BindMainChat.mainchatbackButton.setOnClickListener(view -> {
             onBackPressed();
             BindMainChat.TypeMessage.setText(null);
         });
+
+
+        recordAudio();
 
         BindMainChat.constraint.setOnClickListener(view -> {
             Intent intent = new Intent(this, UserDataShow.class);
@@ -248,6 +259,87 @@ public class mainChatActivity extends status {
 
     }
 
+    private void recordAudio() {
+        BindMainChat.audioRecord.setRecordView(BindMainChat.recordView);
+        BindMainChat.audioRecord.setListenForRecord(false);
+
+        BindMainChat.audioRecord.setOnClickListener(view -> {
+            if (isRecordingOk(mainChatActivity.this)) {
+                BindMainChat.audioRecord.setListenForRecord(true);
+
+                BindMainChat.recordView.setOnRecordListener(new OnRecordListener() {
+
+                    @Override
+                    public void onStart() {
+                       /* try {
+                            setUpRecording();
+                            mediaRecorder.prepare();
+                            mediaRecorder.start();
+                        } catch (IOException exception) {
+                            exception.printStackTrace();
+                        }*/
+
+                        BindMainChat.TypeMessage.setVisibility(View.INVISIBLE);
+                        BindMainChat.sendButton.setVisibility(View.INVISIBLE);
+                        BindMainChat.recordView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                      /*  mediaRecorder.reset();
+                        mediaRecorder.release();
+                        File file = new File(AudioPath);
+                        if (file.exists()) {
+                            file.delete();
+                        }*/
+                        BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
+                        BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onFinish(long recordTime) {
+                       /* mediaRecorder.stop();
+                        mediaRecorder.release();*/
+                        BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
+                        BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onLessThanSecond() {
+                        mediaRecorder.reset();
+                        mediaRecorder.release();
+                        File file = new File(AudioPath);
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                        BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
+                        BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                    }
+                });
+            } else {
+                requestRecording(mainChatActivity.this);
+            }
+        });
+
+    }
+
+    private void setUpRecording() {
+        mediaRecorder = new MediaRecorder();
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        if (isStorageOk(mainChatActivity.this)) {
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "PersonalChat/Media/AudioRecord");
+            if (!file.exists()) {
+                file.mkdir();
+            } else
+                AudioPath = file.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".3gp";
+            mediaRecorder.setOutputFile(AudioPath);
+        } else
+            requestStorage(mainChatActivity.this);
+    }
+
     private void deleteChat() {
         database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
         onBackPressed();
@@ -263,5 +355,21 @@ public class mainChatActivity extends status {
         hashMap.put("Typing", "");
         reference.updateChildren(hashMap);
         reference.keepSynced(true);
+    }
+
+    private boolean isRecordingOk(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean isStorageOk(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestRecording(Activity activity) {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.RECORD_AUDIO}, 8080);
+    }
+
+    private void requestStorage(Activity activity) {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 9090);
     }
 }

@@ -6,6 +6,7 @@
     android:theme="@style/Theme.PersonalChat.V1"
     tools:context=".Activity.recentActivity">
 
+
     <LinearLayout
         android:id="@+id/labelLayout"
         android:layout_width="match_parent"
@@ -78,7 +79,6 @@
         app:cardCornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/dashboardPager"
         app:layout_constraintEnd_toEndOf="parent">
-
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/floatNewChat"
             android:layout_width="40dp"
