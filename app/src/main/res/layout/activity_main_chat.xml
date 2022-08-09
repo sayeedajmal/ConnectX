@@ -151,6 +151,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraint">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainChatRecyclerView"
             android:layout_width="match_parent"
@@ -176,10 +177,29 @@
         android:id="@+id/Type"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_round"
+            android:foreground="?android:selectableItemBackground"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/sendbutton" />
+
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/TypeMessage"
@@ -206,26 +226,9 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints,RtlSymmetry" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/sendButton"
-            android:layout_width="40dp"
-            android:layout_height="45dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/button_round"
-            android:foreground="?android:selectableItemBackground"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/sendbutton" />
-
         <com.devlomi.record_view.RecordButton
             android:id="@+id/audioRecord"
-            android:layout_width="40dp"
+            android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
