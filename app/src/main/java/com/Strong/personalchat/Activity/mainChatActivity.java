@@ -35,7 +35,6 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,8 +44,9 @@ import java.util.Objects;
 
 public class mainChatActivity extends status {
     FirebaseAuth fAuth;
-    String MineId, AudioPath, FileName;
+    String MineId, FileName;
     String YourID;
+    private static final int WRITE_REQUEST_CODE = 8;
     private static MediaRecorder mediaRecorder;
     FirebaseDatabase database;
     ActivityMainChatBinding BindMainChat;
@@ -222,7 +222,6 @@ public class mainChatActivity extends status {
             startActivity(intent);
         });
 
-
         /* OPTION MENU FOR DELETING AND SOME OTHER STUFF*/
         BindMainChat.optionButton.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
@@ -248,28 +247,43 @@ public class mainChatActivity extends status {
             });
         });
         database.getReference().keepSynced(true);
-        BindMainChat.audioRecord.setListenForRecord(false);
 
+        BindMainChat.audioRecord.setListenForRecord(false);
         BindMainChat.audioRecord.setRecordView(BindMainChat.recordView);
+        AudioRecordButton();
+    }
+    private void AudioRecordButton() {
         BindMainChat.audioRecord.setOnClickListener(view -> {
             BindMainChat.audioRecord.setListenForRecord(true);
-
+            Toast.makeText(this, "Ready..?", Toast.LENGTH_SHORT).show();
+            //Create Folder
+            FileName = "PersonalChat" + File.separator + "Media";
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                createDirectory(FileName);
+            } else {
+                askPermissionTOWrite();
+            }
+            //Record Audio
+            recordAudio();
         });
     }
 
+    private String CreateFile() {
+        String Name = +System.currentTimeMillis() + ".mp3";
+        File file = new File(Environment.getExternalStoragePublicDirectory("MUSIC") + File.separator + FileName, Name);
+        // Toast.makeText(this, file.getPath(), Toast.LENGTH_SHORT).show();
+        return file.getPath();
+    }
 
     private void recordAudio() {
-
         if (isRecordingOk()) {
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setOutputFile(AudioPath);
-            System.out.println("RecordAudioPath " + AudioPath);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
+            mediaRecorder.setOutputFile(CreateFile());
 
             BindMainChat.recordView.setOnRecordListener(new OnRecordListener() {
-
                 @Override
                 public void onStart() {
                     try {
@@ -278,7 +292,6 @@ public class mainChatActivity extends status {
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }
-
                     BindMainChat.TypeMessage.setVisibility(View.INVISIBLE);
                     BindMainChat.sendButton.setVisibility(View.INVISIBLE);
                     BindMainChat.recordView.setVisibility(View.VISIBLE);
@@ -288,12 +301,17 @@ public class mainChatActivity extends status {
                 public void onCancel() {
                     mediaRecorder.reset();
                     mediaRecorder.release();
-                    File file = new File(AudioPath);
-                    if (file.exists()) {
-                        file.delete();
+                    File file = new File(CreateFile());
+                    if (file.isFile()) {
+                        file.deleteOnExit();
+                        Toast.makeText(mainChatActivity.this, "Canceled..", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mainChatActivity.this, file.getPath(), Toast.LENGTH_SHORT).show();
                     }
                     BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
                     BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                    BindMainChat.audioRecord.setListenForRecord(false);
+
                 }
 
                 @Override
@@ -302,22 +320,46 @@ public class mainChatActivity extends status {
                     mediaRecorder.release();
                     BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
                     BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                    BindMainChat.audioRecord.setListenForRecord(false);
                 }
 
                 @Override
                 public void onLessThanSecond() {
                     mediaRecorder.reset();
                     mediaRecorder.release();
-                    File file = new File(AudioPath);
-                    if (file.exists()) {
-                        file.delete();
+                    File file = new File(CreateFile());
+                    if (file.delete()) {
+                        Toast.makeText(mainChatActivity.this, "Not Less Then A Second..", Toast.LENGTH_SHORT).show();
                     }
                     BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
                     BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                    BindMainChat.audioRecord.setListenForRecord(false);
                 }
             });
         } else
             requestRecording();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+
+        if (requestCode == WRITE_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                createDirectory(FileName);
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void createDirectory(String folderName) {
+        File file = new File(Environment.getExternalStoragePublicDirectory("MUSIC"), folderName);
+        file.mkdir();
+    }
+
+    private void askPermissionTOWrite() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_REQUEST_CODE);
     }
 
     private void deleteChat() {
@@ -344,4 +386,6 @@ public class mainChatActivity extends status {
     private void requestRecording() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 8080);
     }
+
+
 }

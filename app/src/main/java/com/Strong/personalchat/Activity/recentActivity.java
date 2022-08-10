@@ -29,8 +29,6 @@ import java.util.Objects;
 public class recentActivity extends status {
     ViewPagerSection viewPagerAdaptor;
     ActivityRecentBinding BindRecent;
-    String FileName;
-    private static final int PERMISSION_REQUEST_CODE = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,42 +60,11 @@ public class recentActivity extends status {
         if (CurrentUser.getChatUserImage() != null) {
             Picasso.get().load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
         }
-
-        FileName = "PersonalChat" + File.separator + "Media";
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            createDirectory(FileName);
-        } else {
-            askPermission();
-        }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
-
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                createDirectory(FileName);
-            } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    private void createDirectory(String folderName) {
-        File file = new File(Environment.getExternalStoragePublicDirectory("MUSIC"), folderName);
-        file.mkdir();
-    }
-
-    private void askPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
     }
 }
