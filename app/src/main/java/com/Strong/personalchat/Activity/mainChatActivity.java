@@ -4,7 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -24,12 +26,15 @@ import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.Utilities.status;
 import com.devlomi.record_view.OnRecordListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,8 +52,9 @@ public class mainChatActivity extends status {
     String MineId, FileName;
     String YourID;
     private static final int WRITE_REQUEST_CODE = 8;
-    private static MediaRecorder mediaRecorder;
     FirebaseDatabase database;
+    StorageReference storageReference;
+    DatabaseReference reference;
     ActivityMainChatBinding BindMainChat;
 
     @SuppressLint("NonConstantResourceId")
@@ -61,10 +67,11 @@ public class mainChatActivity extends status {
         YourID = getIntent().getStringExtra("userId");
         fAuth = FirebaseAuth.getInstance();
         MineId = fAuth.getUid();
+        storageReference = FirebaseStorage.getInstance().getReference();
         String username = getIntent().getStringExtra("username");
         String chatUserImage = getIntent().getStringExtra("UserImage");
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+        reference = FirebaseDatabase.getInstance().getReference().
                 child("Users").
                 child(YourID).child("Typing").child(MineId);
 
@@ -162,7 +169,7 @@ public class mainChatActivity extends status {
         BindMainChat.sendButton.setOnClickListener(view -> {
             String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
             if (!message.equals("")) {
-                final message conversation = new message(MineId, message);
+                message conversation = new message(MineId, message);
                 conversation.setTimeStamp(new Date().getTime());
                 BindMainChat.TypeMessage.setText(null);
 
@@ -247,41 +254,74 @@ public class mainChatActivity extends status {
             });
         });
         database.getReference().keepSynced(true);
-
         BindMainChat.audioRecord.setListenForRecord(false);
-        BindMainChat.audioRecord.setRecordView(BindMainChat.recordView);
+
         AudioRecordButton();
     }
+
+    private void sendAudioMessage(String audioPath) {
+        long milliTime = System.currentTimeMillis();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference = storageReference.child("Media").child("RecordAudio").child(Long.toString(milliTime));
+        Uri uri = Uri.fromFile(new File(audioPath));
+        storageReference.putFile(uri).addOnSuccessListener(success -> {
+            Task<Uri> audioUrl = success.getStorage().getDownloadUrl();
+            audioUrl.addOnCompleteListener(path -> {
+                if (path.isSuccessful()) {
+                    String url = path.getResult().toString();
+
+                    message conversation = new message(MineId, url);
+                    conversation.setTimeStamp(new Date().getTime());
+                    BindMainChat.TypeMessage.setText(null);
+
+                    // Feeding AudioMessage to Sender and Receiver Database
+                    database.getReference().
+                            child("Users").
+                            child(MineId).
+                            child("Chats").
+                            child(YourID).
+                            push().setValue(conversation).addOnSuccessListener(e -> database.getReference().
+                                    child("Users").
+                                    child(YourID).
+                                    child("Chats").
+                                    child(MineId).
+                                    push().setValue(conversation)
+                            );
+                }
+            });
+        });
+
+
+    }
+
     private void AudioRecordButton() {
+        BindMainChat.audioRecord.setRecordView(BindMainChat.recordView);
+        BindMainChat.recordView.setSmallMicColor(Color.parseColor("#2196F3"));
+        BindMainChat.recordView.setSmallMicIcon(R.drawable.microphone);
+        BindMainChat.recordView.setLessThanSecondAllowed(false);
+        BindMainChat.recordView.setSoundEnabled(false);
+
+
         BindMainChat.audioRecord.setOnClickListener(view -> {
-            BindMainChat.audioRecord.setListenForRecord(true);
             Toast.makeText(this, "Ready..?", Toast.LENGTH_SHORT).show();
             //Create Folder
             FileName = "PersonalChat" + File.separator + "Media";
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                createDirectory(FileName);
+                if (isRecordingOk()) {
+                    BindMainChat.audioRecord.setListenForRecord(true);
+                    createDirectory(FileName);
+                } else
+                    requestRecording();
             } else {
                 askPermissionTOWrite();
             }
-            //Record Audio
-            recordAudio();
-        });
-    }
 
-    private String CreateFile() {
-        String Name = +System.currentTimeMillis() + ".mp3";
-        File file = new File(Environment.getExternalStoragePublicDirectory("MUSIC") + File.separator + FileName, Name);
-        // Toast.makeText(this, file.getPath(), Toast.LENGTH_SHORT).show();
-        return file.getPath();
-    }
-
-    private void recordAudio() {
-        if (isRecordingOk()) {
-            mediaRecorder = new MediaRecorder();
+            File AudioFile = new File(CreateFile());
+            MediaRecorder mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
-            mediaRecorder.setOutputFile(CreateFile());
+            mediaRecorder.setOutputFile(AudioFile.getPath());
 
             BindMainChat.recordView.setOnRecordListener(new OnRecordListener() {
                 @Override
@@ -301,13 +341,10 @@ public class mainChatActivity extends status {
                 public void onCancel() {
                     mediaRecorder.reset();
                     mediaRecorder.release();
-                    File file = new File(CreateFile());
-                    if (file.isFile()) {
-                        file.deleteOnExit();
-                        Toast.makeText(mainChatActivity.this, "Canceled..", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(mainChatActivity.this, file.getPath(), Toast.LENGTH_SHORT).show();
-                    }
+                    if (AudioFile.exists())
+                        AudioFile.delete();
+                    Toast.makeText(mainChatActivity.this, "Canceled...", Toast.LENGTH_SHORT).show();
+
                     BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
                     BindMainChat.recordView.setVisibility(View.INVISIBLE);
                     BindMainChat.audioRecord.setListenForRecord(false);
@@ -318,26 +355,32 @@ public class mainChatActivity extends status {
                 public void onFinish(long recordTime) {
                     mediaRecorder.stop();
                     mediaRecorder.release();
+                    sendAudioMessage(AudioFile.getPath());
                     BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
                     BindMainChat.recordView.setVisibility(View.INVISIBLE);
                     BindMainChat.audioRecord.setListenForRecord(false);
+
                 }
 
                 @Override
                 public void onLessThanSecond() {
                     mediaRecorder.reset();
                     mediaRecorder.release();
-                    File file = new File(CreateFile());
-                    if (file.delete()) {
-                        Toast.makeText(mainChatActivity.this, "Not Less Then A Second..", Toast.LENGTH_SHORT).show();
-                    }
+                    if (AudioFile.exists())
+                        AudioFile.delete();
                     BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
                     BindMainChat.recordView.setVisibility(View.INVISIBLE);
                     BindMainChat.audioRecord.setListenForRecord(false);
                 }
             });
-        } else
-            requestRecording();
+        });
+    }
+
+    private String CreateFile() {
+        String Name = +System.currentTimeMillis() + ".mp3";
+        File file = new File(Environment.getExternalStoragePublicDirectory("MUSIC") + File.separator + FileName, Name);
+        // Toast.makeText(this, file.getPath(), Toast.LENGTH_SHORT).show();
+        return file.getPath();
     }
 
     @Override
@@ -386,6 +429,4 @@ public class mainChatActivity extends status {
     private void requestRecording() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 8080);
     }
-
-
 }

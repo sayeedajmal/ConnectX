@@ -18,12 +18,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import me.jagar.chatvoiceplayerlibrary.VoicePlayerView;
+
 public class messageAdaptor extends RecyclerView.Adapter {
     ArrayList<message> messageModels;
     Context context;
-
     int SENDER_VIEW_TYPE = 1;
     int RECEIVE_VIEW_TYPE = 2;
+    int SENDER_AUDIO_RECORD = 3;
+    int RECEIVER_AUDIO_RECORD = 4;
 
     public messageAdaptor(ArrayList<message> messageModels, Context context) {
         this.messageModels = messageModels;
@@ -37,8 +40,17 @@ public class messageAdaptor extends RecyclerView.Adapter {
         if (viewType == SENDER_VIEW_TYPE) {
             view = LayoutInflater.from(context).inflate(R.layout.sample_send, parent, false);
             return new sendViewHolder(view);
-        } else {
+
+        } else if (viewType == RECEIVE_VIEW_TYPE) {
             view = LayoutInflater.from(context).inflate(R.layout.sample_recieve, parent, false);
+            return new receiveViewHolder(view);
+
+        } else if (viewType == SENDER_AUDIO_RECORD) {
+            view = LayoutInflater.from(context).inflate(R.layout.sample_audiosend, parent, false);
+            return new sendViewHolder(view);
+
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.sample_audiorecieve, parent, false);
             return new receiveViewHolder(view);
         }
     }
@@ -46,15 +58,25 @@ public class messageAdaptor extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         message message = messageModels.get(position);
-
-        if (holder.getClass() == sendViewHolder.class) {
-            ((sendViewHolder) holder).messageSen.setText(message.getMessage());
-            Date timeD = new Date(message.getTimeStamp());
-            ((sendViewHolder) holder).messageSenTime.setText(ShowDateTime(timeD));
-        } else {
-            ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
-            Date timeD = new Date(message.getTimeStamp());
-            ((receiveViewHolder) holder).messageRecTime.setText(ShowDateTime(timeD));
+        switch (getItemViewType(position)) {
+            case 1:
+                ((sendViewHolder) holder).messageSen.setText(message.getMessage());
+                Date sendTime = new Date(message.getTimeStamp());
+                ((sendViewHolder) holder).messageSenTime.setText(ShowDateTime(sendTime));
+                break;
+            case 2:
+                ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
+                Date receiveTime = new Date(message.getTimeStamp());
+                ((receiveViewHolder) holder).messageRecTime.setText(ShowDateTime(receiveTime));
+                break;
+            case 3:
+                if (message.getMessage().startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+                    ((sendViewHolder) holder).sendRecord.setAudio(message.getMessage());
+                break;
+            case 4:
+                if (message.getMessage().startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+                    ((receiveViewHolder) holder).receiveRecord.setAudio(message.getMessage());
+                break;
         }
     }
 
@@ -65,8 +87,14 @@ public class messageAdaptor extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())) {
+            String message = messageModels.get(position).getMessage();
+            if (message.startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+                return SENDER_AUDIO_RECORD;
             return SENDER_VIEW_TYPE;
         } else {
+            String message = messageModels.get(position).getMessage();
+            if (message.startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+                return RECEIVER_AUDIO_RECORD;
             return RECEIVE_VIEW_TYPE;
         }
     }
@@ -78,21 +106,25 @@ public class messageAdaptor extends RecyclerView.Adapter {
 
     public static class receiveViewHolder extends RecyclerView.ViewHolder {
         TextView messageRec, messageRecTime;
+        VoicePlayerView receiveRecord;
 
         public receiveViewHolder(@NonNull View itemView) {
             super(itemView);
             messageRec = itemView.findViewById(R.id.messageRec);
             messageRecTime = itemView.findViewById(R.id.messageRecTime);
+            receiveRecord = itemView.findViewById(R.id.RecVoicePlayerView);
         }
     }
 
     public static class sendViewHolder extends RecyclerView.ViewHolder {
         TextView messageSen, messageSenTime;
+        VoicePlayerView sendRecord;
 
         public sendViewHolder(@NonNull View itemView) {
             super(itemView);
             messageSen = itemView.findViewById(R.id.messageSen);
             messageSenTime = itemView.findViewById(R.id.messageSenTime);
+            sendRecord = itemView.findViewById(R.id.SendVoicePlayerView);
         }
     }
 }
