@@ -76,7 +76,7 @@
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/button_corner"
+        android:background="@drawable/button_round"
         android:backgroundTint="#2196F3"
         android:fontFamily="@font/trebuc"
         android:text="Continue"

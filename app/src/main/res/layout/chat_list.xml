@@ -1,63 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginTop="3dp"
+    app:cardCornerRadius="10dp"
     android:foreground="?android:selectableItemBackgroundBorderless"
-   android:layout_margin="5dp"
     android:theme="@style/Theme.PersonalChat.V1"
     tools:ignore="MissingConstraints">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/chatUserImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/round"
-        android:layout_marginStart="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/ChatUsername"
-        android:layout_width="wrap_content"
-        android:maxWidth="187dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/trebuc"
-        android:text="Username"
-        android:textSize="19sp"
-        app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
-        app:layout_constraintStart_toEndOf="@+id/chatUserImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chatUserImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/round"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/chatLastMessage"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:maxHeight="18dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/trebuc"
-        android:paddingStart="5sp"
-        android:textSize="15sp"
-        android:text="LastMessage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/chatUserImage"
-        app:layout_constraintTop_toBottomOf="@+id/ChatUsername"
-        tools:ignore="RtlSymmetry" />
+        <TextView
+            android:id="@+id/ChatUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/trebuc"
+            android:maxWidth="187dp"
+            android:text="Username"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toTopOf="@+id/chatLastMessage"
+            app:layout_constraintStart_toEndOf="@+id/chatUserImage"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/lastMessageTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="10dp"
-        android:text="LastMessageTime"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/chatLastMessage"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/trebuc"
+            android:maxHeight="18dp"
+            android:paddingStart="5sp"
+            android:text="LastMessage"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/chatUserImage"
+            app:layout_constraintTop_toBottomOf="@+id/ChatUsername"
+            tools:ignore="RtlSymmetry" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/lastMessageTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:text="LastMessageTime"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -270,7 +270,7 @@ public class mainChatActivity extends status {
                 if (path.isSuccessful()) {
                     String url = path.getResult().toString();
 
-                    message conversation = new message(MineId, url);
+                    message conversation = new message(MineId, url, "RecordAudio");
                     conversation.setTimeStamp(new Date().getTime());
                     BindMainChat.TypeMessage.setText(null);
 
@@ -303,7 +303,7 @@ public class mainChatActivity extends status {
 
 
         BindMainChat.audioRecord.setOnClickListener(view -> {
-            Toast.makeText(this, "Ready..?", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ready..? Hold The Button..", Toast.LENGTH_SHORT).show();
             //Create Folder
             FileName = "PersonalChat" + File.separator + "Media";
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {

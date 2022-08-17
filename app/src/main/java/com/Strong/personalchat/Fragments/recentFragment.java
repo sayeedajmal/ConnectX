@@ -99,13 +99,13 @@ public class recentFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (Objects.requireNonNull(dataSnapshot.getKey()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                        CurrentUser.setUsername(dataSnapshot.child("username").getValue(String.class));
-                        CurrentUser.setEmail(dataSnapshot.child("email").getValue(String.class));
-                        CurrentUser.setPassword(dataSnapshot.child("password").getValue(String.class));
-                        CurrentUser.setChatUserImage(dataSnapshot.child("chatUserImage").getValue(String.class));
-                        CurrentUser.setUserId(dataSnapshot.child("userID").getValue(String.class));
-                    }
+                        if (Objects.equals(dataSnapshot.getKey(), FirebaseAuth.getInstance().getUid())) {
+                            CurrentUser.setUsername(dataSnapshot.child("username").getValue(String.class));
+                            CurrentUser.setEmail(dataSnapshot.child("email").getValue(String.class));
+                            CurrentUser.setPassword(dataSnapshot.child("password").getValue(String.class));
+                            CurrentUser.setChatUserImage(dataSnapshot.child("chatUserImage").getValue(String.class));
+                            CurrentUser.setUserId(dataSnapshot.child("userID").getValue(String.class));
+                        }
                 }
             }
 

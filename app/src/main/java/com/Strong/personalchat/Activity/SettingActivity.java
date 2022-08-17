@@ -29,8 +29,8 @@ public class SettingActivity extends status {
 
         BindSet.logoutButton.setOnClickListener(view -> {
             status = new status();
-            status.onLogout();
             firebaseAuth.signOut();
+            status.onLogout();
             Toast.makeText(this, "We Are Waiting For You..", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, purposeActivity.class));
         });

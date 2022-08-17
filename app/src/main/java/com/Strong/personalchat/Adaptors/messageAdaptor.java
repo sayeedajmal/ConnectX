@@ -41,8 +41,8 @@ public class messageAdaptor extends RecyclerView.Adapter {
             view = LayoutInflater.from(context).inflate(R.layout.sample_send, parent, false);
             return new sendViewHolder(view);
 
-        } else if (viewType == RECEIVE_VIEW_TYPE) {
-            view = LayoutInflater.from(context).inflate(R.layout.sample_recieve, parent, false);
+        } else if (viewType == RECEIVER_AUDIO_RECORD) {
+            view = LayoutInflater.from(context).inflate(R.layout.sample_audiorecieve, parent, false);
             return new receiveViewHolder(view);
 
         } else if (viewType == SENDER_AUDIO_RECORD) {
@@ -50,7 +50,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
             return new sendViewHolder(view);
 
         } else {
-            view = LayoutInflater.from(context).inflate(R.layout.sample_audiorecieve, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.sample_recieve, parent, false);
             return new receiveViewHolder(view);
         }
     }
@@ -58,6 +58,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         message message = messageModels.get(position);
+        String audioMessage = messageModels.get(position).getMessageType();
         switch (getItemViewType(position)) {
             case 1:
                 ((sendViewHolder) holder).messageSen.setText(message.getMessage());
@@ -70,11 +71,11 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 ((receiveViewHolder) holder).messageRecTime.setText(ShowDateTime(receiveTime));
                 break;
             case 3:
-                if (message.getMessage().startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+                if (audioMessage != null && audioMessage.equals("RecordAudio"))
                     ((sendViewHolder) holder).sendRecord.setAudio(message.getMessage());
                 break;
             case 4:
-                if (message.getMessage().startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+                if (audioMessage != null && audioMessage.equals("RecordAudio"))
                     ((receiveViewHolder) holder).receiveRecord.setAudio(message.getMessage());
                 break;
         }
@@ -87,13 +88,13 @@ public class messageAdaptor extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())) {
-            String message = messageModels.get(position).getMessage();
-            if (message.startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+            String message = messageModels.get(position).getMessageType();
+            if (message != null && message.equals("RecordAudio"))
                 return SENDER_AUDIO_RECORD;
             return SENDER_VIEW_TYPE;
         } else {
-            String message = messageModels.get(position).getMessage();
-            if (message.startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FRecordAudio"))
+            String message = messageModels.get(position).getMessageType();
+            if (message != null && message.equals("RecordAudio"))
                 return RECEIVER_AUDIO_RECORD;
             return RECEIVE_VIEW_TYPE;
         }

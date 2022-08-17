@@ -7,34 +7,35 @@
     tools:context=".Activity.recentActivity">
 
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/labelLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#0383Eb"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/setting"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/setting" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="30dp"
             android:fontFamily="@font/emotion"
             android:text="@string/app_name"
-            android:textColor="@color/White"
             android:textSize="35sp" />
-    </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/setting"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="15dp"
+            android:layout_gravity="end"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/setting" />
+    </FrameLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutDashboard"
@@ -43,7 +44,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="5dp"
-        android:background="@drawable/callview_corner"
+        android:background="@color/transparent"
         android:clickable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
         android:orientation="vertical"
@@ -52,8 +53,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelLayout"
         app:tabIconTint="#2196F3"
-        app:tabIndicatorColor="@color/White"
-        app:tabIndicatorHeight="3dp"
+        app:tabIndicatorColor="#0D83EB"
+        app:tabIndicatorHeight="1dp"
+        app:tabSelectedTextColor="#2196F3"
         tools:ignore="MissingConstraints" />
 
     <androidx.viewpager.widget.ViewPager
@@ -79,6 +81,7 @@
         app:cardCornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/dashboardPager"
         app:layout_constraintEnd_toEndOf="parent">
+
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/floatNewChat"
             android:layout_width="40dp"
