@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="4dp"
     android:theme="@style/Theme.PersonalChat.V1">
 
     <LinearLayout
@@ -27,13 +27,13 @@
             app:playProgressbarColor="#0F8BED"
             app:progressTimeColor="#000"
             app:seekBarProgressColor="#000"
-            app:seekBarThumbColor="#FFC107"
+            app:seekBarThumbColor="#11A4DD"
             app:shareBackgroundColor="#0F8BED"
             app:shareCornerRadius="100"
             app:shareText="SHARE ME"
             app:showShareButton="false"
             app:showTiming="true"
-            app:timingBackgroundColor="#6AFF7700"
+            app:timingBackgroundColor="#8611A4DD"
             app:viewBackground="#C6C4CF"
             app:viewCornerRadius="100"
             app:visualizationNotPlayedColor="#727171"

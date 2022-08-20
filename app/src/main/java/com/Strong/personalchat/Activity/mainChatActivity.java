@@ -310,69 +310,72 @@ public class mainChatActivity extends status {
                 if (isRecordingOk()) {
                     BindMainChat.audioRecord.setListenForRecord(true);
                     createDirectory(FileName);
+                    RecordAudio();
                 } else
                     requestRecording();
             } else {
                 askPermissionTOWrite();
             }
+        });
+    }
 
-            File AudioFile = new File(CreateFile());
-            MediaRecorder mediaRecorder = new MediaRecorder();
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
-            mediaRecorder.setOutputFile(AudioFile.getPath());
+    private void RecordAudio() {
+        File AudioFile = new File(CreateFile());
+        MediaRecorder mediaRecorder = new MediaRecorder();
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
+        mediaRecorder.setOutputFile(AudioFile.getPath());
 
-            BindMainChat.recordView.setOnRecordListener(new OnRecordListener() {
-                @Override
-                public void onStart() {
-                    try {
-                        mediaRecorder.prepare();
-                        mediaRecorder.start();
-                    } catch (IOException exception) {
-                        exception.printStackTrace();
-                    }
-                    BindMainChat.TypeMessage.setVisibility(View.INVISIBLE);
-                    BindMainChat.sendButton.setVisibility(View.INVISIBLE);
-                    BindMainChat.recordView.setVisibility(View.VISIBLE);
+        BindMainChat.recordView.setOnRecordListener(new OnRecordListener() {
+            @Override
+            public void onStart() {
+                try {
+                    mediaRecorder.prepare();
+                    mediaRecorder.start();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
                 }
+                BindMainChat.TypeMessage.setVisibility(View.INVISIBLE);
+                BindMainChat.sendButton.setVisibility(View.INVISIBLE);
+                BindMainChat.recordView.setVisibility(View.VISIBLE);
+            }
 
-                @Override
-                public void onCancel() {
-                    mediaRecorder.reset();
-                    mediaRecorder.release();
-                    if (AudioFile.exists())
-                        AudioFile.delete();
-                    Toast.makeText(mainChatActivity.this, "Canceled...", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onCancel() {
+                mediaRecorder.reset();
+                mediaRecorder.release();
+                if (AudioFile.exists())
+                    AudioFile.delete();
+                Toast.makeText(mainChatActivity.this, "Canceled...", Toast.LENGTH_SHORT).show();
 
-                    BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
-                    BindMainChat.recordView.setVisibility(View.INVISIBLE);
-                    BindMainChat.audioRecord.setListenForRecord(false);
+                BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
+                BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                BindMainChat.audioRecord.setListenForRecord(false);
 
-                }
+            }
 
-                @Override
-                public void onFinish(long recordTime) {
-                    mediaRecorder.stop();
-                    mediaRecorder.release();
-                    sendAudioMessage(AudioFile.getPath());
-                    BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
-                    BindMainChat.recordView.setVisibility(View.INVISIBLE);
-                    BindMainChat.audioRecord.setListenForRecord(false);
+            @Override
+            public void onFinish(long recordTime) {
+                mediaRecorder.stop();
+                mediaRecorder.release();
+                sendAudioMessage(AudioFile.getPath());
+                BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
+                BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                BindMainChat.audioRecord.setListenForRecord(false);
 
-                }
+            }
 
-                @Override
-                public void onLessThanSecond() {
-                    mediaRecorder.reset();
-                    mediaRecorder.release();
-                    if (AudioFile.exists())
-                        AudioFile.delete();
-                    BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
-                    BindMainChat.recordView.setVisibility(View.INVISIBLE);
-                    BindMainChat.audioRecord.setListenForRecord(false);
-                }
-            });
+            @Override
+            public void onLessThanSecond() {
+                mediaRecorder.reset();
+                mediaRecorder.release();
+                if (AudioFile.exists())
+                    AudioFile.delete();
+                BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
+                BindMainChat.recordView.setVisibility(View.INVISIBLE);
+                BindMainChat.audioRecord.setListenForRecord(false);
+            }
         });
     }
 
