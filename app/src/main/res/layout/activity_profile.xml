@@ -31,16 +31,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:ignore="MissingConstraints" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/pickImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pick An Image"
-        android:textSize="15sp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_round"
+        android:backgroundTint="@color/transparent"
+        android:drawableStart="@drawable/add_pic"
+        android:fontFamily="@font/trebuc"
+        android:paddingStart="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/newProfileImage"
         app:layout_constraintEnd_toEndOf="@+id/newProfileImage"
         app:layout_constraintStart_toStartOf="@+id/newProfileImage"
-        app:layout_constraintTop_toTopOf="@+id/newProfileImage" />
+        app:layout_constraintTop_toTopOf="@+id/newProfileImage"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView6"
@@ -80,6 +84,9 @@
         android:backgroundTint="#2196F3"
         android:fontFamily="@font/trebuc"
         android:text="Continue"
+        android:paddingStart="10dp"
+        android:drawableTint="@color/white"
+        android:drawableStart="@drawable/login"
         android:textColor="@color/White"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"

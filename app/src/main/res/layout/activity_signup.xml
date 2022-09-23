@@ -15,7 +15,6 @@
         android:scaleType="centerCrop"
         android:layout_marginStart="28dp"
         android:layout_marginTop="36dp"
-        android:clickable="true"
         android:background="@color/transparent"
         android:foreground="?android:selectableItemBackgroundBorderless"
         android:src="@drawable/backbutton"
@@ -49,25 +48,27 @@
 
     <EditText
         android:id="@+id/signUsername"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints=""
+        android:background="@drawable/button_corner"
         android:drawableStart="@drawable/ic_user"
         android:drawablePadding="5dp"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/button_corner"
         android:fontFamily="@font/trebuc"
         android:gravity="center"
+        android:hint="@string/app_name"
         android:inputType="text"
         android:padding="5dp"
-        android:hint="@string/app_name"
-        android:textSize="20sp"
         android:textColorHint="@color/CadetBlue"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="MissingConstraints"
-        android:autofillHints="" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,10 +83,11 @@
 
     <EditText
         android:id="@+id/signEmail"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
-        android:textColorHint="@color/CadetBlue"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/button_corner"
         android:drawableStart="@drawable/email"
         android:drawablePadding="5dp"
@@ -94,6 +96,7 @@
         android:hint="personalchat@gmail.com"
         android:inputType="textEmailAddress"
         android:padding="5dp"
+        android:textColorHint="@color/CadetBlue"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -115,17 +118,19 @@
 
     <EditText
         android:id="@+id/signPassword"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/button_corner"
         android:drawableStart="@drawable/password"
         android:drawablePadding="5dp"
         android:gravity="center"
         android:hint="********"
-        android:textColorHint="@color/CadetBlue"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:textColorHint="@color/CadetBlue"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +149,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ContinueToUploadImage"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="52dp"
         android:background="@drawable/image_corner"
@@ -162,18 +167,18 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goLoginButton"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="110dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/button_round"
         android:backgroundTint="#2196F3"
         android:fontFamily="@font/abcdisplay"
         android:text="Log In"
         android:textColor="@color/White"
         android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ContinueToUploadImage"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

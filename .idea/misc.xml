@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/drawable/email.xml" value="0.13" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.13" />
         <entry key="app/src/main/res/drawable/password.xml" value="0.13" />
+        <entry key="app/src/main/res/drawable/sendbutton.xml" value="0.16" />
         <entry key="app/src/main/res/drawable/setting.xml" value="0.203" />
         <entry key="app/src/main/res/drawable/unlock.xml" value="0.13" />
         <entry key="app/src/main/res/layout/activity_change_user_data.xml" value="0.23697916666666666" />
