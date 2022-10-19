@@ -13,8 +13,6 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:foreground="?android:selectableItemBackgroundBorderless"
         android:padding="0dp"
         android:background="@color/transparent"
         android:scaleType="centerCrop"
@@ -60,7 +58,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/newContactPager"
         android:layout_width="match_parent"
-        android:layout_height="611dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SearchPerson" />

@@ -91,7 +91,6 @@
             android:layout_marginStart="15dp"
             android:background="@drawable/round"
             android:clickable="true"
-            android:foreground="?android:selectableItemBackgroundBorderless"
             android:scaleType="centerCrop"
             android:src="@drawable/newchat"
             app:fabSize="normal"
