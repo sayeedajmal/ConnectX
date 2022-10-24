@@ -49,11 +49,11 @@ import java.util.Objects;
 
 public class mainChatActivity extends status {
     FirebaseAuth fAuth;
-    String MineId, FileName;
+    String MineId;
+    ;
     String YourID;
     private static final int WRITE_REQUEST_CODE = 8;
     FirebaseDatabase database;
-    StorageReference storageReference;
     DatabaseReference reference;
     ActivityMainChatBinding BindMainChat;
 
@@ -67,7 +67,6 @@ public class mainChatActivity extends status {
         YourID = getIntent().getStringExtra("userId");
         fAuth = FirebaseAuth.getInstance();
         MineId = fAuth.getUid();
-        storageReference = FirebaseStorage.getInstance().getReference();
         String username = getIntent().getStringExtra("username");
         String chatUserImage = getIntent().getStringExtra("UserImage");
 
@@ -261,10 +260,11 @@ public class mainChatActivity extends status {
 
     private void sendAudioMessage(String audioPath) {
         long milliTime = System.currentTimeMillis();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference = storageReference.child("Media").child("RecordAudio").child(Long.toString(milliTime));
+
+        StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
+        firebaseAudioPath = firebaseAudioPath.child("Media").child("RecordAudio").child(YourID).child(Long.toString(milliTime));
         Uri uri = Uri.fromFile(new File(audioPath));
-        storageReference.putFile(uri).addOnSuccessListener(success -> {
+        firebaseAudioPath.putFile(uri).addOnSuccessListener(success -> {
             Task<Uri> audioUrl = success.getStorage().getDownloadUrl();
             audioUrl.addOnCompleteListener(path -> {
                 if (path.isSuccessful()) {
@@ -290,8 +290,6 @@ public class mainChatActivity extends status {
                 }
             });
         });
-
-
     }
 
     private void AudioRecordButton() {
@@ -303,13 +301,12 @@ public class mainChatActivity extends status {
 
 
         BindMainChat.audioRecord.setOnClickListener(view -> {
-            Toast.makeText(this, "Ready..? Hold The Button..", Toast.LENGTH_SHORT).show();
             //Create Folder
-            FileName = "PersonalChat" + File.separator + "Media";
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 if (isRecordingOk()) {
                     BindMainChat.audioRecord.setListenForRecord(true);
-                    createDirectory(FileName);
+                    Toast.makeText(this, "Ready..? Hold The Button..", Toast.LENGTH_SHORT).show();
+                    createDirectory();
                     RecordAudio();
                 } else
                     requestRecording();
@@ -381,7 +378,7 @@ public class mainChatActivity extends status {
 
     private String CreateFile() {
         String Name = +System.currentTimeMillis() + ".mp3";
-        File file = new File(Environment.getExternalStoragePublicDirectory("MUSIC") + File.separator + FileName, Name);
+        File file = new File(Environment.getExternalStoragePublicDirectory("Music") + File.separator + "PersonalChat", Name);
         // Toast.makeText(this, file.getPath(), Toast.LENGTH_SHORT).show();
         return file.getPath();
     }
@@ -391,7 +388,7 @@ public class mainChatActivity extends status {
 
         if (requestCode == WRITE_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                createDirectory(FileName);
+                createDirectory();
             } else {
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
             }
@@ -399,9 +396,8 @@ public class mainChatActivity extends status {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void createDirectory(String folderName) {
-        File file = new File(Environment.getExternalStoragePublicDirectory("MUSIC"), folderName);
-        file.mkdir();
+    private void createDirectory() {
+        new File(Environment.getExternalStoragePublicDirectory("Music"), "PersonalChat");
     }
 
     private void askPermissionTOWrite() {
@@ -410,6 +406,14 @@ public class mainChatActivity extends status {
 
     private void deleteChat() {
         database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+        /*StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
+        firebaseAudioPath=firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
+        firebaseAudioPath.delete().addOnSuccessListener(unused -> Toast.makeText(mainChatActivity.this, "Chat Deleted.", Toast.LENGTH_SHORT).show()).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(mainChatActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });*/
         onBackPressed();
     }
 

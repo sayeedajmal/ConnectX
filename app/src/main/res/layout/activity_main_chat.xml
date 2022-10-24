@@ -223,6 +223,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_marginEnd="10dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:scaleType="centerCrop"
@@ -230,7 +231,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/microphone" />
 
-        <!--<com.devlomi.record_view.RecordView
+      <com.devlomi.record_view.RecordView
             android:id="@+id/recordView"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -244,7 +245,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
             app:slide_to_cancel_arrow_color="#2196F3"
-            app:slide_to_cancel_text="Slide to Cancel" />-->
+            app:slide_to_cancel_text="Slide to Cancel" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
