@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:theme="@style/Theme.PersonalChat.V1"
     tools:context=".Activity.signupActivity">
 
@@ -12,10 +14,10 @@
         android:id="@+id/backButtonSignup"
         android:layout_width="50dp"
         android:layout_height="40dp"
-        android:scaleType="centerCrop"
         android:layout_marginStart="28dp"
         android:layout_marginTop="36dp"
         android:background="@color/transparent"
+        android:scaleType="centerCrop"
         android:src="@drawable/backbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,11 +33,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/equinox"
         android:text="CREATE NEW ACCOUNT"
         android:textSize="30sp"
@@ -45,139 +48,142 @@
         app:layout_constraintTop_toBottomOf="@+id/circleImageView"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/signUsername"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="16dp"
-        android:autofillHints=""
-        android:background="@drawable/button_corner"
-        android:drawableStart="@drawable/ic_user"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/trebuc"
-        android:gravity="center"
-        android:hint="@string/app_name"
-        android:inputType="text"
-        android:padding="5dp"
-        android:textColorHint="@color/CadetBlue"
-        android:textSize="20sp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/Username"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center_horizontal"
+        android:hint="Username"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="#2196F3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="MissingConstraints" />
+        app:startIconDrawable="@drawable/ic_user"
+        app:startIconTint="#2196F3">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:padding="0dp"
+            android:textSize="20sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:fontFamily="@font/trebuc"
-        android:padding="2sp"
-        android:text="Username"
-        app:layout_constraintBottom_toTopOf="@+id/signUsername"
-        app:layout_constraintStart_toStartOf="@+id/signUsername"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/signEmail"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/button_corner"
-        android:drawableStart="@drawable/email"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/trebuc"
-        android:gravity="center"
-        android:hint="personalchat@gmail.com"
-        android:inputType="textEmailAddress"
-        android:padding="5dp"
-        android:textColorHint="@color/CadetBlue"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUsername"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:fontFamily="@font/trebuc"
-        android:padding="2sp"
-        android:text="Email Address"
-        app:layout_constraintBottom_toTopOf="@+id/signEmail"
-        app:layout_constraintStart_toStartOf="@+id/signEmail"
-        tools:ignore="MissingConstraints" />
-
-
-    <EditText
-        android:id="@+id/signPassword"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/button_corner"
-        android:drawableStart="@drawable/password"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:hint="********"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColorHint="@color/CadetBlue"
-        android:textSize="20sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center_horizontal"
+        android:hint="Email ID"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="#2196F3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signEmail"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/Username"
+        app:startIconDrawable="@drawable/email"
+        app:startIconTint="#2196F3">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signEmail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:padding="0dp"
+            android:textSize="20sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:padding="2sp"
-        android:text="Create Password"
-        app:layout_constraintBottom_toTopOf="@+id/signPassword"
-        app:layout_constraintStart_toStartOf="@+id/signPassword"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:hint="Password"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="2dp"
+        app:endIconMode="password_toggle"
+        app:endIconTint="#2196F3"
+        app:hintTextColor="#2196F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLayout"
+        app:startIconDrawable="@drawable/password"
+        app:startIconTint="#2196F3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+            android:padding="0dp"
+            android:textSize="20sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ContinueToUploadImage"
+        android:id="@+id/SignUp"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/image_corner"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/button_round"
         android:backgroundTint="#2196F3"
         android:fontFamily="@font/abcdisplay"
+        android:foreground="?actionBarItemBackground"
         android:text="Continue"
         android:textColor="@color/White"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signPassword"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
         tools:ignore="MissingConstraints" />
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/SignUp"
+        app:layout_constraintEnd_toEndOf="@+id/SignUp"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/SignUp"
+        app:layout_constraintTop_toTopOf="@+id/SignUp"
+        tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goLoginButton"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/button_round"
         android:backgroundTint="#2196F3"
         android:fontFamily="@font/abcdisplay"
-        android:text="Log In"
+        android:foreground="?actionBarItemBackground"
+        android:text="Login"
         android:textColor="@color/White"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ContinueToUploadImage"
+        app:layout_constraintTop_toBottomOf="@+id/SignUp"
         tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

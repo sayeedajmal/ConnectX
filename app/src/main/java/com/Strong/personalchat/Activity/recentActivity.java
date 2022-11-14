@@ -1,29 +1,18 @@
 package com.Strong.personalchat.Activity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
+import com.Strong.personalchat.Fragments.ViewPagerSection;
 import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
 import com.Strong.personalchat.Fragments.requestFragment;
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.Fragments.ViewPagerSection;
-import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.Utilities.status;
+import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.models.CurrentUser;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 import java.util.Objects;
 
 public class recentActivity extends status {
@@ -57,14 +46,19 @@ public class recentActivity extends status {
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
 
-        if (CurrentUser.getChatUserImage() != null) {
-            Picasso.get().load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
-        }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (CurrentUser.getChatUserImage() != null) {
+            Picasso.get().load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
+        }
     }
 }

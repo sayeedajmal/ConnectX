@@ -1,14 +1,16 @@
 package com.Strong.personalchat.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.Strong.personalchat.Utilities.Constants;
 import com.Strong.personalchat.databinding.ActivitySignupBinding;
+
+import java.util.Objects;
 
 public class signupActivity extends AppCompatActivity {
     ActivitySignupBinding BindSignup;
@@ -30,10 +32,14 @@ public class signupActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        BindSignup.ContinueToUploadImage.setOnClickListener(view -> {
-            username = BindSignup.signUsername.getText().toString().trim();
-            email = BindSignup.signEmail.getText().toString().trim();
-            pass = BindSignup.signPassword.getText().toString().trim();
+        signUp();
+    }
+
+    private void signUp() {
+        BindSignup.SignUp.setOnClickListener(view -> {
+            username = Objects.requireNonNull(BindSignup.signUsername.getText()).toString().trim();
+            email = Objects.requireNonNull(BindSignup.signEmail.getText()).toString().trim();
+            pass = Objects.requireNonNull(BindSignup.signPassword.getText()).toString().trim();
 
             if (TextUtils.isEmpty(username)) {
                 showToast("Please enter Username.");

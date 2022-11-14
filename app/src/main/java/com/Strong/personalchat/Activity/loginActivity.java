@@ -1,12 +1,12 @@
 package com.Strong.personalchat.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.Strong.personalchat.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,13 +21,11 @@ public class loginActivity extends AppCompatActivity {
         BindLogin = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(BindLogin.getRoot());
 
-
         auth = FirebaseAuth.getInstance();
 
-
-        BindLogin.loginButton.setOnClickListener(view -> {
+        BindLogin.Login.setOnClickListener(view -> {
             BindLogin.progressbar.setVisibility(View.VISIBLE);
-            BindLogin.loginButton.setVisibility(View.INVISIBLE);
+            BindLogin.Login.setVisibility(View.INVISIBLE);
             BindLogin.goSignupButton.setVisibility(View.INVISIBLE);
 
             String email = BindLogin.getEmail.getText().toString();
@@ -36,7 +34,7 @@ public class loginActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 showToast("Fill Email & Password Correctly");
                 BindLogin.progressbar.setVisibility(View.GONE);
-                BindLogin.loginButton.setVisibility(View.VISIBLE);
+                BindLogin.Login.setVisibility(View.VISIBLE);
                 BindLogin.goSignupButton.setVisibility(View.VISIBLE);
 
             } else {
@@ -44,14 +42,14 @@ public class loginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         showToast("Logged Successfully");
                         BindLogin.progressbar.setVisibility(View.GONE);
-                        BindLogin.loginButton.setVisibility(View.INVISIBLE);
+                        BindLogin.Login.setVisibility(View.INVISIBLE);
                         BindLogin.goSignupButton.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(loginActivity.this, recentActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
                         BindLogin.progressbar.setVisibility(View.GONE);
-                        BindLogin.loginButton.setVisibility(View.VISIBLE);
+                        BindLogin.Login.setVisibility(View.VISIBLE);
                         BindLogin.goSignupButton.setVisibility(View.VISIBLE);
                         showToast("Invalid UserName or Password");
                     }

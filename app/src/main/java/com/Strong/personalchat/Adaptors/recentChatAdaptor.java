@@ -3,18 +3,16 @@ package com.Strong.personalchat.Adaptors;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Strong.personalchat.R;
 import com.Strong.personalchat.Activity.mainChatActivity;
+import com.Strong.personalchat.R;
 import com.Strong.personalchat.models.recentGetter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -53,7 +51,7 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
 
         //Last Message to Shown
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("Chats").child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("Chats").child(users.getUserId()).orderByChild("timestamp").limitToLast(1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -82,7 +80,7 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
     }
 
     private String ShowDateTime(Date date) {
-        return new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date);
+        return new SimpleDateFormat("hh:mm a dd/MM", Locale.getDefault()).format(date);
     }
 
     @Override

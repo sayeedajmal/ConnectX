@@ -50,7 +50,6 @@ import java.util.Objects;
 public class mainChatActivity extends status {
     FirebaseAuth fAuth;
     String MineId;
-    ;
     String YourID;
     private static final int WRITE_REQUEST_CODE = 8;
     FirebaseDatabase database;
