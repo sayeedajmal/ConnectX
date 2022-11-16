@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -15,6 +18,7 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalChat.V1">
+
         <activity
             android:name=".Activity.SplashActivity"
             android:exported="true">
@@ -32,6 +36,8 @@
         <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.newChatActivity" />
         <activity android:name=".Activity.mainChatActivity" />
+        <activity android:name=".Activity.VideoCallOutgoing" />
+        <activity android:name=".Activity.VideoCallIncoming" />
         <activity android:name=".Activity.UserDataShow" />
         <activity android:name=".Activity.userDataImage" />
         <activity android:name=".Activity.ChangeUserData" />

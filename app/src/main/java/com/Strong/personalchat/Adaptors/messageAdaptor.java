@@ -4,13 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Strong.personalchat.models.message;
 import com.Strong.personalchat.R;
+import com.Strong.personalchat.models.message;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
     int RECEIVE_VIEW_TYPE = 2;
     int SENDER_AUDIO_RECORD = 3;
     int RECEIVER_AUDIO_RECORD = 4;
+    BottomSheetDialog bottomSheetDialog;
 
     public messageAdaptor(ArrayList<message> messageModels, Context context) {
         this.messageModels = messageModels;
@@ -70,15 +73,36 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 Date receiveTime = new Date(message.getTimeStamp());
                 ((receiveViewHolder) holder).messageRecTime.setText(ShowDateTime(receiveTime));
                 break;
-            case 3:
+           /* case 3:
                 if (audioMessage != null && audioMessage.equals("RecordAudio"))
                     ((sendViewHolder) holder).sendRecord.setAudio(message.getMessage());
                 break;
             case 4:
                 if (audioMessage != null && audioMessage.equals("RecordAudio"))
                     ((receiveViewHolder) holder).receiveRecord.setAudio(message.getMessage());
-                break;
+                break;*/
         }
+        holder.itemView.setOnLongClickListener(view -> {
+            deleteMessage();
+            return false;
+        });
+    }
+
+    private void deleteMessage() {
+        bottomSheetDialog = new BottomSheetDialog(context);
+        bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_delete);
+        Button cancel = bottomSheetDialog.findViewById(R.id.Cancel);
+        Button delete = bottomSheetDialog.findViewById(R.id.Delete);
+
+        bottomSheetDialog.show();
+        assert cancel != null;
+        cancel.setOnClickListener(v -> bottomSheetDialog.dismiss());
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        bottomSheetDialog.setOnDismissListener(dialogInterface -> bottomSheetDialog.dismiss());
+        assert delete != null;
+        delete.setOnClickListener(v -> {
+
+        });
     }
 
     private String ShowDateTime(Date date) {
@@ -89,13 +113,11 @@ public class messageAdaptor extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         if (messageModels.get(position).getuId().equals(FirebaseAuth.getInstance().getUid())) {
             String message = messageModels.get(position).getMessageType();
-            if (message != null && message.equals("RecordAudio"))
-                return SENDER_AUDIO_RECORD;
+            if (message != null && message.equals("RecordAudio")) return SENDER_AUDIO_RECORD;
             return SENDER_VIEW_TYPE;
         } else {
             String message = messageModels.get(position).getMessageType();
-            if (message != null && message.equals("RecordAudio"))
-                return RECEIVER_AUDIO_RECORD;
+            if (message != null && message.equals("RecordAudio")) return RECEIVER_AUDIO_RECORD;
             return RECEIVE_VIEW_TYPE;
         }
     }

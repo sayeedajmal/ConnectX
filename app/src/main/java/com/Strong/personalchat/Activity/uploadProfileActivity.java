@@ -49,6 +49,7 @@ public class uploadProfileActivity extends AppCompatActivity {
         email = getIntent().getStringExtra(Constants.KEY_EMAIL);
         pass = getIntent().getStringExtra(Constants.KEY_PASSWORD);
         id = getIntent().getStringExtra(Constants.KEY_ID);
+
         BindProfile.newProfileImage.setOnClickListener(view -> SelectImage());
 
 

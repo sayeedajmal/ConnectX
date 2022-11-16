@@ -173,12 +173,37 @@
         android:id="@+id/Type"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:gravity="center"
         android:layout_margin="5dp"
         android:background="@color/transparent"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/TypeMessage"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/sendButton"
+            android:background="@drawable/round"
+            android:backgroundTint="@color/transparent"
+            android:fontFamily="@font/trebuc"
+            android:hint="Type a Message"
+            android:maxHeight="75dp"
+            android:minHeight="42dp"
+            android:padding="5dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColorHint="@color/SlateGray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sendButton"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints,RtlSymmetry" />
+
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/sendButton"
@@ -194,59 +219,48 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/sendbutton" />
 
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/TypeMessage"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/chooseImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/sendButton"
-            android:background="@drawable/round"
-            android:fontFamily="@font/trebuc"
-            android:backgroundTint="@color/transparent"
-            android:hint="Type a Message"
-            android:maxHeight="75dp"
-            android:minHeight="42dp"
-            android:padding="5dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textColorHint="@color/SlateGray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sendButton"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints,RtlSymmetry" />
-
-        <com.devlomi.record_view.RecordButton
-            android:id="@+id/audioRecord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="10dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginRight="5dp"
+            android:background="@color/transparent"
             android:scaleType="centerCrop"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/microphone" />
+            app:srcCompat="@drawable/chooseiamge" />
+        <!--        <com.devlomi.record_view.RecordButton
+                    android:id="@+id/audioRecord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/microphone" />
 
-      <com.devlomi.record_view.RecordView
-            android:id="@+id/recordView"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/sendButton"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/audioRecord"
-            app:layout_constraintStart_toStartOf="parent"
-            app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
-            app:slide_to_cancel_arrow_color="#2196F3"
-            app:slide_to_cancel_text="Slide to Cancel" />
+              <com.devlomi.record_view.RecordView
+                    android:id="@+id/recordView"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toStartOf="@+id/sendButton"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/audioRecord"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
+                    app:slide_to_cancel_arrow_color="#2196F3"
+                    app:slide_to_cancel_text="Slide to Cancel" />-->
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

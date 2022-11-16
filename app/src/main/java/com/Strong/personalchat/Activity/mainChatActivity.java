@@ -1,14 +1,14 @@
 package com.Strong.personalchat.Activity;
 
-import android.Manifest;
+import static android.content.Intent.ACTION_GET_CONTENT;
+import static android.content.Intent.createChooser;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.media.MediaRecorder;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuInflater;
@@ -17,29 +17,21 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.R;
+import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
-import com.Strong.personalchat.Utilities.status;
-import com.devlomi.record_view.OnRecordListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +47,8 @@ public class mainChatActivity extends status {
     FirebaseDatabase database;
     DatabaseReference reference;
     ActivityMainChatBinding BindMainChat;
+    private final int REQ_IMAGE = 500;
+    private Uri filePath;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -69,9 +63,7 @@ public class mainChatActivity extends status {
         String username = getIntent().getStringExtra("username");
         String chatUserImage = getIntent().getStringExtra("UserImage");
 
-        reference = FirebaseDatabase.getInstance().getReference().
-                child("Users").
-                child(YourID).child("Typing").child(MineId);
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
 
         final HashMap<String, Object> hashmap = new HashMap<>();
 
@@ -172,18 +164,7 @@ public class mainChatActivity extends status {
                 BindMainChat.TypeMessage.setText(null);
 
                 // Feeding Message to Sender and Receiver Database
-                database.getReference().
-                        child("Users").
-                        child(MineId).
-                        child("Chats").
-                        child(YourID).
-                        push().setValue(conversation).addOnSuccessListener(e -> database.getReference().
-                                child("Users").
-                                child(YourID).
-                                child("Chats").
-                                child(MineId).
-                                push().setValue(conversation)
-                        );
+                database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
             }
         });
 
@@ -198,11 +179,11 @@ public class mainChatActivity extends status {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() != 0) {
                     hashmap.put("Typing", charSequence.toString());
-                    BindMainChat.audioRecord.setVisibility(View.INVISIBLE);
+                    BindMainChat.chooseImage.setVisibility(View.INVISIBLE);
                     BindMainChat.sendButton.setVisibility(View.VISIBLE);
                 } else {
                     hashmap.put("Typing", "");
-                    BindMainChat.audioRecord.setVisibility(View.VISIBLE);
+                    BindMainChat.chooseImage.setVisibility(View.VISIBLE);
                     BindMainChat.sendButton.setVisibility(View.INVISIBLE);
                 }
                 reference.updateChildren(hashmap);
@@ -252,9 +233,70 @@ public class mainChatActivity extends status {
             });
         });
         database.getReference().keepSynced(true);
-        BindMainChat.audioRecord.setListenForRecord(false);
+        /*BindMainChat.audioRecord.setListenForRecord(false);
 
-        AudioRecordButton();
+        AudioRecordButton();*/
+
+        BindMainChat.videCallButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, VideoCallOutgoing.class);
+            intent.putExtra("Uid", YourID);
+            intent.putExtra("OutName", username);
+            intent.putExtra("OutImage", chatUserImage);
+            startActivity(intent);
+        });
+
+        BindMainChat.chooseImage.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(ACTION_GET_CONTENT);
+            startActivityForResult(createChooser(intent, "Select Image From Here"), REQ_IMAGE);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQ_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+//                BindProfile.newProfileImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void deleteChat() {
+        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+        /*StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
+        firebaseAudioPath=firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
+        firebaseAudioPath.delete().addOnSuccessListener(unused -> Toast.makeText(mainChatActivity.this, "Chat Deleted.", Toast.LENGTH_SHORT).show()).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(mainChatActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("Typing", "");
+        reference.updateChildren(hashMap);
+        reference.keepSynced(true);
+    }
+
+     /*   private boolean isRecordingOk() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestRecording() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 8080);
     }
 
     private void sendAudioMessage(String audioPath) {
@@ -274,18 +316,7 @@ public class mainChatActivity extends status {
                     BindMainChat.TypeMessage.setText(null);
 
                     // Feeding AudioMessage to Sender and Receiver Database
-                    database.getReference().
-                            child("Users").
-                            child(MineId).
-                            child("Chats").
-                            child(YourID).
-                            push().setValue(conversation).addOnSuccessListener(e -> database.getReference().
-                                    child("Users").
-                                    child(YourID).
-                                    child("Chats").
-                                    child(MineId).
-                                    push().setValue(conversation)
-                            );
+                    database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
                 }
             });
         });
@@ -307,8 +338,7 @@ public class mainChatActivity extends status {
                     Toast.makeText(this, "Ready..? Hold The Button..", Toast.LENGTH_SHORT).show();
                     createDirectory();
                     RecordAudio();
-                } else
-                    requestRecording();
+                } else requestRecording();
             } else {
                 askPermissionTOWrite();
             }
@@ -341,8 +371,7 @@ public class mainChatActivity extends status {
             public void onCancel() {
                 mediaRecorder.reset();
                 mediaRecorder.release();
-                if (AudioFile.exists())
-                    AudioFile.delete();
+                if (AudioFile.exists()) AudioFile.delete();
                 Toast.makeText(mainChatActivity.this, "Canceled...", Toast.LENGTH_SHORT).show();
 
                 BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
@@ -366,8 +395,7 @@ public class mainChatActivity extends status {
             public void onLessThanSecond() {
                 mediaRecorder.reset();
                 mediaRecorder.release();
-                if (AudioFile.exists())
-                    AudioFile.delete();
+                if (AudioFile.exists()) AudioFile.delete();
                 BindMainChat.TypeMessage.setVisibility(View.VISIBLE);
                 BindMainChat.recordView.setVisibility(View.INVISIBLE);
                 BindMainChat.audioRecord.setListenForRecord(false);
@@ -401,38 +429,5 @@ public class mainChatActivity extends status {
 
     private void askPermissionTOWrite() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_REQUEST_CODE);
-    }
-
-    private void deleteChat() {
-        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
-        /*StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
-        firebaseAudioPath=firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
-        firebaseAudioPath.delete().addOnSuccessListener(unused -> Toast.makeText(mainChatActivity.this, "Chat Deleted.", Toast.LENGTH_SHORT).show()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(mainChatActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
-        onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                child("Users").
-                child(YourID).child("Typing").child(MineId);
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("Typing", "");
-        reference.updateChildren(hashMap);
-        reference.keepSynced(true);
-    }
-
-    private boolean isRecordingOk() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestRecording() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 8080);
-    }
+    }*/
 }
