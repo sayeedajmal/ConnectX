@@ -1,9 +1,7 @@
 package com.Strong.personalchat.Activity;
 
-import static android.content.Intent.*;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import static android.content.Intent.ACTION_GET_CONTENT;
+import static android.content.Intent.createChooser;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +10,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.Strong.personalchat.Utilities.Constants;
 import com.Strong.personalchat.databinding.ActivityProfileBinding;
@@ -93,6 +94,7 @@ public class uploadProfileActivity extends AppCompatActivity {
 
             //Storing Image String to The Database
             FirebaseDatabase database = FirebaseDatabase.getInstance();
+            storageReference = FirebaseStorage.getInstance().getReference();
 
             Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
             ByteArrayOutputStream bas = new ByteArrayOutputStream();
@@ -102,7 +104,6 @@ public class uploadProfileActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
 
-                    storageReference = FirebaseStorage.getInstance().getReference();
                     String id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     storageReference = storageReference.child("ProfileImages/" + id);
 

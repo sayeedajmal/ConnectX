@@ -226,13 +226,14 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:background="@color/transparent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitEnd"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/chooseiamge" />
+
         <!--        <com.devlomi.record_view.RecordButton
                     android:id="@+id/audioRecord"
                     android:layout_width="wrap_content"
