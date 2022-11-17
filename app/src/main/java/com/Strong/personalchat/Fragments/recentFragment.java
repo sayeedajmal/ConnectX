@@ -2,21 +2,19 @@ package com.Strong.personalchat.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.Strong.personalchat.Adaptors.recentChatAdaptor;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
 import com.Strong.personalchat.models.CurrentUser;
 import com.Strong.personalchat.models.recentGetter;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +55,7 @@ public class recentFragment extends Fragment {
         String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         database.child("Users").child(uid).child("Chats").addValueEventListener(new ValueEventListener() {
+            //Getting UID of particular chat user
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -64,6 +63,8 @@ public class recentFragment extends Fragment {
                     getters.clear();
                     String Uid = dataSnapshot.getKey();
                     assert Uid != null;
+
+                    //Getting data of particular user by taking their id
                     database.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -99,13 +100,13 @@ public class recentFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (Objects.equals(dataSnapshot.getKey(), FirebaseAuth.getInstance().getUid())) {
-                            CurrentUser.setUsername(dataSnapshot.child("username").getValue(String.class));
-                            CurrentUser.setEmail(dataSnapshot.child("email").getValue(String.class));
-                            CurrentUser.setPassword(dataSnapshot.child("password").getValue(String.class));
-                            CurrentUser.setChatUserImage(dataSnapshot.child("chatUserImage").getValue(String.class));
-                            CurrentUser.setUserId(dataSnapshot.child("userID").getValue(String.class));
-                        }
+                    if (Objects.equals(dataSnapshot.getKey(), FirebaseAuth.getInstance().getUid())) {
+                        CurrentUser.setUsername(dataSnapshot.child("username").getValue(String.class));
+                        CurrentUser.setEmail(dataSnapshot.child("email").getValue(String.class));
+                        CurrentUser.setPassword(dataSnapshot.child("password").getValue(String.class));
+                        CurrentUser.setChatUserImage(dataSnapshot.child("chatUserImage").getValue(String.class));
+                        CurrentUser.setUserId(dataSnapshot.child("userID").getValue(String.class));
+                    }
                 }
             }
 
