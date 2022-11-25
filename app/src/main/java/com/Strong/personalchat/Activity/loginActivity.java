@@ -1,9 +1,11 @@
 package com.Strong.personalchat.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class loginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         BindLogin.Login.setOnClickListener(view -> {
+            hideKeyboard();
             BindLogin.progressbar.setVisibility(View.VISIBLE);
             BindLogin.Login.setVisibility(View.INVISIBLE);
             BindLogin.goSignupButton.setVisibility(View.INVISIBLE);
@@ -63,6 +66,14 @@ public class loginActivity extends AppCompatActivity {
         });
 
         BindLogin.backButton.setOnClickListener(view -> onBackPressed());
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     private void showToast(String message) {

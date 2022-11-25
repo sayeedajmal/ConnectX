@@ -29,6 +29,7 @@ import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -236,8 +237,7 @@ public class mainChatActivity extends status {
                         return true;
                     case R.id.deleteChat:
                         deleteChat();
-                        Toast.makeText(getApplicationContext(), "Chats of " + username + " Deleted..", Toast.LENGTH_SHORT).show();
-                        return true;
+                        return false;
                     default:
                         return false;
                 }
@@ -310,7 +310,8 @@ public class mainChatActivity extends status {
     }
 
     private void deleteChat() {
-        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+        Snackbar.make(BindMainChat.optionButton, "\uD83D\uDE01 \uD83D\uDE06 You Can't Delete This Chat \uD83E\uDD2A", Snackbar.LENGTH_SHORT).show();
+        // database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
         /*StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
         firebaseAudioPath=firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
         firebaseAudioPath.delete().addOnSuccessListener(unused -> Toast.makeText(mainChatActivity.this, "Chat Deleted.", Toast.LENGTH_SHORT).show()).addOnFailureListener(new OnFailureListener() {
@@ -319,7 +320,6 @@ public class mainChatActivity extends status {
                 Toast.makeText(mainChatActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });*/
-        onBackPressed();
     }
 
     @Override
@@ -333,8 +333,7 @@ public class mainChatActivity extends status {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
 
         if (requestCode == REQ_IMAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

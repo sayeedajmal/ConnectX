@@ -2,15 +2,14 @@ package com.Strong.personalchat.Fragments;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.Strong.personalchat.Adaptors.callsAdaptor;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
@@ -40,6 +39,8 @@ public class callsFragment extends Fragment {
 
         callList.add(new callsGetter("Sayeed Ajmal", "Missed", ""));
         callList.add(new callsGetter("Shoaib Akhtar ", "OutGoing", ""));
+        callList.add(new callsGetter("Md Sami", "Incoming", ""));
+        callList.add(new callsGetter("Shaikh Sahil", "Missed", ""));
 
         callsAdaptor callsAdaptor = new callsAdaptor(getContext(), callList);
         BindRecycle.RecyclerView.setAdapter(callsAdaptor);

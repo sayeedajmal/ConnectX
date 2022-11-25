@@ -1,11 +1,15 @@
 package com.Strong.personalchat.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-;import com.Strong.personalchat.databinding.ActivityPurposeBinding;
+import com.Strong.personalchat.databinding.ActivityPurposeBinding;
+
 
 public class purposeActivity extends AppCompatActivity {
 
@@ -19,6 +23,7 @@ public class purposeActivity extends AppCompatActivity {
         setContentView(BindPurpose.getRoot());
 
         BindPurpose.goLogin.setOnClickListener(view -> {
+            hideKeyboard();
             Intent intent = new Intent(purposeActivity.this, loginActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -31,6 +36,13 @@ public class purposeActivity extends AppCompatActivity {
         });
     }
 
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -12,7 +12,7 @@
         android:id="@+id/card_gchat_message_other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#B9C9E4"
+        app:cardBackgroundColor="#CAD8F1"
         app:cardCornerRadius="10dp"
         app:cardElevation="1dp"
         app:cardPreventCornerOverlap="false"
@@ -38,20 +38,22 @@
                 android:text="This is Reciever."
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/messageRecTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:background="@drawable/round_corner"
-                android:padding="3dp"
+                android:background="@color/transparent"
+                android:paddingStart="5dp"
+                android:paddingEnd="3dp"
+                android:paddingBottom="1dp"
                 android:text="01,28,2022 - 09-09 PM"
-                android:textColor="@color/black"
+                android:textColor="#2C2B2B"
                 android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="RtlHardcoded,SmallSp" />
+                tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -1,8 +1,11 @@
 package com.Strong.personalchat.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +40,7 @@ public class signupActivity extends AppCompatActivity {
 
     private void signUp() {
         BindSignup.SignUp.setOnClickListener(view -> {
+            hideKeyboard();
             username = Objects.requireNonNull(BindSignup.signUsername.getText()).toString().trim();
             email = Objects.requireNonNull(BindSignup.signEmail.getText()).toString().trim();
             pass = Objects.requireNonNull(BindSignup.signPassword.getText()).toString().trim();
@@ -61,6 +65,14 @@ public class signupActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     private void showToast(String message) {

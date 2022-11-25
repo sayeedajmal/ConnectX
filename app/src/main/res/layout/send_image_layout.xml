@@ -33,13 +33,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:background="@drawable/round_corner"
+        android:layout_marginEnd="16dp"
+        android:background="@color/transparent"
         android:padding="3dp"
         android:text="01,28,2022 - 09-09 PM"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/card_gchat_message_me"
-        app:layout_constraintStart_toStartOf="@+id/card_gchat_message_me"
         tools:ignore="RtlHardcoded,SmallSp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

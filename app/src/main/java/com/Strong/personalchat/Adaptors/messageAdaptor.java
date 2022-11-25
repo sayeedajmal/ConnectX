@@ -31,6 +31,8 @@ public class messageAdaptor extends RecyclerView.Adapter {
     int RECEIVER_AUDIO_RECORD = 4;*/
     int SENDER_IMAGE = 3;
     int RECEIVER_IMAGE = 4;
+    int SENDER_EMOJI = 5;
+    int RECEIVER_EMOJI = 6;
     BottomSheetDialog bottomSheetDialog;
 
     public messageAdaptor(ArrayList<message> messageModels, Context context) {
@@ -51,10 +53,17 @@ public class messageAdaptor extends RecyclerView.Adapter {
         } else if (viewType == SENDER_IMAGE) {
             view = LayoutInflater.from(context).inflate(R.layout.send_image_layout, parent, false);
             return new sendViewHolder(view);
-        } else {
+        } else if (viewType == RECEIVE_VIEW_TYPE) {
             view = LayoutInflater.from(context).inflate(R.layout.sample_recieve, parent, false);
             return new receiveViewHolder(view);
-        }/*else if (viewType == RECEIVER_AUDIO_RECORD) {
+        } else if (viewType == SENDER_EMOJI) {
+            view = LayoutInflater.from(context).inflate(R.layout.sample_send_emoji, parent, false);
+            return new receiveViewHolder(view);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.sample_recieve_emoji, parent, false);
+            return new receiveViewHolder(view);
+        }
+        /*else if (viewType == RECEIVER_AUDIO_RECORD) {
             view = LayoutInflater.from(context).inflate(R.layout.sample_audiorecieve, parent, false);
             return new receiveViewHolder(view);
 
@@ -69,13 +78,14 @@ public class messageAdaptor extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         message message = messageModels.get(position);
         String ImagePics = messageModels.get(position).getMessageType();
+        String emojiStart = "\uD83D\uDE01";
         //String audioMessage = messageModels.get(position).getMessageType();
 
         switch (getItemViewType(position)) {
             case 1:
                 ((sendViewHolder) holder).messageSen.setText(message.getMessage());
                 Date sendTime = new Date(message.getTimeStamp());
-                ((sendViewHolder) holder).messageSenTime.setText(ShowDateTime(sendTime));
+                ((sendViewHolder) holder).messageSenTime.setText(ShowSend(sendTime));
                 break;
             case 2:
                 ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
@@ -86,7 +96,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 if (ImagePics != null && ImagePics.equals("ImagePics"))
                     Picasso.get().load(message.getMessage()).into(((sendViewHolder) holder).sendImage);
                 Date sendImgTime = new Date(message.getTimeStamp());
-                ((sendViewHolder) holder).img_sen_time.setText(ShowDateTime(sendImgTime));
+                ((sendViewHolder) holder).img_sen_time.setText(ShowSend(sendImgTime));
                 break;
             case 4:
                 if (ImagePics != null && ImagePics.equals("ImagePics"))
@@ -94,7 +104,14 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 Date recImgTime = new Date(message.getTimeStamp());
                 ((receiveViewHolder) holder).img_rec_time.setText(ShowDateTime(recImgTime));
                 break;
-
+            case 5:
+                if (message.getMessage().startsWith(emojiStart)) {
+                    ((sendViewHolder) holder).sendEmoji.setText(message.getMessage());
+                }
+            case 6:
+                if (message.getMessage().startsWith(emojiStart)) {
+                    ((receiveViewHolder) holder).ReceiveEmoji.setText(message.getMessage());
+                }
            /* case 3:
                 if (audioMessage != null && audioMessage.equals("RecordAudio"))
                     ((sendViewHolder) holder).sendRecord.setAudio(message.getMessage());
@@ -104,7 +121,9 @@ public class messageAdaptor extends RecyclerView.Adapter {
                     ((receiveViewHolder) holder).receiveRecord.setAudio(message.getMessage());
                 break;*/
         }
-        holder.itemView.setOnLongClickListener(view -> {
+        holder.itemView.setOnLongClickListener(view ->
+
+        {
             deleteMessage();
             return false;
         });
@@ -128,7 +147,11 @@ public class messageAdaptor extends RecyclerView.Adapter {
     }
 
     private String ShowDateTime(Date date) {
-        return new SimpleDateFormat("dd,MM,yyyy - hh:mm a", Locale.getDefault()).format(date);
+        return new SimpleDateFormat("dd.MM.yy - hh:mm a", Locale.getDefault()).format(date);
+    }
+
+    private String ShowSend(Date date) {
+        return new SimpleDateFormat("hh:mm a- dd.MM.yy", Locale.getDefault()).format(date);
     }
 
     @Override
@@ -137,10 +160,12 @@ public class messageAdaptor extends RecyclerView.Adapter {
             String message = messageModels.get(position).getMessageType();
             if (message != null && message.equals("ImagePics")) return SENDER_IMAGE;
             //if (message != null && message.equals("RecordAudio")) return SENDER_AUDIO_RECORD;
+           // if (message.startsWith("\\\\u")) return SENDER_EMOJI;
             return SENDER_VIEW_TYPE;
         } else {
             String message = messageModels.get(position).getMessageType();
             if (message != null && message.equals("ImagePics")) return RECEIVER_IMAGE;
+           // if (message.startsWith("\\\\u")) return RECEIVER_EMOJI;
             //  if (message != null && message.equals("RecordAudio")) return RECEIVER_AUDIO_RECORD;
             return RECEIVE_VIEW_TYPE;
         }
@@ -151,23 +176,8 @@ public class messageAdaptor extends RecyclerView.Adapter {
         return messageModels.size();
     }
 
-    public static class receiveViewHolder extends RecyclerView.ViewHolder {
-        TextView messageRec, messageRecTime, img_rec_time;
-        ImageView recImage;
-        //VoicePlayerView receiveRecord;
-
-        public receiveViewHolder(@NonNull View itemView) {
-            super(itemView);
-            messageRec = itemView.findViewById(R.id.messageRec);
-            messageRecTime = itemView.findViewById(R.id.messageRecTime);
-            recImage = itemView.findViewById(R.id.recImage);
-            img_rec_time = itemView.findViewById(R.id.img_rec_time);
-            // receiveRecord = itemView.findViewById(R.id.RecVoicePlayerView);
-        }
-    }
-
     public static class sendViewHolder extends RecyclerView.ViewHolder {
-        TextView messageSen, messageSenTime, img_sen_time;
+        TextView messageSen, messageSenTime, img_sen_time, sendEmoji;
         ImageView sendImage;
         // VoicePlayerView sendRecord;
 
@@ -178,7 +188,24 @@ public class messageAdaptor extends RecyclerView.Adapter {
             messageSenTime = itemView.findViewById(R.id.messageSenTime);
             sendImage = itemView.findViewById(R.id.sendImage);
             img_sen_time = itemView.findViewById(R.id.img_sen_time);
+            sendEmoji = itemView.findViewById(R.id.sendEmoji);
             //  sendRecord = itemView.findViewById(R.id.SendVoicePlayerView);
+        }
+    }
+
+    public static class receiveViewHolder extends RecyclerView.ViewHolder {
+        TextView messageRec, messageRecTime, img_rec_time, ReceiveEmoji;
+        ImageView recImage;
+        //VoicePlayerView receiveRecord;
+
+        public receiveViewHolder(@NonNull View itemView) {
+            super(itemView);
+            messageRec = itemView.findViewById(R.id.messageRec);
+            messageRecTime = itemView.findViewById(R.id.messageRecTime);
+            recImage = itemView.findViewById(R.id.recImage);
+            img_rec_time = itemView.findViewById(R.id.img_rec_time);
+            ReceiveEmoji = itemView.findViewById(R.id.ReceiveEmoji);
+            // receiveRecord = itemView.findViewById(R.id.RecVoicePlayerView);
         }
     }
 }
