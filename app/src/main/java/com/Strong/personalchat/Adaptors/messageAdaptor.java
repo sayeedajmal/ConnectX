@@ -1,6 +1,7 @@
 package com.Strong.personalchat.Adaptors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Strong.personalchat.Activity.userDataImage;
 import com.Strong.personalchat.R;
 import com.Strong.personalchat.models.message;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -25,6 +27,7 @@ import java.util.Locale;
 public class messageAdaptor extends RecyclerView.Adapter {
     ArrayList<message> messageModels;
     Context context;
+    Intent intent;
     int SENDER_VIEW_TYPE = 1;
     int RECEIVE_VIEW_TYPE = 2;/*
     int SENDER_AUDIO_RECORD = 3;
@@ -53,16 +56,16 @@ public class messageAdaptor extends RecyclerView.Adapter {
         } else if (viewType == SENDER_IMAGE) {
             view = LayoutInflater.from(context).inflate(R.layout.send_image_layout, parent, false);
             return new sendViewHolder(view);
-        } else if (viewType == RECEIVE_VIEW_TYPE) {
+        } else {
             view = LayoutInflater.from(context).inflate(R.layout.sample_recieve, parent, false);
             return new receiveViewHolder(view);
-        } else if (viewType == SENDER_EMOJI) {
+        }/* else if (viewType == SENDER_EMOJI) {
             view = LayoutInflater.from(context).inflate(R.layout.sample_send_emoji, parent, false);
             return new receiveViewHolder(view);
         } else {
             view = LayoutInflater.from(context).inflate(R.layout.sample_recieve_emoji, parent, false);
             return new receiveViewHolder(view);
-        }
+        }*/
         /*else if (viewType == RECEIVER_AUDIO_RECORD) {
             view = LayoutInflater.from(context).inflate(R.layout.sample_audiorecieve, parent, false);
             return new receiveViewHolder(view);
@@ -78,7 +81,6 @@ public class messageAdaptor extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         message message = messageModels.get(position);
         String ImagePics = messageModels.get(position).getMessageType();
-        String emojiStart = "\uD83D\uDE01";
         //String audioMessage = messageModels.get(position).getMessageType();
 
         switch (getItemViewType(position)) {
@@ -104,7 +106,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 Date recImgTime = new Date(message.getTimeStamp());
                 ((receiveViewHolder) holder).img_rec_time.setText(ShowDateTime(recImgTime));
                 break;
-            case 5:
+          /*  case 5:
                 if (message.getMessage().startsWith(emojiStart)) {
                     ((sendViewHolder) holder).sendEmoji.setText(message.getMessage());
                 }
@@ -112,7 +114,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 if (message.getMessage().startsWith(emojiStart)) {
                     ((receiveViewHolder) holder).ReceiveEmoji.setText(message.getMessage());
                 }
-           /* case 3:
+           case 3:
                 if (audioMessage != null && audioMessage.equals("RecordAudio"))
                     ((sendViewHolder) holder).sendRecord.setAudio(message.getMessage());
                 break;
@@ -121,11 +123,16 @@ public class messageAdaptor extends RecyclerView.Adapter {
                     ((receiveViewHolder) holder).receiveRecord.setAudio(message.getMessage());
                 break;*/
         }
-        holder.itemView.setOnLongClickListener(view ->
-
-        {
+        holder.itemView.setOnLongClickListener(view -> {
             deleteMessage();
             return false;
+        });
+        holder.itemView.setOnClickListener(view -> {
+            if (ImagePics != null && ImagePics.equals("ImagePics")) {
+                intent = new Intent(context, userDataImage.class);
+                intent.putExtra("Image", message.getMessage());
+                context.startActivity(intent);
+            }
         });
     }
 
@@ -160,12 +167,11 @@ public class messageAdaptor extends RecyclerView.Adapter {
             String message = messageModels.get(position).getMessageType();
             if (message != null && message.equals("ImagePics")) return SENDER_IMAGE;
             //if (message != null && message.equals("RecordAudio")) return SENDER_AUDIO_RECORD;
-           // if (message.startsWith("\\\\u")) return SENDER_EMOJI;
             return SENDER_VIEW_TYPE;
         } else {
             String message = messageModels.get(position).getMessageType();
+            String emoji = messageModels.get(position).getMessage();
             if (message != null && message.equals("ImagePics")) return RECEIVER_IMAGE;
-           // if (message.startsWith("\\\\u")) return RECEIVER_EMOJI;
             //  if (message != null && message.equals("RecordAudio")) return RECEIVER_AUDIO_RECORD;
             return RECEIVE_VIEW_TYPE;
         }
