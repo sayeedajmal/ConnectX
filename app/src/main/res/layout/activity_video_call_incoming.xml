@@ -60,7 +60,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/mova"
         android:text="Incoming Video Call"
-        android:textSize="19sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/inDrop"
         app:layout_constraintEnd_toEndOf="@+id/ReceiveVideo"

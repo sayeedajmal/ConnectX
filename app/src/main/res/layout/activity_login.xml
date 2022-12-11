@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="156dp"
-        android:fontFamily="@font/abcdisplay"
+        android:fontFamily="@font/mova"
         android:paddingStart="5dp"
         android:text="WELCOME BACK"
         android:textSize="40sp"
@@ -70,6 +70,7 @@
             android:id="@+id/getEmail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="@font/mova"
             android:inputType="textEmailAddress"
             android:padding="0dp"
             android:textSize="20sp" />
@@ -101,10 +102,21 @@
             android:id="@+id/getPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="@font/mova"
             android:inputType="textPassword"
             android:padding="0dp"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/mova"
+        android:text="Forgot Your Password"
+        app:layout_constraintEnd_toEndOf="@+id/getPasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/getPasswordLayout" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/Login"
@@ -113,11 +125,12 @@
         android:layout_marginTop="80dp"
         android:background="@drawable/button_round"
         android:backgroundTint="#2196F3"
-        android:fontFamily="@font/abcdisplay"
+        android:fontFamily="@font/mova"
         android:foreground="?actionBarItemBackground"
+        android:paddingTop="3dp"
         android:text="Log in"
         android:textColor="@color/White"
-        android:textSize="35sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,11 +156,12 @@
         android:layout_marginTop="70dp"
         android:background="@drawable/button_round"
         android:backgroundTint="#2196F3"
-        android:fontFamily="@font/abcdisplay"
+        android:fontFamily="@font/mova"
         android:foreground="?actionBarItemBackground"
+        android:paddingTop="3dp"
         android:text="SIGN UP"
         android:textColor="@color/White"
-        android:textSize="35sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"

@@ -32,6 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
+            android:textSize="21sp"
+            android:fontFamily="@font/mova"
             android:textStyle="bold" />
 
         <TextView
@@ -39,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Message"
-            android:textSize="15sp" />
+            android:fontFamily="@font/mova"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

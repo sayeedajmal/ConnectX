@@ -87,12 +87,12 @@
             android:layout_marginEnd="3dp"
             android:layout_toStartOf="@+id/videCallButton"
             android:layout_toEndOf="@+id/mainChatImage"
-            android:fontFamily="@font/trebuc"
+            android:fontFamily="@font/mova"
             android:maxWidth="175dp"
             android:maxHeight="25dp"
             android:text="Username"
             android:textAlignment="textStart"
-            android:textSize="20sp"
+            android:textSize="23sp"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 
@@ -190,7 +190,7 @@
             android:layout_toStartOf="@+id/sendButton"
             android:background="@drawable/round"
             android:backgroundTint="@color/transparent"
-            android:fontFamily="@font/trebuc"
+            android:fontFamily="@font/mova"
             android:hint="Type a Message"
             android:maxHeight="75dp"
             android:minHeight="42dp"
