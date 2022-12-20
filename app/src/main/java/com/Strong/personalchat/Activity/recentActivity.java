@@ -12,6 +12,8 @@ import com.Strong.personalchat.R;
 import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.models.CurrentUser;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -32,6 +34,8 @@ public class recentActivity extends status {
         requestFragment requestFragment = new requestFragment();
 
         viewPagerAdaptor = new ViewPagerSection(getSupportFragmentManager(), 0);
+
+        //FirebaseMessaging.getInstance().getToken().addOnSuccessListener(s -> System.out.println("<<<<<<<<<<<<<<" + s));
 
         viewPagerAdaptor.addFragment(recentFragment, "Primary");
         viewPagerAdaptor.addFragment(callsFragment, "Calls");

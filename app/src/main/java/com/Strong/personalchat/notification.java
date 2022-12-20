@@ -51,6 +51,7 @@ public class notification extends FirebaseMessagingService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channel_id)
                 .setColor(Color.rgb(255, 255, 255))
                 .setLargeIcon(bitmap)
+                .setColorized(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.mipmap.icon_foreground)
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
