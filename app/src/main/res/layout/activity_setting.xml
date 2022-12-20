@@ -107,7 +107,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="148dp"
         android:backgroundTint="#0380eb"
@@ -117,7 +117,6 @@
         android:padding="20dp"
         android:text="Logout"
         android:textColor="@color/white"
-        android:textSize="20sp"
         app:circularflow_radiusInDP="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HelpButton" />

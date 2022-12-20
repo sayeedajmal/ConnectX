@@ -54,13 +54,11 @@ public class mainChatActivity extends status {
     FirebaseAuth fAuth;
     String MineId;
     String YourID;
-    private static final int WRITE_REQUEST_CODE = 8;
     FirebaseDatabase database;
     DatabaseReference reference;
     StorageReference StoreRef;
     ActivityMainChatBinding BindMainChat;
     private final int REQ_IMAGE = 500;
-    private Uri filePath;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -261,7 +259,7 @@ public class mainChatActivity extends status {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(ACTION_GET_CONTENT);
-                startActivityForResult(createChooser(intent, "Select Image From Here"), REQ_IMAGE);
+                startActivityForResult(createChooser(intent, "Select Image To Send"), REQ_IMAGE);
             } else {
                 AskToRead();
             }
@@ -274,7 +272,7 @@ public class mainChatActivity extends status {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQ_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
+            Uri filePath = data.getData();
             database = FirebaseDatabase.getInstance();
             StoreRef = FirebaseStorage.getInstance().getReference();
             long milliTime = System.currentTimeMillis();
@@ -336,9 +334,9 @@ public class mainChatActivity extends status {
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
 
         if (requestCode == REQ_IMAGE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            } else {
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
