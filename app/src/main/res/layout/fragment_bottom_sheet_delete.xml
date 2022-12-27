@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
-    android:backgroundTint="#C9252C33"
+    android:backgroundTint="@color/lite_white"
     app:circularflow_radiusInDP="10dp"
     tools:context=".Fragments.bottomSheetDelete">
 
@@ -16,9 +16,9 @@
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
         android:background="@color/transparent"
-        android:text="cancel"
         android:fontFamily="@font/mova"
-        android:textColor="@color/white" />
+        android:text="cancel"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/Delete"
@@ -27,7 +27,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="10dp"
         android:background="@color/transparent"
-        android:text="delete"
         android:fontFamily="@font/mova"
-        android:textColor="@color/white" />
+        android:text="delete"
+        android:textColor="@color/black" />
 </androidx.cardview.widget.CardView>

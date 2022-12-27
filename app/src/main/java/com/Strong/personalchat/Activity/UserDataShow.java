@@ -2,11 +2,10 @@ package com.Strong.personalchat.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityUserDataShowBinding;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 public class UserDataShow extends status {
     ActivityUserDataShowBinding BindDataShow;
@@ -21,7 +20,7 @@ public class UserDataShow extends status {
         String userImage = getIntent().getStringExtra("Image");
 
         BindDataShow.userDataName.setText(username);
-        Picasso.get().load(userImage).into(BindDataShow.userDataImage);
+        Glide.with(this).load(userImage).into(BindDataShow.userDataImage);
         BindDataShow.backButton.setOnClickListener(view -> onBackPressed());
 
         userImageShow(userImage);

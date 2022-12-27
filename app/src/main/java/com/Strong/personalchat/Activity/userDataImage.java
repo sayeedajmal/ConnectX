@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
-import com.Strong.personalchat.databinding.ActivityUserDataImageBinding;
 import com.Strong.personalchat.Utilities.status;
-import com.squareup.picasso.Picasso;
+import com.Strong.personalchat.databinding.ActivityUserDataImageBinding;
+import com.bumptech.glide.Glide;
 
 public class userDataImage extends status {
     private ScaleGestureDetector scaleGestureDetector;
@@ -22,7 +22,7 @@ public class userDataImage extends status {
 
         String image = getIntent().getStringExtra("Image");
 
-        Picasso.get().load(image).into(BindImage.Image);
+        Glide.with(this).load(image).into(BindImage.Image);
 
 
         BindImage.backButton.setOnClickListener(view -> {

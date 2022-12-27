@@ -10,6 +10,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.Strong.personalchat.Fragments.ViewPagerSection;
 import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
@@ -18,10 +20,7 @@ import com.Strong.personalchat.R;
 import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.models.CurrentUser;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
@@ -64,7 +63,6 @@ public class recentActivity extends status {
         BindRecent.setting.setOnClickListener(view -> startActivity(new Intent(this, SettingActivity.class)));
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
-
     }
 
     @Override
@@ -84,7 +82,7 @@ public class recentActivity extends status {
         super.onResume();
         (sensorManage).registerListener(sensorEventListener, sensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         if (CurrentUser.getChatUserImage() != null) {
-            Picasso.get().load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
+            Glide.with(this).load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
         }
     }
 

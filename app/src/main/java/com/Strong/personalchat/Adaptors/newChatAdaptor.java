@@ -2,7 +2,6 @@ package com.Strong.personalchat.Adaptors;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Strong.personalchat.models.newChatGetter;
-import com.Strong.personalchat.R;
-import com.squareup.picasso.Picasso;
 import com.Strong.personalchat.Activity.mainChatActivity;
+import com.Strong.personalchat.R;
+import com.Strong.personalchat.models.newChatGetter;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -41,14 +40,14 @@ public class newChatAdaptor extends RecyclerView.Adapter<newChatAdaptor.ViewHold
         newChatGetter users = newUserList.get(position);
 
 
-        Picasso.get().load(users.getChatUserImage()).into(holder.newContactImage);
+        Glide.with(context).load(users.getChatUserImage()).into(holder.newContactImage);
         holder.newChatUsername.setText(users.getUsername());
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, mainChatActivity.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
-            intent.putExtra("UserImage",users.getChatUserImage());
+            intent.putExtra("UserImage", users.getChatUserImage());
             context.startActivity(intent);
         });
     }

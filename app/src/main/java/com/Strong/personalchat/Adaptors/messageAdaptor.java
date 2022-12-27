@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Strong.personalchat.Activity.userDataImage;
 import com.Strong.personalchat.R;
 import com.Strong.personalchat.models.message;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -96,13 +96,13 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 break;
             case 3:
                 if (ImagePics != null && ImagePics.equals("ImagePics"))
-                    Picasso.get().load(message.getMessage()).into(((sendViewHolder) holder).sendImage);
+                    Glide.with(context).load(message.getMessage()).into(((sendViewHolder) holder).sendImage);
                 Date sendImgTime = new Date(message.getTimeStamp());
                 ((sendViewHolder) holder).img_sen_time.setText(ShowSend(sendImgTime));
                 break;
             case 4:
                 if (ImagePics != null && ImagePics.equals("ImagePics"))
-                    Picasso.get().load(message.getMessage()).into(((receiveViewHolder) holder).recImage);
+                    Glide.with(context).load(message.getMessage()).into(((receiveViewHolder) holder).recImage);
                 Date recImgTime = new Date(message.getTimeStamp());
                 ((receiveViewHolder) holder).img_rec_time.setText(ShowDateTime(recImgTime));
                 break;

@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="5dp"
     android:layout_marginBottom="3dp"
-    android:theme="@style/Theme.PersonalChat.V1">
+    android:theme="@style/Theme.Neumorph.Bridge">
 
 
-    <androidx.cardview.widget.CardView
+    <soup.neumorphism.NeumorphCardView
         android:id="@+id/card_gchat_message_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="#404F5A"
         app:cardCornerRadius="20dp"
-        app:cardElevation="1dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:neumorph_lightSource="leftTop"
+        app:neumorph_shadowColorLight="@color/transparent"
+        app:neumorph_shapeType="basin"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -34,23 +35,22 @@
                 android:layout_gravity="end"
                 android:fontFamily="@font/trebuc"
                 android:maxWidth="260dp"
-                android:padding="6dp"
+                android:padding="10dp"
                 android:text="This is a Sender."
-                android:textColor="@color/white"
                 android:textSize="19sp"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </soup.neumorphism.NeumorphCardView>
 
     <TextView
         android:id="@+id/messageSenTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginEnd="5dp"
         android:background="@color/transparent"
         android:paddingStart="3dp"
         android:paddingEnd="5dp"
-        android:layout_marginEnd="5dp"
         android:paddingBottom="1dp"
         android:text="01/28/2022 - 09-09 PM"
         android:textAlignment="textEnd"

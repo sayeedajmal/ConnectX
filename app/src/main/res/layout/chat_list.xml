@@ -55,6 +55,7 @@
             android:paddingStart="5sp"
             android:text="LastMessage"
             android:textSize="15sp"
+            android:textColor="#03A9F4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/lastMessageTime"
             app:layout_constraintStart_toEndOf="@+id/chatUserImage"

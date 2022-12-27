@@ -9,8 +9,8 @@ import com.Strong.personalchat.BuildConfig;
 import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivitySettingBinding;
 import com.Strong.personalchat.models.CurrentUser;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 public class SettingActivity extends status {
     ActivitySettingBinding BindSet;
@@ -36,7 +36,7 @@ public class SettingActivity extends status {
         });
 
         UserImage = CurrentUser.getChatUserImage();
-        Picasso.get().load(UserImage).into(BindSet.SettingUserImage);
+        Glide.with(this).load(UserImage).into(BindSet.SettingUserImage);
         BindSet.Username.setText(CurrentUser.getUsername());
 
         BindSet.SettingUserImage.setOnClickListener(view -> {

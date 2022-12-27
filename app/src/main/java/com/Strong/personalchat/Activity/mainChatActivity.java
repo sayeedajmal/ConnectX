@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -22,12 +23,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.R;
 import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +41,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -78,7 +80,7 @@ public class mainChatActivity extends status {
         final HashMap<String, Object> hashmap = new HashMap<>();
 
         BindMainChat.mainChatUsername.setText(username);
-        Picasso.get().load(chatUserImage).into(BindMainChat.mainChatImage);
+        Glide.with(this).load(chatUserImage).into(BindMainChat.mainChatImage);
 
         final ArrayList<message> messageModels = new ArrayList<>();
 
@@ -135,35 +137,8 @@ public class mainChatActivity extends status {
             }
         });
 
-        //Showing Messages
-        assert MineId != null;
-        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
-
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageModels.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    message model = dataSnapshot.getValue(message.class);
-                    messageModels.add(model);
-                    if (count == 0) {
-                        messageAdaptor.notifyDataSetChanged();
-                    } else {
-                        // Getting Shown the last message when open the chat section
-                        messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
-                        BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size() - 1);
-                    }
-                    BindMainChat.mainChatRecyclerView.setAdapter(messageAdaptor);
-                }
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                messageAdaptor.notifyDataSetChanged();
-            }
-
-        });
+        //Showing Message
+        initMessage(messageAdaptor, messageModels, count);
 
         //Sending the message and storing in the database
         BindMainChat.sendButton.setOnClickListener(view -> {
@@ -265,6 +240,44 @@ public class mainChatActivity extends status {
             }
 
         });
+
+        BindMainChat.swipeRefresh.setOnRefreshListener(() -> {
+            initMessage(messageAdaptor, messageModels, count);
+            BindMainChat.swipeRefresh.setRefreshing(false);
+        });
+    }
+
+    private void initMessage(messageAdaptor messageAdaptor, ArrayList<message> messageModels, int count) {
+        //Showing Messages
+        assert MineId != null;
+        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
+
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messageModels.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    message model = dataSnapshot.getValue(message.class);
+                    messageModels.add(model);
+                    if (count == 0) {
+                        messageAdaptor.notifyDataSetChanged();
+                    } else {
+                        // Getting Shown the last message when open the chat section
+                        messageAdaptor.notifyItemRangeChanged(messageModels.size(), messageModels.size());
+                        BindMainChat.mainChatRecyclerView.smoothScrollToPosition(messageModels.size() - 1);
+                    }
+                    BindMainChat.mainChatRecyclerView.setAdapter(messageAdaptor);
+                }
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                messageAdaptor.notifyDataSetChanged();
+            }
+
+        });
+
     }
 
     @Override
