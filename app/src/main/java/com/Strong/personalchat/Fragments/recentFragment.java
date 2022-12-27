@@ -67,7 +67,7 @@ public class recentFragment extends Fragment {
                         CurrentUser.setEmail(dataSnapshot.child("email").getValue(String.class));
                         CurrentUser.setPassword(dataSnapshot.child("password").getValue(String.class));
                         CurrentUser.setChatUserImage(dataSnapshot.child("chatUserImage").getValue(String.class));
-                        CurrentUser.setUserId(dataSnapshot.child("userID").getValue(String.class));
+                        CurrentUser.setUserId(dataSnapshot.child("userId").getValue(String.class));
                     }
                 }
             }
@@ -85,12 +85,9 @@ public class recentFragment extends Fragment {
     }
 
     private void swipeRefresh(recentChatAdaptor adaptor) {
-        BindRecycle.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initRecent(adaptor);
-                BindRecycle.swipeRefresh.setRefreshing(false);
-            }
+        BindRecycle.swipeRefresh.setOnRefreshListener(() -> {
+            initRecent(adaptor);
+            BindRecycle.swipeRefresh.setRefreshing(false);
         });
     }
 

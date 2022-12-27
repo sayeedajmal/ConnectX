@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.personalchat.Activity.mainChatActivity;
 import com.Strong.personalchat.R;
+import com.Strong.personalchat.models.CurrentUser;
 import com.Strong.personalchat.models.recentGetter;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,14 +58,16 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String message = dataSnapshot.child("message").getValue(String.class);
                     assert message != null;
+                    //  System.out.println("<<<<<<<<<<" + users.getUserId() + "<<<<<" + CurrentUser.getUserId());
                     if (message.startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FImagePics")) {
-                        holder.chatLastMessage.setText("Image");
+                        holder.chatLastMessage.setText("✓ " + "Image");
                     } else {
-                        holder.chatLastMessage.setText(dataSnapshot.child("message").getValue(String.class));
+                        holder.chatLastMessage.setText("✓" + dataSnapshot.child("message").getValue(String.class));
                     }
                     Long fetchingTime = dataSnapshot.child("timeStamp").getValue(Long.class);
                     Date time = new Date(fetchingTime);
                     holder.lastMessageTime.setText(ShowDateTime(time));
+
                 }
             }
 
@@ -74,9 +77,15 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
         });
 
         //Showing Chat Details
-        Glide.with(context).load(users.getChatUserImage()).into(holder.chatUserImage);
+        Glide.with(context).
+
+                load(users.getChatUserImage()).
+
+                into(holder.chatUserImage);
         holder.ChatUsername.setText(users.getUsername());
-        holder.itemView.setOnClickListener(view -> {
+        holder.itemView.setOnClickListener(view ->
+
+        {
             Intent intent = new Intent(context, mainChatActivity.class);
             intent.putExtra("userId", users.getUserId());
             intent.putExtra("username", users.getUsername());
