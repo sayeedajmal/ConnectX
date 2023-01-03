@@ -3,6 +3,7 @@ package com.Strong.personalchat.models;
 public class message {
     String uId;
     String message;
+    String seen;
     String messageType;
     Long timeStamp;
 
@@ -16,20 +17,21 @@ public class message {
         this.message = message;
         this.messageType=messageType;
     }
-    public void setuId(String uId) {
-        this.uId = uId;
-    }
 
     public String getuId() {
         return uId;
     }
 
-    public String getMessageType() {
-        return messageType;
+    public String getSeen() {
+        return seen;
     }
 
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
+    public void setSeen(String seen) {
+        this.seen = seen;
+    }
+
+    public String getMessageType() {
+        return messageType;
     }
 
     public String getMessage() {

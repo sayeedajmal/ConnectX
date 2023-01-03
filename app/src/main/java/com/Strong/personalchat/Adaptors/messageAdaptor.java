@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,8 +66,8 @@ public class messageAdaptor extends RecyclerView.Adapter {
         } else {
             view = LayoutInflater.from(context).inflate(R.layout.sample_recieve_emoji, parent, false);
             return new receiveViewHolder(view);
-        }*/
-        /*else if (viewType == RECEIVER_AUDIO_RECORD) {
+        }
+        else if (viewType == RECEIVER_AUDIO_RECORD) {
             view = LayoutInflater.from(context).inflate(R.layout.sample_audiorecieve, parent, false);
             return new receiveViewHolder(view);
 
@@ -81,6 +82,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         message message = messageModels.get(position);
         String ImagePics = messageModels.get(position).getMessageType();
+        String Seen = messageModels.get(position).getSeen();
         //String audioMessage = messageModels.get(position).getMessageType();
 
         switch (getItemViewType(position)) {
@@ -88,6 +90,8 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 ((sendViewHolder) holder).messageSen.setText(message.getMessage());
                 Date sendTime = new Date(message.getTimeStamp());
                 ((sendViewHolder) holder).messageSenTime.setText(ShowSend(sendTime));
+                if (Seen != null && Seen.equals("yes"))
+                    ((sendViewHolder) holder).seen.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
@@ -184,7 +188,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
 
     public static class sendViewHolder extends RecyclerView.ViewHolder {
         TextView messageSen, messageSenTime, img_sen_time, sendEmoji;
-        ImageView sendImage;
+        ImageView sendImage, seen;
         // VoicePlayerView sendRecord;
 
 
@@ -195,6 +199,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
             sendImage = itemView.findViewById(R.id.sendImage);
             img_sen_time = itemView.findViewById(R.id.img_sen_time);
             sendEmoji = itemView.findViewById(R.id.sendEmoji);
+            seen = itemView.findViewById(R.id.seen);
             //  sendRecord = itemView.findViewById(R.id.SendVoicePlayerView);
         }
     }

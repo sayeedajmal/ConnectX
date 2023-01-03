@@ -34,16 +34,6 @@ public class recentFragment extends Fragment {
     ArrayList<recentGetter> getters = new ArrayList<>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         BindRecycle = FragmentRecyclerviewBinding.inflate(inflater, container, false);
 

@@ -35,10 +35,20 @@
                 android:layout_gravity="end"
                 android:fontFamily="@font/mova"
                 android:maxWidth="260dp"
-                android:padding="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
                 android:text="This is a Sender."
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
+
+            <ImageView
+                android:id="@+id/seen"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:visibility="gone"
+                android:layout_gravity="end"
+                android:src="@drawable/seen" />
         </LinearLayout>
     </soup.neumorphism.NeumorphCardView>
 
@@ -53,7 +63,6 @@
         android:paddingEnd="5dp"
         android:paddingBottom="1dp"
         android:text="01/28/2022 - 09-09 PM"
-        android:textAlignment="textEnd"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_gchat_message_me"

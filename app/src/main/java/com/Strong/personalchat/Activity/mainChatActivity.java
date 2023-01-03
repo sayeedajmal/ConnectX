@@ -146,6 +146,7 @@ public class mainChatActivity extends status {
             if (!message.equals("")) {
                 message conversation = new message(MineId, message);
                 conversation.setTimeStamp(new Date().getTime());
+                conversation.setSeen("no");
                 BindMainChat.TypeMessage.setText(null);
 
                 // Feeding Message to Sender and Receiver Database
@@ -305,6 +306,7 @@ public class mainChatActivity extends status {
                             String url = path.getResult().toString();
                             message conversation = new message(MineId, url, "ImagePics");
                             conversation.setTimeStamp(new Date().getTime());
+                            conversation.setSeen("no");
                             BindMainChat.TypeMessage.setText(null);
                             // Feeding AudioMessage to Sender and Receiver Database
                             database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));

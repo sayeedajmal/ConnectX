@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.personalchat.Activity.mainChatActivity;
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.models.CurrentUser;
 import com.Strong.personalchat.models.recentGetter;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
