@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -23,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.R;
@@ -245,6 +243,29 @@ public class mainChatActivity extends status {
         BindMainChat.swipeRefresh.setOnRefreshListener(() -> {
             initMessage(messageAdaptor, messageModels, count);
             BindMainChat.swipeRefresh.setRefreshing(false);
+        });
+
+
+    }
+    private void seen_room() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        if (Objects.equals(dataSnapshot1.getKey(), "seen")) {
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats")
+                                    .child(YourID).child(Objects.requireNonNull(dataSnapshot.getKey())).child(dataSnapshot1.getKey());
+                            reference.setValue("yes");
+                        }
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
     }
 
