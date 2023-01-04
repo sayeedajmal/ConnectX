@@ -73,10 +73,6 @@ public class mainChatActivity extends status {
         String username = getIntent().getStringExtra("username");
         String chatUserImage = getIntent().getStringExtra("UserImage");
 
-        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
-
-        final HashMap<String, Object> hashmap = new HashMap<>();
-
         BindMainChat.mainChatUsername.setText(username);
         Glide.with(this).load(chatUserImage).into(BindMainChat.mainChatImage);
 
@@ -109,6 +105,12 @@ public class mainChatActivity extends status {
             }
         });
 
+        //Checking Room available to show seen message
+
+
+       // setRoom("1");
+       // checkRoom();
+
         //SHOWING TYPING
         database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -139,50 +141,15 @@ public class mainChatActivity extends status {
         initMessage(messageAdaptor, messageModels, count);
 
         //Sending the message and storing in the database
-        BindMainChat.sendButton.setOnClickListener(view -> {
-            String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
-            if (!message.equals("")) {
-                message conversation = new message(MineId, message);
-                conversation.setTimeStamp(new Date().getTime());
-                conversation.setSeen("no");
-                BindMainChat.TypeMessage.setText(null);
-
-                // Feeding Message to Sender and Receiver Database
-                database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
-            }
-        });
+        initSendMessage();
 
         // MESSAGE TYPING SHOW TYPING ON ACTIVE STATUS OPTION
-        BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() != 0) {
-                    hashmap.put("Typing", charSequence.toString());
-                    BindMainChat.chooseImage.setVisibility(View.INVISIBLE);
-                    BindMainChat.sendButton.setVisibility(View.VISIBLE);
-                } else {
-                    hashmap.put("Typing", "");
-                    BindMainChat.chooseImage.setVisibility(View.VISIBLE);
-                    BindMainChat.sendButton.setVisibility(View.INVISIBLE);
-                }
-                reference.updateChildren(hashmap);
-                reference.keepSynced(true);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        initTyping();
 
         BindMainChat.mainchatbackButton.setOnClickListener(view -> {
             onBackPressed();
             BindMainChat.TypeMessage.setText(null);
+            // setRoom("0");
         });
 
         BindMainChat.constraint.setOnClickListener(view -> {
@@ -192,30 +159,9 @@ public class mainChatActivity extends status {
             startActivity(intent);
         });
 
-        /* OPTION MENU FOR DELETING AND SOME OTHER STUFF*/
-        BindMainChat.optionButton.setOnClickListener(view -> {
-            PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
-            MenuInflater inflater = popupMenu.getMenuInflater();
-            inflater.inflate(R.menu.option, popupMenu.getMenu());
-            popupMenu.show();
+        // OPTION MENU FOR DELETING AND SOME OTHER STUFF
+        initOption();
 
-            popupMenu.setOnMenuItemClickListener(menuItem -> {
-                switch (menuItem.getItemId()) {
-                    case R.id.report:
-                        Toast.makeText(getApplicationContext(), "You Clicked on Report", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.block:
-                        Toast.makeText(getApplicationContext(), "You Clicked on Block", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.deleteChat:
-                        deleteChat();
-                        return false;
-                    default:
-                        return false;
-                }
-            });
-        });
-        database.getReference().keepSynced(true);
         /*BindMainChat.audioRecord.setListenForRecord(false);
 
         AudioRecordButton();*/
@@ -245,21 +191,50 @@ public class mainChatActivity extends status {
             BindMainChat.swipeRefresh.setRefreshing(false);
         });
 
+        database.getReference().keepSynced(true);
 
     }
-    private void seen_room() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+    //CHECKING CHATROOM PRESENTATION
+    private void checkRoom() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("ChatRoom").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        if (Objects.equals(dataSnapshot1.getKey(), "seen")) {
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats")
-                                    .child(YourID).child(Objects.requireNonNull(dataSnapshot.getKey())).child(dataSnapshot1.getKey());
-                            reference.setValue("yes");
-                        }
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String seen = dataSnapshot.getValue(String.class);
+                    assert seen != null;
+                    if (seen.equals("1")) {
+                        seenInit();
                     }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //SET ROOM VALUE TO 1 WHILE PRESENT IN THIS ACTIVITY
+    private void setRoom(String value) {
+        DatabaseReference refer = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("ChatRoom").child(MineId);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("chatRoom", value);
+        refer.updateChildren(map);
+        refer.keepSynced(true);
+    }
+
+    private void seenInit() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).child(Objects.requireNonNull(dataSnapshot.getKey()));
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("seen", "yes");
+                    reference.updateChildren(map);
+                }
             }
 
             @Override
@@ -300,6 +275,81 @@ public class mainChatActivity extends status {
 
         });
 
+    }
+
+    private void initTyping() {
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
+        HashMap<String, Object> hashmap = new HashMap<>();
+        BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() != 0) {
+                    hashmap.put("Typing", charSequence.toString());
+                    BindMainChat.chooseImage.setVisibility(View.INVISIBLE);
+                    BindMainChat.sendButton.setVisibility(View.VISIBLE);
+                } else {
+                    hashmap.put("Typing", "");
+                    BindMainChat.chooseImage.setVisibility(View.VISIBLE);
+                    BindMainChat.sendButton.setVisibility(View.INVISIBLE);
+                }
+                reference.updateChildren(hashmap);
+                reference.keepSynced(true);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+    }
+
+    private void initOption() {
+        BindMainChat.optionButton.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
+            MenuInflater inflater = popupMenu.getMenuInflater();
+            inflater.inflate(R.menu.option, popupMenu.getMenu());
+            popupMenu.show();
+
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.report:
+                        Toast.makeText(getApplicationContext(), "You Clicked on Report", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.block:
+                        Toast.makeText(getApplicationContext(), "You Clicked on Block", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.deleteChat:
+                        deleteChat();
+                        return false;
+                    default:
+                        return false;
+                }
+            });
+        });
+    }
+
+    private void initSendMessage() {
+        BindMainChat.sendButton.setOnClickListener(view -> {
+            String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
+            if (!message.equals("")) {
+
+               // checkRoom();
+
+                message conversation = new message(MineId, message);
+                conversation.setTimeStamp(new Date().getTime());
+                conversation.setSeen("no");
+                BindMainChat.TypeMessage.setText(null);
+
+                // Feeding Message to Sender and Receiver Database
+                FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
+            }
+        });
     }
 
     @Override
@@ -364,6 +414,14 @@ public class mainChatActivity extends status {
         hashMap.put("Typing", "");
         reference.updateChildren(hashMap);
         reference.keepSynced(true);
+       // setRoom("0");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //setRoom("1");
+       // checkRoom();
     }
 
     @Override
