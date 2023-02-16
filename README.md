@@ -2,11 +2,17 @@
 
 <b>PersonalChat for Android is a realtime chating app writtern in java using Firebase.
 
+<img src="icon.png" width="100px">
+
 PersonalChat allows to send and receive text messages, photos.</b>
 
 # SCREENSHOTS
 
-<img src="img">
+<img src="Front.png" width="250px">
+<img src="Chat.png" width="250px">
+<img src="Image.png" width="250px">
+<img src="search.png" width="250px">
+<img src="Setting.png" width="250px">
 
 # FEATURES
 
@@ -28,5 +34,4 @@ Some features are binded.
         1. Firebase (Realtime Database)
         2. Glide (Image Fetch)
         3. CircleImageView (Round Image)
-        4. Volley (Http request and response)
-        5. Neumorphism (Noumorphism View)
+        4. Neumorphism (Noumorphism View)

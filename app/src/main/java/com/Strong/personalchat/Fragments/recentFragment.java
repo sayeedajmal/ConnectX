@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.Strong.personalchat.Adaptors.recentChatAdaptor;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
@@ -87,8 +85,8 @@ public class recentFragment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     getters.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String Uid = dataSnapshot.getKey();
                     assert Uid != null;
 
