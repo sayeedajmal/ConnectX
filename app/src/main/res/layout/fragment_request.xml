@@ -13,6 +13,6 @@
         android:gravity="center"
         android:padding="20dp"
         android:text="WE ARE DEVELOPING THIS APPLICATION. SO, PLEASE KEEP PATIENCE."
-        android:textColor="#@color/SkyBlue"
+        android:textColor="@color/SkyBlue"
         android:textSize="40sp" />
 </FrameLayout>

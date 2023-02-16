@@ -99,7 +99,7 @@
     <color name="DarkMagenta">#8B008B</color>
     <color name="DarkRed">#8B0000</color>
     <color name="BlueViolet">#8A2BE2</color>
-    <color name="SkyBlue">#@color/SkyBlue</color>
+    <color name="SkyBlue">#2196F3</color>
     <color name="Gray">#808080</color>
     <color name="Olive">#808000</color>
     <color name="Maroon">#800000</color>
