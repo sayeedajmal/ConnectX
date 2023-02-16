@@ -1,10 +1,32 @@
-<h1>PersonalChat Chating Application</h1>
-<img width=128 align="left" height=128 src="app/src/main/res/mipmap-xxhdpi/icon_round.png" />PersonalChat Chating Application Developed by <a href="https://github.com/sayeedajmal">Me</a> with the use of Pure Java BackEnd and With <a href="https://firebase.google.com/">Firebase Database</a>. This is A Simple Secure Chating App. Try to Checkout.
-<br><br><br><br>
-<h2>TECHNOLOGY USED IN THIS APPLICATION</h2>
+# PERSONALCHAT CHATING FOR ANDROID
 
-    - FIREBASE CLOUD DATABASE
-    - ANDROID STUDIO
-    - JAVA BACKEND
+<b>PersonalChat for Android is a realtime chating app writtern in java using Firebase.
 
-<h2>We are Adding More Features Regularly</h2>
+PersonalChat allows to send and receive text messages, photos.</b>
+
+# SCREENSHOTS
+
+<img src="img">
+
+# FEATURES
+
+Some features are binded.
+
+    1. Simple UI Interface.
+    2. Calling Feature (Developing Mode).
+    3. Realtime Chating Function.
+    4. Status (Active).
+    5. No Last Seen.
+    6. DarkMode and LightMode Available(Match to your Phone Mode).
+    7. Chat Request (Developing Mode).
+    8. No Message Seen.
+    9. Message Notification without UserName (Developing Mode).
+    10. Video Calling Feature (Developing Mode).
+
+# API USED
+
+        1. Firebase (Realtime Database)
+        2. Glide (Image Fetch)
+        3. CircleImageView (Round Image)
+        4. Volley (Http request and response)
+        5. Neumorphism (Noumorphism View)

@@ -55,10 +55,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelLayout"
-        app:tabIconTint="#2196F3"
+        app:tabIconTint="#@color/SkyBlue"
         app:tabIndicatorColor="#0D83EB"
         app:tabIndicatorHeight="1dp"
-        app:tabSelectedTextColor="#2196F3"
+        app:tabSelectedTextColor="#@color/SkyBlue"
         tools:ignore="MissingConstraints" />
 
     <androidx.viewpager.widget.ViewPager

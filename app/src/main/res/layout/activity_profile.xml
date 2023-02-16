@@ -83,7 +83,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_round"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="#@color/SkyBlue"
         android:drawableStart="@drawable/login"
         android:drawableTint="@color/white"
         android:fontFamily="@font/mova"
