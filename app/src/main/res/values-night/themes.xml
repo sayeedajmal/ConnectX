@@ -5,7 +5,7 @@
         <item name="android:textColor">@color/lite_white</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:screenOrientation">portrait</item>
-        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:statusBarColor">#252c33</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/transparent</item>

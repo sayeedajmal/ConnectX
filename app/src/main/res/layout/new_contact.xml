@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_margin="5dp"
     android:clickable="true"
+    android:background="@drawable/round_corner"
+    android:elevation="5dp"
+    app:circularflow_radiusInDP="10dp"
     android:foreground="?android:selectableItemBackgroundBorderless"
     android:theme="@style/Theme.PersonalChat.V1"
     tools:ignore="MissingConstraints">
@@ -15,8 +16,9 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/newContactImage"
         android:layout_width="60dp"
+        android:layout_margin="5dp"
         android:layout_height="60dp"
-        android:layout_marginStart="5dp"
+        android:background="@drawable/round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

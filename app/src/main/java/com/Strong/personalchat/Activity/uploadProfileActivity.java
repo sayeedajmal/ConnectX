@@ -147,7 +147,7 @@ public class uploadProfileActivity extends AppCompatActivity {
             BindProfile.profileProgress.setVisibility(View.VISIBLE);
             BindProfile.uploadProfile.setVisibility(View.INVISIBLE);
         } else {
-            BindProfile.profileProgress.setVisibility(View.GONE);
+            BindProfile.profileProgress.setVisibility(View.INVISIBLE);
             BindProfile.uploadProfile.setVisibility(View.VISIBLE);
         }
     }

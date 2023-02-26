@@ -36,7 +36,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/SearchPerson"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
@@ -45,6 +45,7 @@
         android:fontFamily="@font/mova"
         android:hint="Search Username"
         android:inputType="textPersonName"
+        android:background="@drawable/round"
         android:paddingStart="10dp"
         android:textColorHint="@color/LightSlateGray"
         android:textSize="20sp"

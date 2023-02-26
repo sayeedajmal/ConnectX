@@ -50,8 +50,9 @@
         android:layout_height="40dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="36dp"
-        android:background="@color/transparent"
-        android:scaleType="centerCrop"
+        android:background="@drawable/round"
+        android:rotation="90"
+        android:scaleType="centerInside"
         android:src="@drawable/call_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userDataName" />
@@ -62,8 +63,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="36dp"
         android:autofillHints="Block"
-        android:background="@color/transparent"
-        android:scaleType="centerCrop"
+        android:background="@drawable/round"
+        android:scaleType="centerInside"
         android:src="@drawable/unblock"
         app:layout_constraintEnd_toStartOf="@+id/userDataVideoCall"
         app:layout_constraintStart_toEndOf="@+id/userDataCall"
@@ -75,10 +76,11 @@
         android:layout_height="40dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="50dp"
-        android:background="@color/transparent"
-        android:scaleType="centerCrop"
+        android:background="@drawable/round"
+        android:contentDescription="Video_Call"
         android:src="@drawable/video_call"
         app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerInside"
         app:layout_constraintTop_toBottomOf="@+id/userDataName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

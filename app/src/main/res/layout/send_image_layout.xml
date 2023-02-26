@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="400dp"
+    android:layout_margin="5dp"
     android:theme="@style/Theme.PersonalChat.V1">
 
 
@@ -13,7 +14,7 @@
         android:layout_height="0dp"
         app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
+        app:cardElevation="2dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toTopOf="@+id/img_sen_time"
@@ -23,6 +24,7 @@
 
         <ImageView
             android:id="@+id/sendImage"
+            android:layout_marginEnd="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/logo" />

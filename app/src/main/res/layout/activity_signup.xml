@@ -22,13 +22,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/circleImageView"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
         android:src="@mipmap/icon_foreground"
+        android:tint="@color/SkyBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -179,18 +180,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/button_round"
+        android:background="@color/transparent"
         android:backgroundTint="@color/SkyBlue"
         android:fontFamily="@font/mova"
         android:foreground="?actionBarItemBackground"
         android:paddingTop="3dp"
         android:text="Login"
-        android:textColor="@color/White"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUp"
         tools:ignore="MissingConstraints" />

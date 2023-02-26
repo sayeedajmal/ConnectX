@@ -12,11 +12,14 @@
     <item
         android:id="@+id/block"
         android:icon="@drawable/block"
+        android:iconTint="@color/SkyBlue"
         android:title="Block"
         app:showAsAction="collapseActionView"/>
 
     <item
         android:id="@+id/deleteChat"
+        android:icon="@drawable/recv_ic_delete"
+        android:iconTint="@color/SkyBlue"
         android:title="Delete Chat"
-        app:showAsAction="collapseActionView"/>
+        app:showAsAction="collapseActionView" />
 </menu>

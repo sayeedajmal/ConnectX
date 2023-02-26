@@ -70,6 +70,7 @@
         android:backgroundTint="@color/SkyBlue"
         android:text="Send FeedBack"
         android:paddingTop="5dp"
+        android:elevation="20dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/feedInput"
         app:layout_constraintStart_toStartOf="@+id/feedInput"
