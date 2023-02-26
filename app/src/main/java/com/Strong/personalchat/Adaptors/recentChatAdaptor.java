@@ -61,7 +61,7 @@ public class recentChatAdaptor extends RecyclerView.Adapter<recentChatAdaptor.Vi
                     if (message.startsWith("https://firebasestorage.googleapis.com/v0/b/personalchat-d14fe.appspot.com/o/Media%2FImagePics")) {
                         holder.chatLastMessage.setText("✓ " + "Image");
                     } else {
-                        holder.chatLastMessage.setText("✓" + dataSnapshot.child("message").getValue(String.class));
+                        holder.chatLastMessage.setText("✓ " + dataSnapshot.child("message").getValue(String.class));
                     }
                     Long fetchingTime = dataSnapshot.child("timeStamp").getValue(Long.class);
                     Date time = new Date(fetchingTime);

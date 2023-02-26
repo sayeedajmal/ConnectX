@@ -50,7 +50,7 @@ public class recentActivity extends status {
                 System.out.println("<<<<<<<<<" + s));
 */
 
-        viewPagerAdaptor.addFragment(recentFragment, "Primary");
+        viewPagerAdaptor.addFragment(recentFragment, "Messages");
         viewPagerAdaptor.addFragment(callsFragment, "Calls");
         viewPagerAdaptor.addFragment(requestFragment, "Requests");
 

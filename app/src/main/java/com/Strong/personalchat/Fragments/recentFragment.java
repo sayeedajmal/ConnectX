@@ -67,16 +67,14 @@ public class recentFragment extends Fragment {
         });
         database.keepSynced(true);
 
-        swipeRefresh(adaptor);
 
-        return BindRecycle.getRoot();
-    }
-
-    private void swipeRefresh(recentChatAdaptor adaptor) {
         BindRecycle.swipeRefresh.setOnRefreshListener(() -> {
+            getters.clear();
             initRecent(adaptor);
             BindRecycle.swipeRefresh.setRefreshing(false);
         });
+
+        return BindRecycle.getRoot();
     }
 
     private void initRecent(recentChatAdaptor adaptor) {

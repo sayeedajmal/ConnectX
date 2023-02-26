@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.PersonalChat.V1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PersonalChat.V1" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:background">@color/lite_white</item>
         <item name="cardBackgroundColor">@color/transparent</item>
         <item name="android:textColor">@color/black</item>
@@ -10,5 +10,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/lite_white</item>
         <item name="tabSelectedTextColor">@color/Green</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorColor">#0D83EB</item>
     </style>
 </resources>

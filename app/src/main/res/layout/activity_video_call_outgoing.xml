@@ -11,8 +11,8 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="70dp"
         android:src="@drawable/ic_user"
+        app:layout_constraintBottom_toTopOf="@+id/video"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/mova"
         android:maxWidth="175dp"
         android:maxHeight="25dp"
@@ -40,14 +40,15 @@
         android:id="@+id/video"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="@drawable/round"
         android:clickable="true"
         android:padding="5dp"
-        android:background="@drawable/round"
         android:scaleType="centerInside"
         android:src="@drawable/video_call"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintBottom_toTopOf="@+id/outDrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outImage"
         tools:ignore="MissingConstraints" />
 
 
@@ -55,38 +56,37 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/mova"
         android:text="OutGoing Video Call"
         android:textSize="19sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/outDrop"
         app:layout_constraintEnd_toEndOf="@+id/video"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/video"
-        app:layout_constraintTop_toBottomOf="@+id/outName" />
+        app:layout_constraintTop_toBottomOf="@+id/video" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/outDrop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:rotation="135"
+        android:backgroundTint="@color/SkyBlue"
         android:src="@drawable/call_icon"
-        app:backgroundTint="@color/Red"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
         android:fontFamily="@font/mova"
         android:text="Cancel"
-        android:textSize="19sp"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/outDrop"
-        app:layout_constraintStart_toStartOf="@+id/outDrop" />
+        app:layout_constraintStart_toStartOf="@+id/outDrop"
+        app:layout_constraintTop_toBottomOf="@+id/outDrop" />
 </androidx.constraintlayout.widget.ConstraintLayout>

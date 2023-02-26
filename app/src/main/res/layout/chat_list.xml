@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
-    android:layout_marginTop="3dp"
+    android:layout_marginTop="5dp"
     android:layout_marginEnd="5dp"
     android:backgroundTint="#0F344353"
     android:foreground="?android:selectableItemBackgroundBorderless"
@@ -17,12 +17,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="6dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/chatUserImage"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="5dp"
             android:background="@drawable/round"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,6 +52,7 @@
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/mova"
             android:lines="1"
+            android:padding="3dp"
             android:maxHeight="18dp"
             android:paddingStart="5sp"
             android:text="LastMessage"
