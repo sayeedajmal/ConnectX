@@ -20,12 +20,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
 import com.bumptech.glide.Glide;
@@ -50,13 +50,14 @@ import java.util.HashMap;
 import java.util.Objects;
 
 
-public class mainChatActivity extends status {
+public class mainChatActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     String MineId;
     String YourID;
     FirebaseDatabase database;
     DatabaseReference reference;
     StorageReference StoreRef;
+    static int seen;
     ActivityMainChatBinding BindMainChat;
     private final int REQ_IMAGE = 500;
 
@@ -67,6 +68,8 @@ public class mainChatActivity extends status {
         BindMainChat = ActivityMainChatBinding.inflate(getLayoutInflater());
         setContentView(BindMainChat.getRoot());
 
+
+//        Getting Intent Extra from RecentActivity
         YourID = getIntent().getStringExtra("userId");
         fAuth = FirebaseAuth.getInstance();
         MineId = fAuth.getUid();
@@ -82,37 +85,34 @@ public class mainChatActivity extends status {
         int count = messageModels.size();
         database = FirebaseDatabase.getInstance();
 
-        //Showing Status
-        database.getReference().child("Users").child(YourID).addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
+        //Checking Room available to show seen message & Active Status
+        FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("ChatRoom").child(YourID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (Objects.requireNonNull(dataSnapshot.getKey()).equals("status")) {
-                        String status = dataSnapshot.getValue(String.class);
-                        assert status != null;
-                        if (status.equals("online")) {
-                            BindMainChat.ActiveStatus.setText("Active Now");
-                        } else {
-                            BindMainChat.ActiveStatus.setText("");
-                        }
+                    String room = dataSnapshot.getValue(String.class);
+                    assert room != null;
+                    if (room.equals("1")) {
+                        seen = 1;
+                        BindMainChat.ActiveStatus.setText("Active Now");
+                        seenInit();
+                    } else {
+                        seen = 0;
+                        BindMainChat.ActiveStatus.setText(null);
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
-        //Checking Room available to show seen message
-
-
-       // setRoom("1");
-       // checkRoom();
+        setRoom("1");
 
         //SHOWING TYPING
-        database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -141,15 +141,18 @@ public class mainChatActivity extends status {
         initMessage(messageAdaptor, messageModels, count);
 
         //Sending the message and storing in the database
-        initSendMessage();
+        BindMainChat.sendButton.setOnClickListener(view -> {
+            initSendMessage();
+        });
 
         // MESSAGE TYPING SHOW TYPING ON ACTIVE STATUS OPTION
         initTyping();
 
+
         BindMainChat.mainchatbackButton.setOnClickListener(view -> {
             onBackPressed();
             BindMainChat.TypeMessage.setText(null);
-            // setRoom("0");
+            setRoom("0");
         });
 
         BindMainChat.constraint.setOnClickListener(view -> {
@@ -163,7 +166,6 @@ public class mainChatActivity extends status {
         initOption();
 
         /*BindMainChat.audioRecord.setListenForRecord(false);
-
         AudioRecordButton();*/
 
         BindMainChat.videCallButton.setOnClickListener(v -> {
@@ -195,34 +197,14 @@ public class mainChatActivity extends status {
 
     }
 
-    //CHECKING CHATROOM PRESENTATION
-    private void checkRoom() {
-        FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("ChatRoom").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String seen = dataSnapshot.getValue(String.class);
-                    assert seen != null;
-                    if (seen.equals("1")) {
-                        seenInit();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     //SET ROOM VALUE TO 1 WHILE PRESENT IN THIS ACTIVITY
     private void setRoom(String value) {
-        DatabaseReference refer = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("ChatRoom").child(MineId);
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("ChatRoom").child(MineId);
         HashMap<String, Object> map = new HashMap<>();
         map.put("chatRoom", value);
-        refer.updateChildren(map);
-        refer.keepSynced(true);
+        reference.updateChildren(map);
+        reference.keepSynced(true);
     }
 
     private void seenInit() {
@@ -335,27 +317,27 @@ public class mainChatActivity extends status {
     }
 
     private void initSendMessage() {
-        BindMainChat.sendButton.setOnClickListener(view -> {
-            String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString();
-            if (!message.equals("")) {
-
-               // checkRoom();
-
-                message conversation = new message(MineId, message);
-                conversation.setTimeStamp(new Date().getTime());
+        String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString().trim();
+        if (!message.equals("")) {
+            message conversation = new message(MineId, message);
+            conversation.setTimeStamp(new Date().getTime());
+            if (seen == 1) {
+                conversation.setSeen("yes");
+            } else {
                 conversation.setSeen("no");
-                BindMainChat.TypeMessage.setText(null);
-
-                // Feeding Message to Sender and Receiver Database
-                FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
             }
-        });
+            BindMainChat.TypeMessage.setText(null);
+
+            // Feeding Message to Sender and Receiver Database
+            FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+//        Getting Image From File and Sending to Firebase Storage
         if (requestCode == REQ_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             database = FirebaseDatabase.getInstance();
@@ -377,7 +359,11 @@ public class mainChatActivity extends status {
                             String url = path.getResult().toString();
                             message conversation = new message(MineId, url, "ImagePics");
                             conversation.setTimeStamp(new Date().getTime());
-                            conversation.setSeen("no");
+                            if (seen == 1) {
+                                conversation.setSeen("yes");
+                            } else {
+                                conversation.setSeen("no");
+                            }
                             BindMainChat.TypeMessage.setText(null);
                             // Feeding AudioMessage to Sender and Receiver Database
                             database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
@@ -414,14 +400,13 @@ public class mainChatActivity extends status {
         hashMap.put("Typing", "");
         reference.updateChildren(hashMap);
         reference.keepSynced(true);
-       // setRoom("0");
+        setRoom("0");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //setRoom("1");
-       // checkRoom();
+        setRoom("1");
     }
 
     @Override

@@ -3,11 +3,12 @@ package com.Strong.personalchat.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.Strong.personalchat.Utilities.status;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.Strong.personalchat.databinding.ActivityUserDataShowBinding;
 import com.bumptech.glide.Glide;
 
-public class UserDataShow extends status {
+public class UserDataShow extends AppCompatActivity {
     ActivityUserDataShowBinding BindDataShow;
 
     @Override

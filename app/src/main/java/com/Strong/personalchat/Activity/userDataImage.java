@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
-import com.Strong.personalchat.Utilities.status;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.Strong.personalchat.databinding.ActivityUserDataImageBinding;
 import com.bumptech.glide.Glide;
 
-public class userDataImage extends status {
+public class userDataImage extends AppCompatActivity {
     private ScaleGestureDetector scaleGestureDetector;
-    private float mScaleFactor = 1.0f;
+    private float ScaleFactor = 1.0f;
 
     ActivityUserDataImageBinding BindImage;
 
@@ -41,10 +42,10 @@ public class userDataImage extends status {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-            mScaleFactor *= scaleGestureDetector.getScaleFactor();
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
-            BindImage.Image.setScaleX(mScaleFactor);
-            BindImage.Image.setScaleY(mScaleFactor);
+            ScaleFactor *= scaleGestureDetector.getScaleFactor();
+            ScaleFactor = Math.max(0.1f, Math.min(ScaleFactor, 10.0f));
+            BindImage.Image.setScaleX(ScaleFactor);
+            BindImage.Image.setScaleY(ScaleFactor);
             return true;
         }
     }

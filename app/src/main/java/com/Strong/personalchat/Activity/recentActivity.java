@@ -8,23 +8,21 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.Strong.personalchat.Fragments.ViewPagerSection;
 import com.Strong.personalchat.Fragments.callsFragment;
 import com.Strong.personalchat.Fragments.recentFragment;
 import com.Strong.personalchat.Fragments.requestFragment;
 import com.Strong.personalchat.R;
-import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.models.CurrentUser;
 import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
-public class recentActivity extends status {
+public class recentActivity extends AppCompatActivity {
     ViewPagerSection viewPagerAdaptor;
     ActivityRecentBinding BindRecent;
     private SensorManager sensorManage;

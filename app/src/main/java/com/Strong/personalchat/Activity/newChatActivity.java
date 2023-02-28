@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.Strong.personalchat.Fragments.newChatFragment;
 import com.Strong.personalchat.Fragments.ViewPagerSection;
 import com.Strong.personalchat.databinding.ActivityNewchatBinding;
-import com.Strong.personalchat.Utilities.status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -15,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class newChatActivity extends status {
+public class newChatActivity extends AppCompatActivity {
     ActivityNewchatBinding BindNewChat;
     ViewPagerSection viewPagerAdaptor;
     FirebaseDatabase database;

@@ -5,17 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.Strong.personalchat.BuildConfig;
-import com.Strong.personalchat.Utilities.status;
 import com.Strong.personalchat.databinding.ActivitySettingBinding;
 import com.Strong.personalchat.models.CurrentUser;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SettingActivity extends status {
+public class SettingActivity extends AppCompatActivity {
     ActivitySettingBinding BindSet;
     FirebaseAuth firebaseAuth;
-    status status;
     String UserImage;
 
     @SuppressLint("SetTextI18n")
@@ -28,9 +28,7 @@ public class SettingActivity extends status {
         firebaseAuth = FirebaseAuth.getInstance();
 
         BindSet.logoutButton.setOnClickListener(view -> {
-            status = new status();
             firebaseAuth.signOut();
-            status.onLogout();
             Toast.makeText(this, "We Are Waiting For You..", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, purposeActivity.class));
         });

@@ -18,6 +18,7 @@ public class VideoCallOutgoing extends AppCompatActivity {
         BindOut = ActivityVideoCallOutgoingBinding.inflate(getLayoutInflater());
         setContentView(BindOut.getRoot());
 
+//        Getting Intent Extra from MainChatActivity
         String Username = getIntent().getStringExtra("OutName");
         String Rec_Uid = getIntent().getStringExtra("Uid");
         String UserImage = getIntent().getStringExtra("OutImage");
