@@ -98,7 +98,7 @@ public class mainChatActivity extends AppCompatActivity {
                     if (room.equals("1")) {
                         seen = 1;
                         BindMainChat.ActiveStatus.setText("Active Now");
-                        seenInit();
+                        //   seenInit();
                     } else {
                         seen = 0;
                         BindMainChat.ActiveStatus.setText(null);
@@ -115,8 +115,7 @@ public class mainChatActivity extends AppCompatActivity {
         setRoom("1");
 
         //SHOWING TYPING
-/*
-        database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -140,7 +139,6 @@ public class mainChatActivity extends AppCompatActivity {
 
             }
         });
-*/
 
         //Sending the message and storing in the database
         initSendMessage();
@@ -209,22 +207,6 @@ public class mainChatActivity extends AppCompatActivity {
     }
 
     private void seenInit() {
-        FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).child(Objects.requireNonNull(dataSnapshot.getKey()));
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("seen", "yes");
-                    reference.updateChildren(map);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void showMessage(messageAdaptor messageAdaptor, ArrayList<message> messageModels, int count) {
@@ -261,7 +243,7 @@ public class mainChatActivity extends AppCompatActivity {
     }
 
     private void initTyping() {
-        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
+        DatabaseReference refer = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
         HashMap<String, Object> hashmap = new HashMap<>();
         BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -280,8 +262,8 @@ public class mainChatActivity extends AppCompatActivity {
                     BindMainChat.chooseImage.setVisibility(View.VISIBLE);
                     BindMainChat.sendButton.setVisibility(View.INVISIBLE);
                 }
-                reference.updateChildren(hashmap);
-                reference.keepSynced(true);
+                refer.updateChildren(hashmap);
+                refer.keepSynced(true);
             }
 
             @Override
@@ -400,6 +382,14 @@ public class mainChatActivity extends AppCompatActivity {
         hashMap.put("Typing", "");
         reference.updateChildren(hashMap);
         reference.keepSynced(true);
+        setRoom("0");
+        seen = 0;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        seen = 0;
         setRoom("0");
     }
 

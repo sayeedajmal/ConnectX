@@ -105,17 +105,14 @@ public class recentFragment extends Fragment {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            adaptor.notifyDataSetChanged();
                         }
                     });
-                    adaptor.notifyDataSetChanged();
                 }
             }
 
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                adaptor.notifyDataSetChanged();
             }
         });
     }
