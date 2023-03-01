@@ -57,7 +57,7 @@ public class mainChatActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
     StorageReference StoreRef;
-    static int seen;
+    private static int seen;
     ActivityMainChatBinding BindMainChat;
     private final int REQ_IMAGE = 500;
 
@@ -80,13 +80,16 @@ public class mainChatActivity extends AppCompatActivity {
         Glide.with(this).load(chatUserImage).into(BindMainChat.mainChatImage);
 
         final ArrayList<message> messageModels = new ArrayList<>();
-
         final messageAdaptor messageAdaptor = new messageAdaptor(messageModels, this);
         int count = messageModels.size();
         database = FirebaseDatabase.getInstance();
 
+
+        //Showing Message
+        showMessage(messageAdaptor, messageModels, count);
+
         //Checking Room available to show seen message & Active Status
-        FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("ChatRoom").child(YourID).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Users").child(MineId).child("ChatRoom").child(YourID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -112,6 +115,7 @@ public class mainChatActivity extends AppCompatActivity {
         setRoom("1");
 
         //SHOWING TYPING
+/*
         database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -136,14 +140,10 @@ public class mainChatActivity extends AppCompatActivity {
 
             }
         });
-
-        //Showing Message
-        initMessage(messageAdaptor, messageModels, count);
+*/
 
         //Sending the message and storing in the database
-        BindMainChat.sendButton.setOnClickListener(view -> {
-            initSendMessage();
-        });
+        initSendMessage();
 
         // MESSAGE TYPING SHOW TYPING ON ACTIVE STATUS OPTION
         initTyping();
@@ -151,6 +151,7 @@ public class mainChatActivity extends AppCompatActivity {
 
         BindMainChat.mainchatbackButton.setOnClickListener(view -> {
             onBackPressed();
+            seen = 0;
             BindMainChat.TypeMessage.setText(null);
             setRoom("0");
         });
@@ -189,7 +190,7 @@ public class mainChatActivity extends AppCompatActivity {
         });
 
         BindMainChat.swipeRefresh.setOnRefreshListener(() -> {
-            initMessage(messageAdaptor, messageModels, count);
+            showMessage(messageAdaptor, messageModels, count);
             BindMainChat.swipeRefresh.setRefreshing(false);
         });
 
@@ -226,7 +227,7 @@ public class mainChatActivity extends AppCompatActivity {
         });
     }
 
-    private void initMessage(messageAdaptor messageAdaptor, ArrayList<message> messageModels, int count) {
+    private void showMessage(messageAdaptor messageAdaptor, ArrayList<message> messageModels, int count) {
         //Showing Messages
         assert MineId != null;
         database.getReference().child("Users").child(MineId).child("Chats").child(YourID).addValueEventListener(new ValueEventListener() {
@@ -317,20 +318,22 @@ public class mainChatActivity extends AppCompatActivity {
     }
 
     private void initSendMessage() {
-        String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString().trim();
-        if (!message.equals("")) {
-            message conversation = new message(MineId, message);
-            conversation.setTimeStamp(new Date().getTime());
-            if (seen == 1) {
-                conversation.setSeen("yes");
-            } else {
-                conversation.setSeen("no");
-            }
-            BindMainChat.TypeMessage.setText(null);
+        BindMainChat.sendButton.setOnClickListener(view -> {
+            String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString().trim();
+            if (!message.equals("")) {
+                message conversation = new message(MineId, message);
+                conversation.setTimeStamp(new Date().getTime());
+                if (seen == 1) {
+                    conversation.setSeen("yes");
+                } else {
+                    conversation.setSeen("no");
+                }
+                BindMainChat.TypeMessage.setText(null);
 
-            // Feeding Message to Sender and Receiver Database
-            FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
-        }
+                // Feeding Message to Sender and Receiver Database
+                FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
+            }
+        });
     }
 
     @Override
@@ -381,15 +384,12 @@ public class mainChatActivity extends AppCompatActivity {
 
     private void deleteChat() {
         Snackbar.make(BindMainChat.optionButton, "\uD83D\uDE01 \uD83D\uDE06 You Can't Delete This Chat \uD83E\uDD2A", Snackbar.LENGTH_SHORT).show();
-        // database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
-        /*StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
-        firebaseAudioPath=firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
-        firebaseAudioPath.delete().addOnSuccessListener(unused -> Toast.makeText(mainChatActivity.this, "Chat Deleted.", Toast.LENGTH_SHORT).show()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(mainChatActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
+       /* database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+        StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
+        firebaseAudioPath = firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
+        firebaseAudioPath.delete().addOnSuccessListener(unused -> Toast.makeText(mainChatActivity.this, "Chat Deleted.", Toast.LENGTH_SHORT).show());
+        onBackPressed();*/
+//                .addOnFailureListener(e -> Toast.makeText(mainChatActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     @Override
