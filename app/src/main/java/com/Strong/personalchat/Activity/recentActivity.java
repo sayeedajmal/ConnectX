@@ -18,6 +18,7 @@ import com.Strong.personalchat.Fragments.requestFragment;
 import com.Strong.personalchat.R;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.models.CurrentUser;
+import com.Strong.personalchat.notification;
 import com.bumptech.glide.Glide;
 
 import java.util.Objects;
@@ -61,6 +62,8 @@ public class recentActivity extends AppCompatActivity {
         BindRecent.setting.setOnClickListener(view -> startActivity(new Intent(this, SettingActivity.class)));
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
+
+        //BindRecent.AppTitle.setOnClickListener(v -> notification.updateApplication("Application Update", "Update For New Features", getApplicationContext()));
     }
 
     @Override

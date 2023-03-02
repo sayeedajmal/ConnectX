@@ -30,7 +30,6 @@ import com.Strong.personalchat.databinding.ActivityMainChatBinding;
 import com.Strong.personalchat.models.message;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -365,12 +364,12 @@ public class mainChatActivity extends AppCompatActivity {
     }
 
     private void deleteChat() {
-        Snackbar.make(BindMainChat.optionButton, "\uD83D\uDE01 \uD83D\uDE06 You Can't Delete This Chat \uD83E\uDD2A", Snackbar.LENGTH_SHORT).show();
-       /* database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+       // Snackbar.make(BindMainChat.optionButton, "\uD83D\uDE01 \uD83D\uDE06 You Can't Delete This Chat \uD83E\uDD2A", Snackbar.LENGTH_SHORT).show();
+        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
         StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
         firebaseAudioPath = firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
         firebaseAudioPath.delete().addOnSuccessListener(unused -> Toast.makeText(mainChatActivity.this, "Chat Deleted.", Toast.LENGTH_SHORT).show());
-        onBackPressed();*/
+        onBackPressed();
 //                .addOnFailureListener(e -> Toast.makeText(mainChatActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
