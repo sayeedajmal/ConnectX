@@ -27,8 +27,8 @@ import java.util.Objects;
 public class recentFragment extends Fragment {
 
     FragmentRecyclerviewBinding BindRecycle;
-    DatabaseReference database;
-    String uid;
+    DatabaseReference reference;
+    private String MineId;
     ArrayList<recentGetter> getters = new ArrayList<>();
 
     @Override
@@ -40,13 +40,13 @@ public class recentFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
 
-        database = FirebaseDatabase.getInstance().getReference();
-        uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        reference = FirebaseDatabase.getInstance().getReference();
+        MineId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         initRecent(adaptor);
 
         //Getting Current User data
-        database.child("Users").addValueEventListener(new ValueEventListener() {
+        reference.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -65,7 +65,7 @@ public class recentFragment extends Fragment {
 
             }
         });
-        database.keepSynced(true);
+        reference.keepSynced(true);
 
 
         BindRecycle.swipeRefresh.setOnRefreshListener(() -> {
@@ -78,18 +78,18 @@ public class recentFragment extends Fragment {
     }
 
     private void initRecent(recentChatAdaptor adaptor) {
-        database.child("Users").child(uid).child("Chats").addValueEventListener(new ValueEventListener() {
+        reference.child("Users").child(MineId).child("Chats").addValueEventListener(new ValueEventListener() {
             //Getting UID of particular chat user
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    getters.clear();
+                getters.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String Uid = dataSnapshot.getKey();
                     assert Uid != null;
 
                     //Getting data of particular user by taking their id
-                    database.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    reference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {

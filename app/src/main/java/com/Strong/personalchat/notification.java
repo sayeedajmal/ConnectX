@@ -14,10 +14,9 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.Strong.personalchat.Activity.recentActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import java.util.Objects;
 
 public class notification extends FirebaseMessagingService {
     @Override
@@ -80,15 +79,32 @@ public class notification extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        /*Update Application*/
-        if (Objects.equals(Objects.requireNonNull(remoteMessage.getNotification()).getChannelId(), "UPDATE"))
-            if (remoteMessage.getNotification() != null) {
-                updateApplication(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-            }
 
-        /*Notify Message*/
-      /*  if (remoteMessage.getNotification().getChannelId().equals("Message"))
-            if (remoteMessage.getNotification() != null)
-                Toast.makeText(this, "SomeOne is Online.", Toast.LENGTH_SHORT).show();*/
+        pushMessageNotification(remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"));
+
+       /* if (Objects.equals(remoteMessage.getData().get("Title"), "Update Application")) {
+            updateApplication(remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"));
+        }*/
+
+    }
+
+    private void pushMessageNotification(String Title, String Message) {
+        String channel_id = "MESSAGE";
+        Intent intent = new Intent(this, recentActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.icon_foreground);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id).setColor(Color.rgb(255, 255, 255)).setLargeIcon(bitmap).setColorized(true).setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE).setChronometerCountDown(true).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setSmallIcon(R.mipmap.icon_foreground).setVibrate(new long[]{1000, 1000, 1000, 1000, 1000}).setOnlyAlertOnce(false).setSilent(false).setContentTitle(Title).setContentText(Message).setContentIntent(pendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel(channel_id, "PersonalChat", NotificationManager.IMPORTANCE_HIGH);
+        channel.setLockscreenVisibility(1);
+        channel.setShowBadge(true);
+        channel.enableVibration(true);
+        channel.enableLights(true);
+        builder.setAutoCancel(true);
+        manager.createNotificationChannel(channel);
+        manager.notify(0, builder.build());
     }
 }

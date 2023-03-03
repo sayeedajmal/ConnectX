@@ -18,9 +18,13 @@ import com.Strong.personalchat.Fragments.requestFragment;
 import com.Strong.personalchat.R;
 import com.Strong.personalchat.databinding.ActivityRecentBinding;
 import com.Strong.personalchat.models.CurrentUser;
-import com.Strong.personalchat.notification;
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class recentActivity extends AppCompatActivity {
@@ -38,16 +42,19 @@ public class recentActivity extends AppCompatActivity {
         sensorManage = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         ShakeToFeedBack();
 
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(Token -> {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+            HashMap<String, Object> object = new HashMap<>();
+            object.put("Token", Token);
+            reference.updateChildren(object);
+        });
+
+
         recentFragment recentFragment = new recentFragment();
         callsFragment callsFragment = new callsFragment();
         requestFragment requestFragment = new requestFragment();
 
         viewPagerAdaptor = new ViewPagerSection(getSupportFragmentManager(), 0);
-
-/*
-        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(s ->
-                System.out.println("<<<<<<<<<" + s));
-*/
 
         viewPagerAdaptor.addFragment(recentFragment, "Messages");
         viewPagerAdaptor.addFragment(callsFragment, "Calls");
@@ -63,8 +70,13 @@ public class recentActivity extends AppCompatActivity {
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
 
-        //BindRecent.AppTitle.setOnClickListener(v -> notification.updateApplication("Application Update", "Update For New Features", getApplicationContext()));
+        updateToken();
     }
+
+    private void updateToken() {
+
+    }
+
 
     @Override
     public void onBackPressed() {

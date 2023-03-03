@@ -26,7 +26,13 @@ import androidx.core.content.ContextCompat;
 
 import com.Strong.personalchat.Adaptors.messageAdaptor;
 import com.Strong.personalchat.R;
+import com.Strong.personalchat.Utilities.APIService;
+import com.Strong.personalchat.Utilities.Client;
+import com.Strong.personalchat.Utilities.Data;
+import com.Strong.personalchat.Utilities.MyResponse;
+import com.Strong.personalchat.Utilities.NotificationSender;
 import com.Strong.personalchat.databinding.ActivityMainChatBinding;
+import com.Strong.personalchat.models.CurrentUser;
 import com.Strong.personalchat.models.message;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
@@ -48,17 +54,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class mainChatActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     String MineId;
     String YourID;
+    private APIService apiService;
+    private String Token;
     FirebaseDatabase database;
     DatabaseReference reference;
     StorageReference StoreRef;
     private static int seen;
     ActivityMainChatBinding BindMainChat;
     private final int REQ_IMAGE = 500;
+    private String username, chatUserImage;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -72,8 +85,10 @@ public class mainChatActivity extends AppCompatActivity {
         YourID = getIntent().getStringExtra("userId");
         fAuth = FirebaseAuth.getInstance();
         MineId = fAuth.getUid();
-        String username = getIntent().getStringExtra("username");
-        String chatUserImage = getIntent().getStringExtra("UserImage");
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
+        username = getIntent().getStringExtra("username");
+        chatUserImage = getIntent().getStringExtra("UserImage");
 
         BindMainChat.mainChatUsername.setText(username);
         Glide.with(this).load(chatUserImage).into(BindMainChat.mainChatImage);
@@ -83,6 +98,22 @@ public class mainChatActivity extends AppCompatActivity {
         int count = messageModels.size();
         database = FirebaseDatabase.getInstance();
 
+        /*Getting Token From Specific User*/
+        database.getReference("Users").child(YourID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (Objects.equals(dataSnapshot.getKey(), "Token")) {
+                        Token = dataSnapshot.getValue(String.class);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //Showing Message
         showMessage(messageAdaptor, messageModels, count);
@@ -192,6 +223,28 @@ public class mainChatActivity extends AppCompatActivity {
         });
 
         database.getReference().keepSynced(true);
+
+    }
+
+    public void sendNotification(String userToken, String Title, String Message) {
+        Data data = new Data(Title, Message);
+        NotificationSender sender = new NotificationSender(data, userToken);
+        apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MyResponse> call, @NonNull Response<MyResponse> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().success != 1) {
+                        Toast.makeText(mainChatActivity.this, "Failed To Deliver Message.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MyResponse> call, @NonNull Throwable t) {
+                Toast.makeText(mainChatActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -308,6 +361,7 @@ public class mainChatActivity extends AppCompatActivity {
                     conversation.setSeen("yes");
                 } else {
                     conversation.setSeen("no");
+                    sendNotification(Token, CurrentUser.getUsername(), "Hey! I am Texting You. Can You See Me!");
                 }
                 BindMainChat.TypeMessage.setText(null);
 
