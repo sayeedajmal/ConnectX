@@ -2,7 +2,9 @@ package com.Strong.personalchat.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,5 +52,8 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         BindSet.AppVersion.setText("App Version: " + BuildConfig.VERSION_NAME);
+
+
+        BindSet.UpdateApp.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://sayeedthedev.web.app"))));
     }
 }
