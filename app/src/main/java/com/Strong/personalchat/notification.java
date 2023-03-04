@@ -15,13 +15,23 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.Strong.personalchat.Activity.recentActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 public class notification extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+        HashMap<String, Object> object = new HashMap<>();
+        object.put("Token", token);
+        reference.updateChildren(object);
     }
 
 /*
