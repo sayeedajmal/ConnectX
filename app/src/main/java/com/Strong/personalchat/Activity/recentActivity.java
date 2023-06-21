@@ -31,6 +31,7 @@ public class recentActivity extends AppCompatActivity {
     ViewPagerSection viewPagerAdaptor;
     ActivityRecentBinding BindRecent;
     private SensorManager sensorManage;
+    public static int feedBackFlag = 0;
     float acceleration, accelerationNow, accelerationLast;
 
     @Override
@@ -49,6 +50,9 @@ public class recentActivity extends AppCompatActivity {
             reference.updateChildren(object);
         });
 
+        if (CurrentUser.getChatUserImage() != null) {
+            Glide.with(this).load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
+        }
 
         recentFragment recentFragment = new recentFragment();
         callsFragment callsFragment = new callsFragment();
@@ -69,14 +73,7 @@ public class recentActivity extends AppCompatActivity {
         BindRecent.setting.setOnClickListener(view -> startActivity(new Intent(this, SettingActivity.class)));
 
         BindRecent.floatNewChat.setOnClickListener(view -> startActivity(new Intent(recentActivity.this, newChatActivity.class)));
-
-        updateToken();
     }
-
-    private void updateToken() {
-
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -116,9 +113,10 @@ public class recentActivity extends AppCompatActivity {
             accelerationNow = (float) Math.sqrt(((double) x * x + y * y + z * z));
             float delta = accelerationNow - accelerationLast;
             acceleration = acceleration * 0.9f + delta;
-            if (acceleration > 12) {
+            if (feedBackFlag != 1) if (acceleration > 12) {
                 goFeedback();
-            }
+                feedBackFlag = 1;
+            } else feedBackFlag = 0;
         }
 
         @Override

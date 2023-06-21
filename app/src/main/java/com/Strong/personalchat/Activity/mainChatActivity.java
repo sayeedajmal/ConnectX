@@ -92,6 +92,7 @@ public class mainChatActivity extends AppCompatActivity {
 
         BindMainChat.mainChatUsername.setText(username);
         Glide.with(this).load(chatUserImage).into(BindMainChat.mainChatImage);
+        BindMainChat.TypeMessage.requestFocus();
 
         final ArrayList<message> messageModels = new ArrayList<>();
         final messageAdaptor messageAdaptor = new messageAdaptor(messageModels, this);
@@ -120,36 +121,24 @@ public class mainChatActivity extends AppCompatActivity {
 
         //Checking Room available to show seen message & Active Status
         database.getReference().child("Users").child(MineId).child("ChatRoom").child(YourID).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String room = dataSnapshot.getValue(String.class);
-                    assert room != null;
-                    if (room.equals("1")) {
-                        seen = 1;
-                        BindMainChat.ActiveStatus.setText("Active Now");
-                        //   seenInit();
-                    } else {
-                        seen = 0;
-                        BindMainChat.ActiveStatus.setText(null);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        setRoom("1");
-
-        //SHOWING TYPING
-        database.getReference().child("Users").child(MineId).child("Typing").child(YourID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (Objects.requireNonNull(dataSnapshot.getKey()).equals("Typing")) {
+                    /*ChatRoom*/
+                    if (Objects.equals(dataSnapshot.getKey(), "chatRoom")) {
+                        String room = dataSnapshot.getValue(String.class);
+                        assert room != null;
+                        if (room.equals("1")) {
+                            seen = 1;
+                            BindMainChat.ActiveStatus.setText("Active Now");
+                            //   seenInit();
+                        } else {
+                            seen = 0;
+                            BindMainChat.ActiveStatus.setText(null);
+                        }
+                        /*Typing*/
+                    } else if (Objects.requireNonNull(dataSnapshot.getKey()).equals("Typing")) {
                         String typing = dataSnapshot.getValue(String.class);
                         assert typing != null;
                         if (typing.length() != 0) {
@@ -235,7 +224,7 @@ public class mainChatActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().success != 1) {
-                        Toast.makeText(mainChatActivity.this, "Failed To Deliver Message.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mainChatActivity.this, response.body().success + " Error Sending Notification", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -256,9 +245,6 @@ public class mainChatActivity extends AppCompatActivity {
         map.put("chatRoom", value);
         reference.updateChildren(map);
         reference.keepSynced(true);
-    }
-
-    private void seenInit() {
     }
 
     private void showMessage(messageAdaptor messageAdaptor, ArrayList<message> messageModels, int count) {
@@ -287,6 +273,7 @@ public class mainChatActivity extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(mainChatActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 messageAdaptor.notifyDataSetChanged();
             }
 
@@ -295,7 +282,7 @@ public class mainChatActivity extends AppCompatActivity {
     }
 
     private void initTyping() {
-        DatabaseReference refer = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
+        DatabaseReference refer = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("ChatRoom").child(MineId);
         HashMap<String, Object> hashmap = new HashMap<>();
         BindMainChat.TypeMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -361,12 +348,12 @@ public class mainChatActivity extends AppCompatActivity {
                     conversation.setSeen("yes");
                 } else {
                     conversation.setSeen("no");
-                    sendNotification(Token, CurrentUser.getUsername(), "Hey! I am Texting You. Can You See Me!");
+                    sendNotification(Token, CurrentUser.getUsername(), message);
                 }
                 BindMainChat.TypeMessage.setText(null);
 
                 // Feeding Message to Sender and Receiver Database
-                FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
+                FirebaseDatabase.getInstance().getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation).addOnFailureListener(e1 -> Toast.makeText(mainChatActivity.this, e1.getLocalizedMessage(), Toast.LENGTH_SHORT).show())).addOnFailureListener(e -> Toast.makeText(mainChatActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show());
             }
         });
     }
@@ -418,7 +405,7 @@ public class mainChatActivity extends AppCompatActivity {
     }
 
     private void deleteChat() {
-       // Snackbar.make(BindMainChat.optionButton, "\uD83D\uDE01 \uD83D\uDE06 You Can't Delete This Chat \uD83E\uDD2A", Snackbar.LENGTH_SHORT).show();
+        // Snackbar.make(BindMainChat.optionButton, "\uD83D\uDE01 \uD83D\uDE06 You Can't Delete This Chat \uD83E\uDD2A", Snackbar.LENGTH_SHORT).show();
         database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
         StorageReference firebaseAudioPath = FirebaseStorage.getInstance().getReference();
         firebaseAudioPath = firebaseAudioPath.child("Media").child("RecordAudio").child(YourID);
@@ -430,7 +417,7 @@ public class mainChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("Typing").child(MineId);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(YourID).child("ChatRoom").child(MineId);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("Typing", "");
         reference.updateChildren(hashMap);

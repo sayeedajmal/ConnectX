@@ -1,30 +1,31 @@
 package com.Strong.personalchat.Activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.Strong.personalchat.Fragments.newChatFragment;
-import com.Strong.personalchat.Fragments.ViewPagerSection;
+import com.Strong.personalchat.Adaptors.newChatAdaptor;
 import com.Strong.personalchat.databinding.ActivityNewchatBinding;
-import com.google.firebase.auth.FirebaseAuth;
+import com.Strong.personalchat.models.newChatGetter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class newChatActivity extends AppCompatActivity {
     ActivityNewchatBinding BindNewChat;
-    ViewPagerSection viewPagerAdaptor;
     FirebaseDatabase database;
-    HashMap<String, Object> hashmap = new HashMap<>();
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-            child("Users").
-            child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+    ArrayList<newChatGetter> arrayList = new ArrayList<>();
+
+    DatabaseReference reference;
 
 
     @Override
@@ -33,12 +34,12 @@ public class newChatActivity extends AppCompatActivity {
         BindNewChat = ActivityNewchatBinding.inflate(getLayoutInflater());
         setContentView(BindNewChat.getRoot());
 
+        reference = FirebaseDatabase.getInstance().getReference().child("Users");
         database = FirebaseDatabase.getInstance();
 
-        newChatFragment newChatFragment = new newChatFragment();
-        viewPagerAdaptor = new ViewPagerSection(getSupportFragmentManager(), 0);
-        viewPagerAdaptor.addFragment(newChatFragment, "");
-        BindNewChat.newContactPager.setAdapter(viewPagerAdaptor);
+        BindNewChat.SearchPerson.requestFocus();
+
+        newChatAdaptor adaptor = new newChatAdaptor(arrayList, this);
         BindNewChat.chatBackButton.setOnClickListener(view -> onBackPressed());
 
         BindNewChat.SearchPerson.addTextChangedListener(new TextWatcher() {
@@ -52,20 +53,40 @@ public class newChatActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                hashmap.put("searchUser", editable.toString());
-                reference.updateChildren(hashmap);
-                reference.keepSynced(true);
+                String searchUser = editable.toString();
+                if (!searchUser.isEmpty()) {
+                    Query query = reference.orderByChild("username").startAt(searchUser).endAt(searchUser + "\uf8ff");
+                    query.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("NotifyDataSetChanged")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChildren()) {
+                                arrayList.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    newChatGetter getter = snapshot.getValue(newChatGetter.class);
+                                    assert getter != null;
+                                    getter.setUserId(snapshot.getKey());
+                                    arrayList.add(getter);
+                                }
+                                adaptor.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
             }
         });
+
+        BindNewChat.RecyclerView.setAdapter(adaptor);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         BindNewChat.SearchPerson.setText(null);
-        hashmap.put("searchUser", "");
-        reference.updateChildren(hashmap);
-        reference.keepSynced(true);
     }
 
 

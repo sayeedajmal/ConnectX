@@ -25,6 +25,7 @@ public class loginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
+        BindLogin.getEmail.requestFocus();
         BindLogin.Login.setOnClickListener(view -> {
             hideKeyboard();
             BindLogin.progressbar.setVisibility(View.VISIBLE);

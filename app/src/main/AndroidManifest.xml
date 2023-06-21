@@ -19,7 +19,8 @@
         android:theme="@style/Theme.PersonalChat.V1">
         <activity
             android:name=".Activity.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

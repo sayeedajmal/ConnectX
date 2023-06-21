@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.Strong.personalchat.Adaptors.recentChatAdaptor;
 import com.Strong.personalchat.databinding.FragmentRecyclerviewBinding;
@@ -29,16 +28,16 @@ public class recentFragment extends Fragment {
     FragmentRecyclerviewBinding BindRecycle;
     DatabaseReference reference;
     private String MineId;
+    recentChatAdaptor adaptor;
     ArrayList<recentGetter> getters = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         BindRecycle = FragmentRecyclerviewBinding.inflate(inflater, container, false);
 
-        recentChatAdaptor adaptor = new recentChatAdaptor(getters, getContext());
+        getters.clear();
+        adaptor = new recentChatAdaptor(getters, getContext());
         BindRecycle.RecyclerView.setAdapter(adaptor);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        BindRecycle.RecyclerView.setLayoutManager(linearLayoutManager);
 
         reference = FirebaseDatabase.getInstance().getReference();
         MineId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -107,6 +106,7 @@ public class recentFragment extends Fragment {
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
+                    adaptor.notifyDataSetChanged();
                 }
             }
 

@@ -28,13 +28,69 @@ public class notification extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
-        HashMap<String, Object> object = new HashMap<>();
-        object.put("Token", token);
-        reference.updateChildren(object);
+        String auth = FirebaseAuth.getInstance().getUid();
+        if (auth != null) {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+            HashMap<String, Object> object = new HashMap<>();
+            object.put("Token", token);
+            reference.updateChildren(object);
+        }
     }
 
-/*
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        /*//Get Update Notification
+        if (Objects.equals(remoteMessage.getNotification().getTitle(), "Update Application")) {
+            updateApplication(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+        } else*/
+        // Push Notification Message
+        pushMessageNotification(remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"));
+    }
+
+    public void updateApplication(String title, String message) {
+        Uri url = Uri.parse("https://github.com/sayeedajmal/Applications/raw/master/PersonalChat/app-release.apk");
+        Intent intent = new Intent(Intent.ACTION_VIEW, url);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        String channel_id = "UPDATE";
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.icon_foreground);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id).setColor(Color.rgb(255, 255, 255)).setLargeIcon(bitmap).setColorized(true).setSmallIcon(R.mipmap.icon_foreground).setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE).setChronometerCountDown(true).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setVibrate(new long[]{1000, 1000, 1000, 1000, 1000}).setOnlyAlertOnce(false).setContentTitle(title).setContentText(message).setContentIntent(pendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel(channel_id, "PersonalChat", NotificationManager.IMPORTANCE_HIGH);
+        channel.setLockscreenVisibility(1);
+        channel.setShowBadge(true);
+        channel.enableVibration(true);
+        channel.enableLights(true);
+        builder.setAutoCancel(true);
+        manager.createNotificationChannel(channel);
+        manager.notify(0, builder.build());
+    }
+
+    private void pushMessageNotification(String Title, String Message) {
+        String channel_id = "MESSAGE";
+        Intent intent = new Intent(this, recentActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.icon_foreground);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id).setColor(Color.rgb(255, 255, 255)).setLargeIcon(bitmap).setColorized(true).setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE).setChronometerCountDown(true).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setSmallIcon(R.mipmap.icon_foreground).setVibrate(new long[]{1000, 1000, 1000, 1000, 1000}).setOnlyAlertOnce(false).setSilent(false).setContentTitle(Title).setContentText(Message).setContentIntent(pendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel(channel_id, "PersonalChat", NotificationManager.IMPORTANCE_HIGH);
+        channel.setLockscreenVisibility(1);
+        channel.setShowBadge(true);
+        channel.enableVibration(true);
+        channel.enableLights(true);
+        builder.setAutoCancel(true);
+        manager.createNotificationChannel(channel);
+        manager.notify(0, builder.build());
+    }
+
+
+    /*
     public static void sendNotification(String Username, String Message, Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "TEST")
                 .setColor(Color.rgb(255, 255, 255))
@@ -64,57 +120,4 @@ public class notification extends FirebaseMessagingService {
         return remoteViews;
     }
 */
-
-    // Method to display the notifications
-    public void updateApplication(String title, String message) {
-        Uri url = Uri.parse("https://github.com/sayeedajmal/Applications/raw/master/PersonalChat/app-release.apk");
-        Intent intent = new Intent(Intent.ACTION_VIEW, url);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        String channel_id = "UPDATE";
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.icon_foreground);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id).setColor(Color.rgb(255, 255, 255)).setLargeIcon(bitmap).setColorized(true).setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE).setChronometerCountDown(true).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setSmallIcon(R.mipmap.icon_foreground).setVibrate(new long[]{1000, 1000, 1000, 1000, 1000}).setOnlyAlertOnce(false).setSilent(false).setContentTitle(title).setContentText(message).setContentIntent(pendingIntent);
-
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationChannel channel = new NotificationChannel(channel_id, "PersonalChat", NotificationManager.IMPORTANCE_HIGH);
-        channel.setLockscreenVisibility(1);
-        channel.setShowBadge(true);
-        channel.enableVibration(true);
-        channel.enableLights(true);
-        builder.setAutoCancel(true);
-        manager.createNotificationChannel(channel);
-        manager.notify(0, builder.build());
-    }
-
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        pushMessageNotification(remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"));
-
-       /* if (Objects.equals(remoteMessage.getData().get("Title"), "Update Application")) {
-            updateApplication(remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"));
-        }*/
-
-    }
-
-    private void pushMessageNotification(String Title, String Message) {
-        String channel_id = "MESSAGE";
-        Intent intent = new Intent(this, recentActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.icon_foreground);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id).setColor(Color.rgb(255, 255, 255)).setLargeIcon(bitmap).setColorized(true).setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE).setChronometerCountDown(true).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setSmallIcon(R.mipmap.icon_foreground).setVibrate(new long[]{1000, 1000, 1000, 1000, 1000}).setOnlyAlertOnce(false).setSilent(false).setContentTitle(Title).setContentText(Message).setContentIntent(pendingIntent);
-
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationChannel channel = new NotificationChannel(channel_id, "PersonalChat", NotificationManager.IMPORTANCE_HIGH);
-        channel.setLockscreenVisibility(1);
-        channel.setShowBadge(true);
-        channel.enableVibration(true);
-        channel.enableLights(true);
-        builder.setAutoCancel(true);
-        manager.createNotificationChannel(channel);
-        manager.notify(0, builder.build());
-    }
 }

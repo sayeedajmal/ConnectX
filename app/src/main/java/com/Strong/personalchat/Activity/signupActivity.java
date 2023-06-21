@@ -25,6 +25,7 @@ public class signupActivity extends AppCompatActivity {
         BindSignup = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(BindSignup.getRoot());
 
+        BindSignup.signUsername.requestFocus();
         BindSignup.backButtonSignup.setOnClickListener(view -> {
             onBackPressed();
             finish();

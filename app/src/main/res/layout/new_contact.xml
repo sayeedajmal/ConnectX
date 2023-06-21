@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:layout_margin="5dp"
+    android:layout_height="70dp"
+    android:layout_margin="3dp"
     android:clickable="true"
-    app:cardCornerRadius="15dp"
-    android:elevation="5dp"
-    app:circularflow_radiusInDP="10dp"
     android:foreground="?android:selectableItemBackgroundBorderless"
     android:theme="@style/Theme.PersonalChat.V1"
     tools:ignore="MissingConstraints">
@@ -16,9 +13,9 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/newContactImage"
         android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="20dp"
-        android:layout_height="60dp"
         android:background="@drawable/round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,16 +24,17 @@
     <TextView
         android:id="@+id/newChatUsername"
         android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
         android:layout_height="30dp"
-        android:layout_marginStart="30dp"
-        android:fontFamily="@font/mova"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginStart="16dp"
         android:background="@color/transparent"
+        android:fontFamily="@font/mova"
         android:lines="1"
         android:maxWidth="250dp"
         android:text="Username"
         android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/newContactImage"
         app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
