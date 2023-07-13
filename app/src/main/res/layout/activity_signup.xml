@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:theme="@style/Theme.PersonalChat.V1"
+    android:theme="@style/Theme.ConnectX.V1"
     tools:context=".Activity.signupActivity">
 
 
@@ -28,8 +28,8 @@
         android:layout_height="85dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
-        android:src="@mipmap/icon_foreground"
-        android:tint="@color/SkyBlue"
+        android:src="@mipmap/ic_launcher_foreground"
+        app:tint="@color/SkyBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />

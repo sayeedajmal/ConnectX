@@ -1,11 +1,5 @@
 <resources>
-    <string name="app_name">PersonalChat</string>
+    <string name="app_name">ConnectX</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!-- Preference Titles -->
-
-    <!-- Messages Preferences -->
-
-    <!-- Sync Preferences -->
 </resources>

@@ -8,11 +8,11 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.Strong.personalchat"
+        applicationId "com.Strong.ConnectX"
         minSdk 26
         targetSdk 33
         versionCode 2
-        versionName "2.0"
+        versionName "2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,7 +30,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'com.Strong.personalchat'
+    namespace 'com.Strong.ConnectX'
 }
 
 dependencies {
@@ -45,11 +45,11 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics:21.3.0'
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
-    implementation 'com.google.firebase:firebase-bom:32.1.0'
+    implementation 'com.google.firebase:firebase-bom:32.1.1'
     implementation 'com.google.firebase:firebase-database:20.2.2'
-    implementation 'com.google.firebase:firebase-storage:20.2.0'
+    implementation 'com.google.firebase:firebase-storage:20.2.1'
     implementation 'com.google.firebase:firebase-auth:22.0.0'
-    implementation 'com.google.firebase:firebase-perf:20.3.2'
+    implementation 'com.google.firebase:firebase-perf:20.3.3'
 
     implementation 'com.devlomi.record-view:record-view:2.0.1'
     implementation 'com.github.JagarYousef:ChatVoicePlayer:1.0.7'

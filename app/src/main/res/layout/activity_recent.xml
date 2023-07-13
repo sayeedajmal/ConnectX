@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.PersonalChat.V1"
+    android:theme="@style/Theme.ConnectX.V1"
     tools:context=".Activity.recentActivity">
 
 
@@ -11,9 +11,9 @@
         android:id="@+id/labelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@color/transparent"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
@@ -37,9 +37,10 @@
             android:layout_gravity="end"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/round"
+            android:background="@color/transparent"
             android:padding="1dp"
-            android:src="@mipmap/icon" />
+            android:src="@mipmap/ic_launcher"
+            app:tint="@color/SkyBlue" />
     </FrameLayout>
 
     <com.google.android.material.tabs.TabLayout
@@ -82,10 +83,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="50dp"
+        android:elevation="30dp"
         android:foregroundGravity="right"
         app:cardBackgroundColor="#0D83EB"
         app:cardCornerRadius="50dp"
-        android:elevation="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/dashboardPager"
         app:layout_constraintEnd_toEndOf="parent">
 

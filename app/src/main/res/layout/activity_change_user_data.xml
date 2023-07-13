@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.PersonalChat.V1"
+    android:theme="@style/Theme.ConnectX.V1"
     tools:context=".Activity.ChangeUserData">
 
     <ImageButton
