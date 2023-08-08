@@ -3,6 +3,7 @@ package com.Strong.ConnectX.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,6 +17,7 @@ import com.Strong.ConnectX.Fragments.callsFragment;
 import com.Strong.ConnectX.Fragments.recentFragment;
 import com.Strong.ConnectX.Fragments.requestFragment;
 import com.Strong.ConnectX.R;
+import com.Strong.ConnectX.Utilities.Constants;
 import com.Strong.ConnectX.databinding.ActivityRecentBinding;
 import com.Strong.ConnectX.models.CurrentUser;
 import com.bumptech.glide.Glide;
@@ -28,11 +30,32 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class recentActivity extends AppCompatActivity {
+    public static int feedBackFlag = 0;
     ViewPagerSection viewPagerAdaptor;
     ActivityRecentBinding BindRecent;
-    private SensorManager sensorManage;
-    public static int feedBackFlag = 0;
     float acceleration, accelerationNow, accelerationLast;
+    private final SensorEventListener sensorEventListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            accelerationLast = accelerationNow;
+            accelerationNow = (float) Math.sqrt(((double) x * x + y * y + z * z));
+            float delta = accelerationNow - accelerationLast;
+            acceleration = acceleration * 0.9f + delta;
+            if (feedBackFlag != 1) if (acceleration > 12) {
+                startActivity(new Intent(recentActivity.this, feedBack.class));
+                feedBackFlag = 1;
+            } else feedBackFlag = 0;
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            feedBackFlag = 0;
+        }
+    };
+    private SensorManager sensorManage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +73,9 @@ public class recentActivity extends AppCompatActivity {
             reference.updateChildren(object);
         });
 
-        if (CurrentUser.getChatUserImage() != null) {
-            Glide.with(this).load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
-        }
+        SharedPreferences sharedPreferences = getSharedPreferences("ConnectX", Context.MODE_PRIVATE);
+        String Image = sharedPreferences.getString(Constants.CHAT_USER_IMAGE, "");
+        Glide.with(this).load(Image).into(BindRecent.setting);
 
         recentFragment recentFragment = new recentFragment();
         callsFragment callsFragment = new callsFragment();
@@ -91,9 +114,6 @@ public class recentActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         (sensorManage).registerListener(sensorEventListener, sensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-        if (CurrentUser.getChatUserImage() != null) {
-            Glide.with(this).load(CurrentUser.getChatUserImage()).into(BindRecent.setting);
-        }
     }
 
     private void ShakeToFeedBack() {
@@ -101,31 +121,5 @@ public class recentActivity extends AppCompatActivity {
         accelerationLast = SensorManager.GRAVITY_EARTH;
         accelerationNow = SensorManager.GRAVITY_EARTH;
         (sensorManage).registerListener(sensorEventListener, sensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    private final SensorEventListener sensorEventListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-            accelerationLast = accelerationNow;
-            accelerationNow = (float) Math.sqrt(((double) x * x + y * y + z * z));
-            float delta = accelerationNow - accelerationLast;
-            acceleration = acceleration * 0.9f + delta;
-            if (feedBackFlag != 1) if (acceleration > 12) {
-                goFeedback();
-                feedBackFlag = 1;
-            } else feedBackFlag = 0;
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-    };
-
-    private void goFeedback() {
-        startActivity(new Intent(this, feedBack.class));
     }
 }

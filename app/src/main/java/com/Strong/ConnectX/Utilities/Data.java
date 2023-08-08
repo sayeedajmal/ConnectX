@@ -1,22 +1,13 @@
 package com.Strong.ConnectX.Utilities;
 
 public class Data {
-    private String Title, Message;
+    private String Title, Message,Image,UID;
 
-    public Data(String title, String message) {
+    public Data(String title, String message,String UID,String Image) {
         Title = title;
         Message = message;
-    }
-
-    public Data() {
-    }
-
-    public String getMessage() {
-        return Message;
-    }
-
-    public void setMessage(String message) {
-        Message = message;
+        this.Image=Image;
+        this.UID=UID;
     }
 
 

@@ -1,5 +1,7 @@
 package com.Strong.ConnectX.Activity;
 
+import static com.Strong.ConnectX.Activity.recentActivity.feedBackFlag;
+
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class feedBack extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        feedBackFlag=0;
         finish();
     }
 }

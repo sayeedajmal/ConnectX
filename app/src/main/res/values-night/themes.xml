@@ -10,5 +10,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="tabSelectedTextColor">@color/LawnGreen</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorColor">#0D83EB</item>
     </style>
 </resources>

@@ -113,7 +113,7 @@ public class uploadProfileActivity extends AppCompatActivity {
                             hashMap.put(Constants.KEY_USERNAME, username);
                             hashMap.put(Constants.KEY_EMAIL, email);
                             hashMap.put(Constants.KEY_PASSWORD, pass);
-                            hashMap.put(Constants.KEY_URI, uri.toString());
+                            hashMap.put(Constants.CHAT_USER_IMAGE, uri.toString());
                             hashMap.put(Constants.KEY_ID, id);
                             database.getReference().child("Users").child(id).setValue(hashMap);
                             showToast("Image Uploaded!");

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.Strong.ConnectX.Activity.mainChatActivity">
+
+    <item android:id="@+id/copyText"
+        android:actionLayout="@layout/activity_main_chat"
+        android:title="Copy"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/deleteText"
+        android:actionLayout="@layout/activity_main_chat"
+        android:icon="@drawable/recv_ic_delete"
+        android:iconTint="@color/white"
+        android:title="Delete"
+        app:showAsAction="withText"/>
+
+    <item android:id="@+id/shareText"
+        android:actionLayout="@layout/activity_main_chat"
+        android:title="Share"
+        app:showAsAction="withText"/>
+</menu>

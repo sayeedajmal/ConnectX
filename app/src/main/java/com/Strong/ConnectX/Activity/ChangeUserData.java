@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.Strong.ConnectX.Utilities.Constants;
 import com.Strong.ConnectX.databinding.ActivityChangeUserDataBinding;
+import com.Strong.ConnectX.models.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -23,11 +25,11 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class ChangeUserData extends AppCompatActivity {
-    ActivityChangeUserDataBinding BindUserData;
-    private Uri filePath;
-    String Username;
     private final int PICK_IMAGE_REQUEST = 20;
+    ActivityChangeUserDataBinding BindUserData;
+    String Username;
     StorageReference storageReference;
+    private Uri filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +46,9 @@ public class ChangeUserData extends AppCompatActivity {
 
         BindUserData.updateButton.setOnClickListener(view -> {
             try {
-                updateUserData();
+                uploadImage();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
     }
@@ -74,33 +76,37 @@ public class ChangeUserData extends AppCompatActivity {
         }
     }
 
-    private void updateUserData() throws IOException {
+    private void uploadImage() throws IOException {
         if (filePath != null) {
-            Toast.makeText(this, "Uploading Profile Pic..", Toast.LENGTH_SHORT).show();
-
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            storageReference = FirebaseStorage.getInstance().getReference();
-            String id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-            storageReference = storageReference.child("ProfileImages/" + id);
+            BindUserData.updateButton.setVisibility(View.INVISIBLE);
+            BindUserData.uploadProgress.setVisibility(View.VISIBLE);
+            //Storing Image String to The Database
             FirebaseDatabase database = FirebaseDatabase.getInstance();
+            storageReference = FirebaseStorage.getInstance().getReference();
 
             Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
             ByteArrayOutputStream bas = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.JPEG, 50, bas);
             byte[] data = bas.toByteArray();
-            Username = BindUserData.updateUserName.getText().toString();
-            storageReference.putBytes(data).addOnSuccessListener(taskSnapshot ->
-                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put(Constants.KEY_URI, uri);
-                        hashMap.put(Constants.KEY_USERNAME, Username);
-                        database.getReference().child("Users").child(id).setValue(hashMap);
-                        startActivity(new Intent(this, recentActivity.class));
-                        finishAffinity();
-                    })
-            );
-        } else {
-            Toast.makeText(this, "Select A Pic", Toast.LENGTH_SHORT).show();
+
+            storageReference = storageReference.child("ProfileImages/" + CurrentUser.userId);
+            storageReference.putBytes(data).addOnSuccessListener(taskSnapshot -> {
+                storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(Constants.CHAT_USER_IMAGE, uri.toString());
+                    database.getReference().child("Users").child(CurrentUser.userId).updateChildren(hashMap);
+                    Toast.makeText(this, "Profile Image Uploaded", Toast.LENGTH_SHORT).show();
+                    BindUserData.updateButton.setVisibility(View.VISIBLE);
+                    BindUserData.uploadProgress.setVisibility(View.INVISIBLE);
+                });
+                Intent intent = new Intent(this, recentActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }).addOnFailureListener(e -> {
+                Toast.makeText(this, "Uploading Failed " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                BindUserData.updateButton.setVisibility(View.VISIBLE);
+                BindUserData.uploadProgress.setVisibility(View.INVISIBLE);
+            });
         }
     }
 }

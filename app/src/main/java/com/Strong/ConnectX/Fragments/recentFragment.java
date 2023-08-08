@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.Strong.ConnectX.Adaptors.recentChatAdaptor;
+import com.Strong.ConnectX.Utilities.SharedPref;
 import com.Strong.ConnectX.databinding.FragmentRecyclerviewBinding;
 import com.Strong.ConnectX.models.CurrentUser;
 import com.Strong.ConnectX.models.recentGetter;
@@ -27,9 +28,11 @@ public class recentFragment extends Fragment {
 
     FragmentRecyclerviewBinding BindRecycle;
     DatabaseReference reference;
-    private String MineId;
     recentChatAdaptor adaptor;
     ArrayList<recentGetter> getters = new ArrayList<>();
+    private String MineId;
+
+    private int FirstAppear = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,11 +53,22 @@ public class recentFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (Objects.equals(dataSnapshot.getKey(), FirebaseAuth.getInstance().getUid())) {
-                        CurrentUser.setUsername(dataSnapshot.child("username").getValue(String.class));
-                        CurrentUser.setEmail(dataSnapshot.child("email").getValue(String.class));
-                        CurrentUser.setPassword(dataSnapshot.child("password").getValue(String.class));
-                        CurrentUser.setChatUserImage(dataSnapshot.child("chatUserImage").getValue(String.class));
-                        CurrentUser.setUserId(dataSnapshot.child("userId").getValue(String.class));
+                        String UserName = dataSnapshot.child("username").getValue(String.class);
+                        String Email = dataSnapshot.child("email").getValue(String.class);
+                        String chatUserImage = dataSnapshot.child("chatUserImage").getValue(String.class);
+                        String UID = dataSnapshot.child("userId").getValue(String.class);
+
+                        CurrentUser.setUsername(UserName);
+                        CurrentUser.setEmail(Email);
+                        CurrentUser.setChatUserImage(chatUserImage);
+                        CurrentUser.setUserId(UID);
+
+                        //SharedPreferences
+                        if (FirstAppear != 1) {
+                            SharedPref sharedPref = new SharedPref(requireContext());
+                            sharedPref.SharedSave(UserName, UID, chatUserImage, Email);
+                            FirstAppear = 1;
+                        }
                     }
                 }
             }
@@ -76,6 +90,7 @@ public class recentFragment extends Fragment {
         return BindRecycle.getRoot();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void initRecent(recentChatAdaptor adaptor) {
         reference.child("Users").child(MineId).child("Chats").addValueEventListener(new ValueEventListener() {
             //Getting UID of particular chat user
@@ -89,6 +104,7 @@ public class recentFragment extends Fragment {
 
                     //Getting data of particular user by taking their id
                     reference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -105,8 +121,8 @@ public class recentFragment extends Fragment {
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
+
                     });
-                    adaptor.notifyDataSetChanged();
                 }
             }
 
@@ -115,5 +131,6 @@ public class recentFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        adaptor.notifyDataSetChanged();
     }
 }

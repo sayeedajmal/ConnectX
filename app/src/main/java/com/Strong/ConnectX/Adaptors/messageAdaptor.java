@@ -1,15 +1,20 @@
 package com.Strong.ConnectX.Adaptors;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Strong.ConnectX.Activity.userDataImage;
@@ -23,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class messageAdaptor extends RecyclerView.Adapter {
     ArrayList<message> messageModels;
@@ -83,17 +90,27 @@ public class messageAdaptor extends RecyclerView.Adapter {
         String ImagePics = messageModels.get(position).getMessageType();
         String Seen = messageModels.get(position).getSeen();
         //String audioMessage = messageModels.get(position).getMessageType();
+        int linkColor= ContextCompat.getColor(context,R.color.lightBlue);
 
+        //Show Messages according to there sides
         switch (getItemViewType(position)) {
             case 1:
-                ((sendViewHolder) holder).messageSen.setText(message.getMessage());
+                if (isLink(message.getMessage())){
+                    ((sendViewHolder)holder).messageSen.setTextColor(linkColor);
+                    ((sendViewHolder) holder).messageSen.setText(message.getMessage());
+                }else
+                    ((sendViewHolder) holder).messageSen.setText(message.getMessage());
                 Date sendTime = new Date(message.getTimeStamp());
                 ((sendViewHolder) holder).messageSenTime.setText(ShowSend(sendTime));
                 if (Seen != null && Seen.equals("yes"))
                     ((sendViewHolder) holder).seen.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
+                if (isLink(message.getMessage())){
+                    ((receiveViewHolder)holder).messageRec.setTextColor(linkColor);
+                    ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
+                }else
+                    ((receiveViewHolder)holder).messageRec.setText(message.getMessage());
                 Date receiveTime = new Date(message.getTimeStamp());
                 ((receiveViewHolder) holder).messageRecTime.setText(ShowDateTime(receiveTime));
                 break;
@@ -126,20 +143,75 @@ public class messageAdaptor extends RecyclerView.Adapter {
                     ((receiveViewHolder) holder).receiveRecord.setAudio(message.getMessage());
                 break;*/
         }
-        holder.itemView.setOnLongClickListener(view -> {
-            deleteMessage();
-            return false;
-        });
         holder.itemView.setOnClickListener(view -> {
             if (ImagePics != null && ImagePics.equals("ImagePics")) {
                 intent = new Intent(context, userDataImage.class);
                 intent.putExtra("Image", message.getMessage());
                 context.startActivity(intent);
+            }else if (isLink(message.getMessage())){
+
+                Pattern pattern=Pattern.compile("(https://)?[a-zA-Z0-9]+(\\.[a-zA-Z]+)+$");
+                Matcher matcher=pattern.matcher(message.getMessage());
+                if (matcher.find()) {
+                    String Url=matcher.group();
+                    if (!Url.startsWith("http://") || !Url.startsWith("https://")) {
+                       Url= "https://"+Url;
+                       context.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Url)));
+                    }
+                }
+            }
+        });
+
+        switch (getItemViewType(position)){
+            case 1:
+                holder.itemView.setOnLongClickListener(view -> {
+                    TextOptions(view,Gravity.END,message.getMessage());
+                    return false;
+                });
+                break;
+            case 2:
+                holder.itemView.setOnLongClickListener(view -> {
+                    TextOptions(view,Gravity.START,message.getMessage());
+                    return false;
+                });
+                break;
+        }
+    }
+
+    private boolean isLink(String text){
+        Pattern pattern=Pattern.compile("(https://)?[a-zA-Z0-9]+(\\.[a-zA-Z]+)+$");
+        return pattern.matcher(text).find();
+    }
+
+    private void TextOptions(View view, int gravity,String text){
+        PopupMenu popupMenu = new PopupMenu(context, view, gravity);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.textoption, popupMenu.getMenu());
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.copyText:
+                    copyText(text);
+                    Toast.makeText(context, "Text Copied!", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.deleteText:
+                    Toast.makeText(context, "You Clicked on Delete", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.shareText:
+                    Toast.makeText(context,"You Clicked On Share", Toast.LENGTH_SHORT).show();
+                default:
+                    return false;
             }
         });
     }
 
-    private void deleteMessage() {
+    private void copyText(String text){
+        ClipboardManager clipboardManager= (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData=ClipData.newPlainText("ConnectX",text);
+        clipboardManager.setPrimaryClip(clipData);
+    }
+    //BottomSheet
+ /*   private void deleteChat() {
         bottomSheetDialog = new BottomSheetDialog(context);
         bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_delete);
         Button cancel = bottomSheetDialog.findViewById(R.id.Cancel);
@@ -154,7 +226,7 @@ public class messageAdaptor extends RecyclerView.Adapter {
         delete.setOnClickListener(v -> {
 
         });
-    }
+    }*/
 
     private String ShowDateTime(Date date) {
         return new SimpleDateFormat("dd.MM.yy - hh:mm a", Locale.getDefault()).format(date);
@@ -183,39 +255,5 @@ public class messageAdaptor extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return messageModels.size();
-    }
-
-    public static class sendViewHolder extends RecyclerView.ViewHolder {
-        TextView messageSen, messageSenTime, img_sen_time, sendEmoji;
-        ImageView sendImage, seen;
-        // VoicePlayerView sendRecord;
-
-
-        public sendViewHolder(@NonNull View itemView) {
-            super(itemView);
-            messageSen = itemView.findViewById(R.id.messageSen);
-            messageSenTime = itemView.findViewById(R.id.messageSenTime);
-            sendImage = itemView.findViewById(R.id.sendImage);
-            img_sen_time = itemView.findViewById(R.id.img_sen_time);
-            sendEmoji = itemView.findViewById(R.id.sendEmoji);
-            seen = itemView.findViewById(R.id.seen);
-            //  sendRecord = itemView.findViewById(R.id.SendVoicePlayerView);
-        }
-    }
-
-    public static class receiveViewHolder extends RecyclerView.ViewHolder {
-        TextView messageRec, messageRecTime, img_rec_time, ReceiveEmoji;
-        ImageView recImage;
-        //VoicePlayerView receiveRecord;
-
-        public receiveViewHolder(@NonNull View itemView) {
-            super(itemView);
-            messageRec = itemView.findViewById(R.id.messageRec);
-            messageRecTime = itemView.findViewById(R.id.messageRecTime);
-            recImage = itemView.findViewById(R.id.recImage);
-            img_rec_time = itemView.findViewById(R.id.img_rec_time);
-            ReceiveEmoji = itemView.findViewById(R.id.ReceiveEmoji);
-            // receiveRecord = itemView.findViewById(R.id.RecVoicePlayerView);
-        }
     }
 }

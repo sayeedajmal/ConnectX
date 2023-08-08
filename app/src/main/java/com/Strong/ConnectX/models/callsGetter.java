@@ -23,20 +23,4 @@ public class callsGetter {
         this.callUserImage = callUserImage;
     }
 
-    public void setCallUsername(String callUsername) {
-        this.callUsername = callUsername;
-    }
-
-    public void setCallInform(String callInform) {
-        this.callInform = callInform;
-    }
-
-    public void setCallUserImage(String callUserImage) {
-        this.callUserImage = callUserImage;
-    }
-
-    public callsGetter() {
-
-    }
-
 }

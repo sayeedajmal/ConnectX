@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.ConnectX.V1" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:background">@color/lite_white</item>
-        <item name="cardBackgroundColor">@color/transparent</item>
+        <!--<item name="cardBackgroundColor">@color/transparent</item>-->
         <item name="android:textColor">@color/black</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:screenOrientation">portrait</item>

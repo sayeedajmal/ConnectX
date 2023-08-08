@@ -5,7 +5,5 @@ public class Constants {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_ID = "userId";
-    public static final String KEY_URI = "chatUserImage";
-//    public static final String
-
+    public static final String CHAT_USER_IMAGE = "chatUserImage";
 }

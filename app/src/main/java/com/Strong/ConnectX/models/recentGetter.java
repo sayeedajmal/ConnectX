@@ -3,10 +3,6 @@ package com.Strong.ConnectX.models;
 public class recentGetter {
     String chatUserImage;
 
-    public recentGetter() {
-
-    }
-
     public String getChatUserImage() {
         return chatUserImage;
     }
