@@ -58,10 +58,10 @@ public class messageAdaptor extends RecyclerView.Adapter {
             view = LayoutInflater.from(context).inflate(R.layout.sample_send, parent, false);
             return new sendViewHolder(view);
         } else if (viewType == RECEIVER_IMAGE) {
-            view = LayoutInflater.from(context).inflate(R.layout.recie_image_layout, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.sample_image_rec, parent, false);
             return new receiveViewHolder(view);
         } else if (viewType == SENDER_IMAGE) {
-            view = LayoutInflater.from(context).inflate(R.layout.send_image_layout, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.sample_image_send, parent, false);
             return new sendViewHolder(view);
         } else {
             view = LayoutInflater.from(context).inflate(R.layout.sample_recieve, parent, false);
@@ -90,15 +90,16 @@ public class messageAdaptor extends RecyclerView.Adapter {
         String ImagePics = messageModels.get(position).getMessageType();
         String Seen = messageModels.get(position).getSeen();
         //String audioMessage = messageModels.get(position).getMessageType();
-        int linkColor= ContextCompat.getColor(context,R.color.lightBlue);
+        int linkColor = ContextCompat.getColor(context, R.color.lightBlue);
 
         //Show Messages according to there sides
         switch (getItemViewType(position)) {
             case 1:
-                if (isLink(message.getMessage())){
-                    ((sendViewHolder)holder).messageSen.setTextColor(linkColor);
+                //Checking Link if true,change color
+                if (isLink(message.getMessage())) {
+                    ((sendViewHolder) holder).messageSen.setTextColor(linkColor);
                     ((sendViewHolder) holder).messageSen.setText(message.getMessage());
-                }else
+                } else
                     ((sendViewHolder) holder).messageSen.setText(message.getMessage());
                 Date sendTime = new Date(message.getTimeStamp());
                 ((sendViewHolder) holder).messageSenTime.setText(ShowSend(sendTime));
@@ -106,11 +107,11 @@ public class messageAdaptor extends RecyclerView.Adapter {
                     ((sendViewHolder) holder).seen.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                if (isLink(message.getMessage())){
-                    ((receiveViewHolder)holder).messageRec.setTextColor(linkColor);
+                if (isLink(message.getMessage())) {
+                    ((receiveViewHolder) holder).messageRec.setTextColor(linkColor);
                     ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
-                }else
-                    ((receiveViewHolder)holder).messageRec.setText(message.getMessage());
+                } else
+                    ((receiveViewHolder) holder).messageRec.setText(message.getMessage());
                 Date receiveTime = new Date(message.getTimeStamp());
                 ((receiveViewHolder) holder).messageRecTime.setText(ShowDateTime(receiveTime));
                 break;
@@ -119,6 +120,8 @@ public class messageAdaptor extends RecyclerView.Adapter {
                     Glide.with(context).load(message.getMessage()).into(((sendViewHolder) holder).sendImage);
                 Date sendImgTime = new Date(message.getTimeStamp());
                 ((sendViewHolder) holder).img_sen_time.setText(ShowSend(sendImgTime));
+                if (Seen != null && Seen.equals("yes"))
+                    ((sendViewHolder) holder).ImageSeen.setVisibility(View.VISIBLE);
                 break;
             case 4:
                 if (ImagePics != null && ImagePics.equals("ImagePics"))
@@ -148,42 +151,42 @@ public class messageAdaptor extends RecyclerView.Adapter {
                 intent = new Intent(context, userDataImage.class);
                 intent.putExtra("Image", message.getMessage());
                 context.startActivity(intent);
-            }else if (isLink(message.getMessage())){
+            } else if (isLink(message.getMessage())) {
 
-                Pattern pattern=Pattern.compile("(https://)?[a-zA-Z0-9]+(\\.[a-zA-Z]+)+$");
-                Matcher matcher=pattern.matcher(message.getMessage());
+                Pattern pattern = Pattern.compile("(https://)?[a-zA-Z0-9]+(\\.[a-zA-Z]+)+$");
+                Matcher matcher = pattern.matcher(message.getMessage());
                 if (matcher.find()) {
-                    String Url=matcher.group();
+                    String Url = matcher.group();
                     if (!Url.startsWith("http://") || !Url.startsWith("https://")) {
-                       Url= "https://"+Url;
-                       context.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Url)));
+                        Url = "https://" + Url;
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Url)));
                     }
                 }
             }
         });
 
-        switch (getItemViewType(position)){
+        switch (getItemViewType(position)) {
             case 1:
                 holder.itemView.setOnLongClickListener(view -> {
-                    TextOptions(view,Gravity.END,message.getMessage());
+                    TextOptions(view, Gravity.END, message.getMessage());
                     return false;
                 });
                 break;
             case 2:
                 holder.itemView.setOnLongClickListener(view -> {
-                    TextOptions(view,Gravity.START,message.getMessage());
+                    TextOptions(view, Gravity.START, message.getMessage());
                     return false;
                 });
                 break;
         }
     }
 
-    private boolean isLink(String text){
-        Pattern pattern=Pattern.compile("(https://)?[a-zA-Z0-9]+(\\.[a-zA-Z]+)+$");
+    private boolean isLink(String text) {
+        Pattern pattern = Pattern.compile("(https://)?[a-zA-Z0-9]+(\\.[a-zA-Z]+)+$");
         return pattern.matcher(text).find();
     }
 
-    private void TextOptions(View view, int gravity,String text){
+    private void TextOptions(View view, int gravity, String text) {
         PopupMenu popupMenu = new PopupMenu(context, view, gravity);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.textoption, popupMenu.getMenu());
@@ -198,16 +201,16 @@ public class messageAdaptor extends RecyclerView.Adapter {
                     Toast.makeText(context, "You Clicked on Delete", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.shareText:
-                    Toast.makeText(context,"You Clicked On Share", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "You Clicked On Share", Toast.LENGTH_SHORT).show();
                 default:
                     return false;
             }
         });
     }
 
-    private void copyText(String text){
-        ClipboardManager clipboardManager= (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData=ClipData.newPlainText("ConnectX",text);
+    private void copyText(String text) {
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("ConnectX", text);
         clipboardManager.setPrimaryClip(clipData);
     }
     //BottomSheet

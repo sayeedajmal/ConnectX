@@ -2,8 +2,6 @@ package com.Strong.ConnectX.Activity;
 
 import static android.content.Intent.ACTION_GET_CONTENT;
 import static android.content.Intent.createChooser;
-import static com.Strong.ConnectX.Utilities.EnCryptDeCrypt.encrypt;
-import static com.Strong.ConnectX.Utilities.EnCryptDeCrypt.generateSecretKey;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -56,15 +54,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
-import javax.crypto.SecretKey;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class mainChatActivity extends AppCompatActivity {
-    private static int seen;
+    static int seen;
     private final int REQ_IMAGE = 500;
     FirebaseAuth fAuth;
     String MineId;
@@ -93,8 +89,6 @@ public class mainChatActivity extends AppCompatActivity {
         YourID = getIntent().getStringExtra("userId");
         username = getIntent().getStringExtra("username");
         chatUserImage = getIntent().getStringExtra("UserImage");
-
-
         BindMainChat.mainChatUsername.setText(username);
         Glide.with(this).load(chatUserImage).into(BindMainChat.mainChatImage);
         BindMainChat.TypeMessage.requestFocus();
@@ -173,7 +167,6 @@ public class mainChatActivity extends AppCompatActivity {
 
         BindMainChat.mainchatbackButton.setOnClickListener(view -> {
             onBackPressed();
-            seen = 0;
             BindMainChat.TypeMessage.setText(null);
             setRoom("0");
         });
@@ -344,14 +337,6 @@ public class mainChatActivity extends AppCompatActivity {
     private void initSendMessage() {
         BindMainChat.sendButton.setOnClickListener(view -> {
             String message = Objects.requireNonNull(BindMainChat.TypeMessage.getText()).toString().trim();
-            SecretKey secretKey = null;
-            String encryptedText = null;
-            try {
-                secretKey = generateSecretKey();
-                encryptedText = encrypt(message, secretKey);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
             if (!message.equals("")) {
                 message conversation = new message(MineId, message);
                 conversation.setTimeStamp(new Date().getTime());
@@ -375,6 +360,9 @@ public class mainChatActivity extends AppCompatActivity {
 
 //        Getting Image From File and Sending to Firebase Storage
         if (requestCode == REQ_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Toast.makeText(this, "Seeen: " + seen, Toast.LENGTH_SHORT).show();
+        }
+        if (requestCode == REQ_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             BindMainChat.progressUpload.setVisibility(View.VISIBLE);
             BindMainChat.chooseImage.setVisibility(View.INVISIBLE);
             Uri filePath = data.getData();
@@ -395,19 +383,7 @@ public class mainChatActivity extends AppCompatActivity {
                     Task<Uri> ImageUrl = success.getStorage().getDownloadUrl();
                     ImageUrl.addOnCompleteListener(path -> {
                         if (path.isSuccessful()) {
-                            String url = path.getResult().toString();
-                            message conversation = new message(MineId, url, "ImagePics");
-                            conversation.setTimeStamp(new Date().getTime());
-                            if (seen == 1) {
-                                conversation.setSeen("yes");
-                            } else {
-                                conversation.setSeen("no");
-                            }
-                            BindMainChat.progressUpload.setVisibility(View.INVISIBLE);
-                            BindMainChat.chooseImage.setVisibility(View.VISIBLE);
-                            BindMainChat.TypeMessage.setText(null);
-                            // Feeding AudioMessage to Sender and Receiver Database
-                            database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
+                            uploadImage(path);
                         }
                     });
                 });
@@ -422,6 +398,22 @@ public class mainChatActivity extends AppCompatActivity {
 
     }
 
+    private void uploadImage(Task<Uri> path) {
+        String url = path.getResult().toString();
+        message conversation = new message(MineId, url, "ImagePics");
+        conversation.setTimeStamp(new Date().getTime());
+        if (seen == 1) {
+            conversation.setSeen("yes");
+        } else {
+            conversation.setSeen("no");
+            sendNotification(Token, CurrentUser.getUsername(), "It's A Picture", YourID, chatUserImage);
+        }
+        BindMainChat.progressUpload.setVisibility(View.INVISIBLE);
+        BindMainChat.chooseImage.setVisibility(View.VISIBLE);
+        // Feeding AudioMessage to Sender and Receiver Database
+        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
+    }
+
     private void deleteChat() {
         // String subfolderPath = "Media/ImagePics/"+MineId+"/"+YourID;
         database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
@@ -434,16 +426,15 @@ public class mainChatActivity extends AppCompatActivity {
         StorageReference subfolderRef = FirebaseStorage.getInstance().getReference().child("Media/ImagePics/" + MineId + "/" + YourID);
 
         subfolderRef.listAll().addOnSuccessListener(listResult -> {
-                    for (StorageReference item : listResult.getItems()) {
-                        FirebaseStorage.getInstance().getReference().child(item.getPath()).delete();
-                        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
-                        onBackPressed();
-                    }
-                })
-                .addOnFailureListener(exception -> {
-                    // Handle any errors
-                    System.err.println("Error listing items: " + exception.getMessage());
-                });
+            for (StorageReference item : listResult.getItems()) {
+                FirebaseStorage.getInstance().getReference().child(item.getPath()).delete();
+                database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+                onBackPressed();
+            }
+        }).addOnFailureListener(exception -> {
+            // Handle any errors
+            System.err.println("Error listing items: " + exception.getMessage());
+        });
     }
 
     @Override
@@ -455,13 +446,11 @@ public class mainChatActivity extends AppCompatActivity {
         reference.updateChildren(hashMap);
         reference.keepSynced(true);
         setRoom("0");
-        seen = 0;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        seen = 0;
         setRoom("0");
     }
 

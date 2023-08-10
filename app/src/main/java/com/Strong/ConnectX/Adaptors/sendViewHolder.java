@@ -11,7 +11,7 @@ import com.Strong.ConnectX.R;
 
 public class sendViewHolder extends RecyclerView.ViewHolder {
     TextView messageSen, messageSenTime, img_sen_time, sendEmoji;
-    ImageView sendImage, seen;
+    ImageView sendImage, seen, ImageSeen;
     // VoicePlayerView sendRecord;
 
 
@@ -23,6 +23,7 @@ public class sendViewHolder extends RecyclerView.ViewHolder {
         img_sen_time = itemView.findViewById(R.id.img_sen_time);
         sendEmoji = itemView.findViewById(R.id.sendEmoji);
         seen = itemView.findViewById(R.id.seen);
+        ImageSeen = itemView.findViewById(R.id.ImageSeen);
         //  sendRecord = itemView.findViewById(R.id.SendVoicePlayerView);
     }
 }
