@@ -14,6 +14,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.Strong.ConnectX.Activity.SettingActivity;
 import com.Strong.ConnectX.Activity.mainChatActivity;
 import com.Strong.ConnectX.Activity.recentActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,37 +43,26 @@ public class notification extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        String UserName=remoteMessage.getData().get("Title");
-        String UID=remoteMessage.getData().get("UID");
-        String Image=remoteMessage.getData().get("Image");
-        String Message=remoteMessage.getData().get("Message");
+        String UserName = remoteMessage.getData().get("sendName");
+        String UID = remoteMessage.getData().get("SendID");
+        String Image = remoteMessage.getData().get("SendImage");
+        String Message = remoteMessage.getData().get("SendMessage");
 
-        pushMessageNotification(UserName,Message,UID,Image);
+        pushMessageNotification(UserName, Message, UID, Image);
     }
 
-    private void pushMessageNotification(String UserName, String Message,String UID,String Image) {
+    private void pushMessageNotification(String UserName, String Message, String UID, String Image) {
         String channel_id = "MESSAGE";
         Intent intent = new Intent(this, mainChatActivity.class);
-        intent.putExtra("username",UserName);
-        intent.putExtra("userId",UID);
-        intent.putExtra("UserImage",Image);
+        intent.putExtra("RecName", UserName);
+        intent.putExtra("RecID", UID);
+        intent.putExtra("RecImage", Image);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE);
 
         Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.ic_launcher_foreground);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id)
-                .setColorized(true)
-                .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
-                .setChronometerCountDown(true)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setSmallIcon(R.mipmap.ic_launcher_foreground)
-                .setLargeIcon(bitmap)
-                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-                .setOnlyAlertOnce(false)
-                .setSilent(false)
-                .setContentTitle(UserName)
-               .setContentText(Message)
-                .setContentIntent(pendingIntent);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id).setColorized(true).setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE).setChronometerCountDown(true).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setSmallIcon(R.mipmap.ic_launcher_foreground).setLargeIcon(bitmap).setVibrate(new long[]{1000, 1000, 1000, 1000, 1000}).setOnlyAlertOnce(false).setSilent(false).setContentTitle(UserName).setContentText(Message).setContentIntent(pendingIntent);
 
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

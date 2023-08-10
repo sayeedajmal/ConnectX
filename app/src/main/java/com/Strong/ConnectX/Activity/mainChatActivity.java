@@ -1,11 +1,11 @@
 package com.Strong.ConnectX.Activity;
 
-import static android.content.Intent.ACTION_GET_CONTENT;
-import static android.content.Intent.createChooser;
+import static android.content.Intent.ACTION_PICK;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -18,8 +18,9 @@ import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -28,11 +29,11 @@ import com.Strong.ConnectX.Adaptors.messageAdaptor;
 import com.Strong.ConnectX.R;
 import com.Strong.ConnectX.Utilities.APIService;
 import com.Strong.ConnectX.Utilities.Client;
+import com.Strong.ConnectX.Utilities.Constants;
 import com.Strong.ConnectX.Utilities.Data;
 import com.Strong.ConnectX.Utilities.MyResponse;
 import com.Strong.ConnectX.Utilities.NotificationSender;
 import com.Strong.ConnectX.databinding.ActivityMainChatBinding;
-import com.Strong.ConnectX.models.CurrentUser;
 import com.Strong.ConnectX.models.message;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
@@ -63,15 +64,15 @@ public class mainChatActivity extends AppCompatActivity {
     static int seen;
     private final int REQ_IMAGE = 500;
     FirebaseAuth fAuth;
-    String MineId;
-    String YourID;
+    private static String MineId;
+    private static String YourID;
     FirebaseDatabase database;
     DatabaseReference reference;
     StorageReference StoreRef;
     ActivityMainChatBinding BindMainChat;
     private APIService apiService;
-    private String Token;
-    private String username, chatUserImage;
+    private static String Token;
+    private static String YourName, YourImage;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -86,11 +87,20 @@ public class mainChatActivity extends AppCompatActivity {
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         MineId = fAuth.getUid();
+
+        YourName = getIntent().getStringExtra("username");
+        YourImage = getIntent().getStringExtra("UserImage");
         YourID = getIntent().getStringExtra("userId");
-        username = getIntent().getStringExtra("username");
-        chatUserImage = getIntent().getStringExtra("UserImage");
-        BindMainChat.mainChatUsername.setText(username);
-        Glide.with(this).load(chatUserImage).into(BindMainChat.mainChatImage);
+
+        getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if (YourName == null) {
+            YourName = getIntent().getStringExtra("RecName");
+            YourImage = getIntent().getStringExtra("RecImage");
+            YourID = getIntent().getStringExtra("RecID");
+        }
+
+        BindMainChat.mainChatUsername.setText(YourName);
+        Glide.with(this).load(YourImage).into(BindMainChat.mainChatImage);
         BindMainChat.TypeMessage.requestFocus();
 
         final ArrayList<message> messageModels = new ArrayList<>();
@@ -166,15 +176,15 @@ public class mainChatActivity extends AppCompatActivity {
 
 
         BindMainChat.mainchatbackButton.setOnClickListener(view -> {
-            onBackPressed();
             BindMainChat.TypeMessage.setText(null);
             setRoom("0");
+            onBackPressed();
         });
 
         BindMainChat.constraint.setOnClickListener(view -> {
             Intent intent = new Intent(this, UserDataShow.class);
-            intent.putExtra("Image", chatUserImage);
-            intent.putExtra("username", username);
+            intent.putExtra("Image", YourImage);
+            intent.putExtra("username", YourName);
             startActivity(intent);
         });
 
@@ -187,17 +197,18 @@ public class mainChatActivity extends AppCompatActivity {
         BindMainChat.videCallButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, VideoCallOutgoing.class);
             intent.putExtra("Uid", YourID);
-            intent.putExtra("OutName", username);
-            intent.putExtra("OutImage", chatUserImage);
+            intent.putExtra("OutName", YourName);
+            intent.putExtra("OutImage", YourImage);
             startActivity(intent);
         });
 
         BindMainChat.chooseImage.setOnClickListener(view -> {
-            Intent intent = new Intent();
-            intent.setType("image/* video/*");
-            intent.setAction(ACTION_GET_CONTENT);
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+          /*  intent.setType("image/* video/*");
+            intent.setType("image/*");
+            intent.setAction(ACTION_GET_CONTENT);*/
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                startActivityForResult(createChooser(intent, "Select Image To Send"), REQ_IMAGE);
+                FileChooser.launch(Intent.createChooser(intent, "Select Image To Send"));
             } else
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_IMAGE);
         });
@@ -211,8 +222,69 @@ public class mainChatActivity extends AppCompatActivity {
 
     }
 
-    public void sendNotification(String userToken, String Title, String Message, String UID, String Image) {
-        Data data = new Data(Title, Message, UID, Image);
+
+    //ResultLauncher
+    private final ActivityResultLauncher<Intent> FileChooser = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            Intent data = result.getData();
+            assert data != null;
+            Uri filePath = data.getData();
+            /*String mimeType = getContentResolver().getType(filePath);
+            if (mimeType.startsWith("image/")) {
+            }*/
+            BindMainChat.progressUpload.setVisibility(View.VISIBLE);
+            BindMainChat.chooseImage.setVisibility(View.INVISIBLE);
+            database = FirebaseDatabase.getInstance();
+            StoreRef = FirebaseStorage.getInstance().getReference();
+            long milliTime = System.currentTimeMillis();
+
+            //Reference of ImagePics
+            StoreRef = StoreRef.child("Media").child("ImagePics").child(MineId).child(YourID).child(Long.toString(milliTime));
+            try {
+                Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                ByteArrayOutputStream bas = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 50, bas);
+                byte[] byteData = bas.toByteArray();
+
+                Toast.makeText(this, "Sending Image", Toast.LENGTH_SHORT).show();
+                StoreRef.putBytes(byteData).addOnSuccessListener(success -> {
+                    Task<Uri> ImageUrl = success.getStorage().getDownloadUrl();
+                    ImageUrl.addOnCompleteListener(path -> {
+                        if (path.isSuccessful()) {
+                            String url = path.getResult().toString();
+                            message conversation = new message(MineId, url, "ImagePics");
+                            conversation.setTimeStamp(new Date().getTime());
+                            if (seen == 1) {
+                                conversation.setSeen("yes");
+                            } else {
+                                conversation.setSeen("no");
+                                sendNotification(Token, "It's A Picture");
+                            }
+                            BindMainChat.progressUpload.setVisibility(View.INVISIBLE);
+                            BindMainChat.chooseImage.setVisibility(View.VISIBLE);
+                            // Feeding AudioMessage to Sender and Receiver Database
+                            database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
+
+                        }
+                    });
+                });
+
+            } catch (IOException e) {
+                BindMainChat.progressUpload.setVisibility(View.INVISIBLE);
+                BindMainChat.chooseImage.setVisibility(View.VISIBLE);
+                Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    });
+
+    public void sendNotification(String userToken, String YourMessage) {
+        SharedPreferences shared = getSharedPreferences("ConnectX", MODE_PRIVATE);
+        String MineName = shared.getString(Constants.KEY_USERNAME, "");
+        String MineID = shared.getString(Constants.KEY_ID, "");
+        String MineImage = shared.getString(Constants.CHAT_USER_IMAGE, "");
+
+        Data data = new Data(MineName, YourMessage, MineImage, MineID);
         NotificationSender sender = new NotificationSender(data, userToken);
         apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
             @Override
@@ -344,7 +416,7 @@ public class mainChatActivity extends AppCompatActivity {
                     conversation.setSeen("yes");
                 } else {
                     conversation.setSeen("no");
-                    sendNotification(Token, CurrentUser.getUsername(), message, YourID, chatUserImage);
+                    sendNotification(Token, message);
                 }
                 BindMainChat.TypeMessage.setText(null);
 
@@ -354,86 +426,23 @@ public class mainChatActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-//        Getting Image From File and Sending to Firebase Storage
-        if (requestCode == REQ_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Toast.makeText(this, "Seeen: " + seen, Toast.LENGTH_SHORT).show();
-        }
-        if (requestCode == REQ_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            BindMainChat.progressUpload.setVisibility(View.VISIBLE);
-            BindMainChat.chooseImage.setVisibility(View.INVISIBLE);
-            Uri filePath = data.getData();
-            database = FirebaseDatabase.getInstance();
-            StoreRef = FirebaseStorage.getInstance().getReference();
-            long milliTime = System.currentTimeMillis();
-
-            //Reference of ImagePics
-            StoreRef = StoreRef.child("Media").child("ImagePics").child(MineId).child(YourID).child(Long.toString(milliTime));
-            try {
-                Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                ByteArrayOutputStream bas = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG, 50, bas);
-                byte[] byteData = bas.toByteArray();
-
-                Toast.makeText(this, "Sending Image", Toast.LENGTH_SHORT).show();
-                StoreRef.putBytes(byteData).addOnSuccessListener(success -> {
-                    Task<Uri> ImageUrl = success.getStorage().getDownloadUrl();
-                    ImageUrl.addOnCompleteListener(path -> {
-                        if (path.isSuccessful()) {
-                            uploadImage(path);
-                        }
-                    });
-                });
-
-            } catch (IOException e) {
-                BindMainChat.progressUpload.setVisibility(View.INVISIBLE);
-                BindMainChat.chooseImage.setVisibility(View.VISIBLE);
-                Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-    }
-
-    private void uploadImage(Task<Uri> path) {
-        String url = path.getResult().toString();
-        message conversation = new message(MineId, url, "ImagePics");
-        conversation.setTimeStamp(new Date().getTime());
-        if (seen == 1) {
-            conversation.setSeen("yes");
-        } else {
-            conversation.setSeen("no");
-            sendNotification(Token, CurrentUser.getUsername(), "It's A Picture", YourID, chatUserImage);
-        }
-        BindMainChat.progressUpload.setVisibility(View.INVISIBLE);
-        BindMainChat.chooseImage.setVisibility(View.VISIBLE);
-        // Feeding AudioMessage to Sender and Receiver Database
-        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).push().setValue(conversation).addOnSuccessListener(e -> database.getReference().child("Users").child(YourID).child("Chats").child(MineId).push().setValue(conversation));
-    }
-
-    private void deleteChat() {
-        // String subfolderPath = "Media/ImagePics/"+MineId+"/"+YourID;
-        database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
-        onBackPressed();
-        //  deleteSubfolderAndContents();
-        // Snack bar.make(BindMainChat.optionButton, "\uD83D\uDE01 \uD83D\uDE06 You Can't Delete This Chat \uD83E\uDD2A", Snackbar.LENGTH_SHORT).show();
-    }
-
-    public void deleteSubfolderAndContents() {
-        StorageReference subfolderRef = FirebaseStorage.getInstance().getReference().child("Media/ImagePics/" + MineId + "/" + YourID);
-
-        subfolderRef.listAll().addOnSuccessListener(listResult -> {
+    public void deleteChat() {
+        StorageReference StoreRef = FirebaseStorage.getInstance().getReference().child("/Media/ImagePics/3AbizhbGLuYwQ1sWE5Av6OBV3di2/DP8DPJnZeMXk0rNhe6ngqxmNT122");
+        StoreRef.listAll().onSuccessTask(listResult -> {
             for (StorageReference item : listResult.getItems()) {
-                FirebaseStorage.getInstance().getReference().child(item.getPath()).delete();
+                item.delete().addOnSuccessListener(unused -> {
+                    database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+                    Toast.makeText(mainChatActivity.this, "Chat Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }).addOnFailureListener(e -> Toast.makeText(mainChatActivity.this, "Can't Delete this Chat. " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show());
+            }
+            return null;
+        }).addOnFailureListener(e -> {
+            if (e.getLocalizedMessage().equals("Continuation returned null")) {
                 database.getReference().child("Users").child(MineId).child("Chats").child(YourID).removeValue();
+                Toast.makeText(mainChatActivity.this, "Chat Deleted Successfully", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
-        }).addOnFailureListener(exception -> {
-            // Handle any errors
-            System.err.println("Error listing items: " + exception.getMessage());
         });
     }
 
@@ -462,22 +471,20 @@ public class mainChatActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // IMAGE ON PERMISSION
         if (requestCode == REQ_IMAGE) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permission Denied. Please Allow Permission By App Info", Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(ACTION_GET_CONTENT);
-                startActivityForResult(createChooser(intent, "Select Image To Send"), REQ_IMAGE);
+                Intent intent = new Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                FileChooser.launch(Intent.createChooser(intent, "Select Image To Send"));
             }
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-     /*   private boolean isRecordingOk() {
+    /*   private boolean isRecordingOk() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
     }
 

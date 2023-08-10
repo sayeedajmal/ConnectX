@@ -30,7 +30,7 @@ public class SettingActivity extends AppCompatActivity {
 
         BindSet.logoutButton.setOnClickListener(view -> {
             firebaseAuth.signOut();
-            Toast.makeText(this, "We Are Waiting For You..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "SomeOne is Waiting For You..", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, purposeActivity.class));
         });
 
@@ -45,13 +45,9 @@ public class SettingActivity extends AppCompatActivity {
         });
         BindSet.backButton.setOnClickListener(view -> onBackPressed());
 
-        BindSet.EditProfileButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ChangeUserData.class);
-            startActivity(intent);
-        });
+        BindSet.EditProfileButton.setOnClickListener(view -> startActivity(new Intent(this, ChangeUserData.class)));
 
         BindSet.AppVersion.setText("App Version: " + BuildConfig.VERSION_NAME);
-
 
         BindSet.UpdateApp.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://sayeedthedev.web.app"))));
     }
